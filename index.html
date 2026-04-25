@@ -1,0 +1,3517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Loyalty-first CRM for small family businesses." />
+    <meta name="theme-color" content="#10b981" />
+    <meta name="application-name" content="loyalty-4-All" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="loyalty-4-All" />
+    <title>loyalty-4-All</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
+    <script src="../assets/vendor/qrcode-generator.js"></script>
+    <script src="../assets/vendor/jsQR.min.js"></script>
+    <style>
+        :root {
+            --bg: #f5f9f6;
+            --surface: rgba(255, 255, 255, 0.9);
+            --soft: rgba(209, 250, 229, 0.3);
+            --text: #1a2421;
+            --muted: #5a6b63;
+            --brand: #10b981;
+            --brand-dark: #059669;
+            --accent: #f59e0b;
+            --info: #3b82f6;
+            --danger: #ef4444;
+            --line: rgba(16, 185, 129, 0.15);
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(16, 185, 129, 0.08);
+            --shadow-hover: 0 12px 40px rgba(16, 185, 129, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: linear-gradient(135deg, #f5f9f6 0%, #e8f2ec 100%);
+            color: var(--text);
+            font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 18px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            min-height: 48px;
+            padding: 12px 20px;
+            transition: all 0.2s ease;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            cursor: not-allowed;
+            opacity: 0.55;
+            transform: none;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            background: #ffffff;
+            color: var(--text);
+            margin-top: 8px;
+            padding: 14px 16px;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--brand);
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        label {
+            color: #064e3b;
+            display: block;
+            font-weight: 700;
+            margin-top: 16px;
+            font-size: 0.95rem;
+        }
+
+        h1,
+        h2,
+        h3 {
+            line-height: 1.2;
+            margin: 0 0 12px;
+            color: #064e3b;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 900;
+        }
+
+        h2 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+        }
+
+        h3 {
+            font-size: 1.25rem;
+        }
+
+        .app {
+            min-height: 100vh;
+        }
+
+        .topbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .topbar-inner {
+            align-items: center;
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1fr auto;
+            margin: 0 auto;
+            max-width: 1240px;
+            padding: 16px 24px;
+        }
+
+        .brand-mark {
+            align-items: center;
+            display: flex;
+            gap: 16px;
+            min-width: 0;
+        }
+
+        .brand-logo {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            color: #fff;
+            display: grid;
+            flex: 0 0 64px;
+            font-size: 1.35rem;
+            font-weight: 900;
+            height: 64px;
+            place-items: center;
+            overflow: hidden;
+            width: 64px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .brand-logo img {
+            border-radius: 14px;
+            height: 100%;
+            object-fit: contain;
+            padding: 4px;
+            width: 100%;
+        }
+
+        .brand-title {
+            font-size: 1.4rem;
+            font-weight: 900;
+            overflow-wrap: anywhere;
+            letter-spacing: -0.02em;
+        }
+
+        .brand-subtitle {
+            color: var(--muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .nav button {
+            background: transparent;
+            color: var(--muted);
+            min-height: 44px;
+            padding: 10px 16px;
+            font-weight: 600;
+        }
+
+        .nav button:hover {
+            background: rgba(16, 185, 129, 0.08);
+            color: #064e3b;
+        }
+
+        .nav button.active {
+            background: var(--brand);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+
+        .main {
+            margin: 0 auto;
+            max-width: 1240px;
+            padding: 32px 24px 64px;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.4s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        .hero-band {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-left: 8px solid var(--brand);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 24px;
+            padding: 28px;
+        }
+
+        .hero-band p {
+            color: var(--muted);
+            margin: 0;
+            max-width: 760px;
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+
+        .two {
+            grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+        }
+
+        .three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .card {
+            background: var(--surface);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .button-row {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            margin-top: 16px;
+        }
+
+        .button-row.three-wide {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .primary {
+            background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+        }
+
+        .primary:hover {
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .secondary {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+        }
+
+        .ghost {
+            background: rgba(16, 185, 129, 0.1);
+            color: #064e3b;
+        }
+
+        .ghost:hover {
+            background: rgba(16, 185, 129, 0.15);
+        }
+
+        .danger {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+            color: #fff;
+        }
+
+        .small-btn {
+            font-size: 0.92rem;
+            min-height: 40px;
+            padding: 8px 12px;
+            border-radius: 8px;
+        }
+
+        .status {
+            background: var(--soft);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            color: #064e3b;
+            font-weight: 700;
+            margin-top: 16px;
+            padding: 14px 16px;
+            white-space: pre-line;
+            font-size: 0.95rem;
+        }
+
+        .warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: #92400e;
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .big-number {
+            font-size: 2.6rem;
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, var(--brand), #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .customer-panel {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            margin-top: 16px;
+            padding: 20px;
+        }
+
+        .customer-name {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #064e3b;
+            letter-spacing: -0.02em;
+        }
+
+        .pill-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .pill {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: #064e3b;
+            font-size: 0.95rem;
+            font-weight: 700;
+            padding: 6px 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .pill.brand {
+            background: var(--brand);
+            border-color: var(--brand);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+        }
+
+        .indicator-grid {
+            display: grid;
+            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            margin-top: 16px;
+        }
+
+        .indicator {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 12px;
+        }
+
+        .indicator strong {
+            color: #064e3b;
+            display: block;
+            font-size: 0.95rem;
+        }
+
+        .indicator span {
+            color: var(--muted);
+            display: block;
+            font-size: 0.82rem;
+            margin-top: 2px;
+        }
+
+        .indicator.ok {
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+
+        .indicator.warn {
+            border-color: rgba(245, 158, 11, 0.45);
+            background: rgba(245, 158, 11, 0.08);
+        }
+
+        .list {
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            max-height: 430px;
+            overflow: auto;
+            background: #fff;
+        }
+
+        .list-item {
+            align-items: center;
+            border-bottom: 1px solid #f1f5f9;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 1fr auto;
+            padding: 14px 16px;
+            transition: background 0.2s ease;
+        }
+
+        .list-item:hover {
+            background: #f8fafc;
+        }
+
+        .list-item:last-child {
+            border-bottom: 0;
+        }
+
+        .list-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        .activity-item {
+            border-bottom: 1px solid #f1f5f9;
+            padding: 12px 16px;
+            transition: background 0.2s ease;
+        }
+        
+        .activity-item:hover {
+            background: #f8fafc;
+        }
+
+        .activity-item:last-child {
+            border-bottom: 0;
+        }
+
+        .history-list {
+            margin-top: 16px;
+            max-height: 280px;
+        }
+
+        .kpi {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: transform 0.2s ease;
+        }
+
+        .kpi:hover {
+            transform: translateY(-2px);
+        }
+
+        .kpi span {
+            color: var(--muted);
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .kpi strong {
+            display: block;
+            margin-top: 8px;
+        }
+
+        .card-preview {
+            aspect-ratio: 96 / 61;
+            background: linear-gradient(135deg, var(--brand), #34d399 58%, #a7f3d0 100%);
+            border-radius: 20px;
+            color: #fff;
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1.2fr 0.8fr;
+            margin-top: 16px;
+            max-width: 560px;
+            overflow: hidden;
+            padding: 24px;
+            width: 100%;
+            box-shadow: 0 12px 24px rgba(16, 185, 129, 0.2);
+        }
+
+        .card-left {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+        }
+
+        .card-business,
+        .card-name {
+            font-weight: 900;
+            overflow-wrap: anywhere;
+            letter-spacing: -0.01em;
+        }
+
+        .card-business {
+            font-size: 1.6rem;
+            opacity: 0.9;
+        }
+
+        .card-name {
+            font-size: 2rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .card-type,
+        .card-id,
+        .card-footer {
+            font-weight: 700;
+            opacity: 0.9;
+        }
+
+        .qr-box {
+            align-self: center;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            color: #064e3b;
+            display: grid;
+            gap: 8px;
+            justify-items: center;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+        }
+
+        .qr-box canvas {
+            height: auto;
+            max-width: 172px;
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .qr-text {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+            font-size: 0.75rem;
+            overflow-wrap: anywhere;
+            font-weight: 600;
+        }
+
+        .sheet-preview {
+            aspect-ratio: 210 / 297;
+            background: #fff;
+            border: 2px dashed #cbd5e1;
+            border-radius: var(--radius);
+            margin-top: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .sheet-card {
+            background: linear-gradient(135deg, var(--brand), #34d399 58%, #a7f3d0 100%);
+            border-radius: 6px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: absolute;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        #reader {
+            background: #fff;
+            border: 2px dashed #cbd5e1;
+            border-radius: 16px;
+            display: none;
+            margin-top: 16px;
+            min-height: 190px;
+            padding: 16px;
+        }
+
+        #reader video,
+        #reader canvas {
+            border-radius: 12px;
+            display: block;
+            max-height: 320px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .reader-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .reader-tools .muted {
+            align-self: center;
+            flex: 1 1 220px;
+        }
+
+        .scan-meta {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: var(--muted);
+            display: grid;
+            gap: 4px;
+            margin-top: 12px;
+            padding: 12px 14px;
+            white-space: pre-line;
+            word-break: break-word;
+        }
+
+        .scan-meta strong {
+            color: #064e3b;
+        }
+
+        .footer-status {
+            bottom: 16px;
+            left: 24px;
+            position: fixed;
+            right: 24px;
+            z-index: 20;
+        }
+
+        .footer-status .status {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 0 auto;
+            max-width: 760px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .ios-install-banner {
+            align-items: center;
+            background: #ffffff;
+            border: 1px solid rgba(6, 78, 59, 0.08);
+            border-radius: 14px;
+            bottom: calc(16px + env(safe-area-inset-bottom));
+            box-shadow: 0 16px 42px rgba(15, 23, 42, 0.16);
+            color: var(--text);
+            display: none;
+            gap: 14px;
+            left: 50%;
+            max-width: min(620px, calc(100vw - 32px));
+            padding: 14px 14px 14px 16px;
+            position: fixed;
+            transform: translateX(-50%);
+            width: max-content;
+            z-index: 40;
+        }
+
+        .ios-install-banner.show {
+            display: flex;
+        }
+
+        .ios-install-banner p {
+            font-size: 0.95rem;
+            font-weight: 600;
+            line-height: 1.35;
+            margin: 0;
+        }
+
+        .share-icon-placeholder {
+            align-items: center;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: 8px;
+            color: #064e3b;
+            display: inline-flex;
+            font-size: 0.78rem;
+            font-weight: 800;
+            justify-content: center;
+            margin: 0 2px;
+            min-height: 28px;
+            padding: 3px 7px;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+
+        .ios-install-dismiss {
+            background: #f1f5f9;
+            color: #064e3b;
+            flex: 0 0 auto;
+            font-size: 0.9rem;
+            min-height: 40px;
+            padding: 8px 14px;
+        }
+
+        .ios-install-dismiss:hover {
+            background: #e2e8f0;
+        }
+
+        body.ios-install-visible .footer-status {
+            bottom: calc(98px + env(safe-area-inset-bottom));
+        }
+
+        @media (max-width: 930px) {
+            body {
+                font-size: 17px;
+            }
+
+            .topbar-inner,
+            .two,
+            .three,
+            .button-row,
+            .button-row.three-wide {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                justify-content: flex-start;
+            }
+
+            .card-preview {
+                aspect-ratio: auto;
+                grid-template-columns: 1fr;
+            }
+
+            .list-item {
+                grid-template-columns: 1fr;
+            }
+
+            .list-actions {
+                justify-content: flex-start;
+            }
+
+            .ios-install-banner {
+                align-items: stretch;
+                flex-direction: column;
+                width: calc(100vw - 32px);
+            }
+
+            .ios-install-dismiss {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+
+            #printArea,
+            #printArea * {
+                visibility: visible;
+            }
+
+            #printArea {
+                left: 0;
+                position: absolute;
+                top: 0;
+                width: 100%;
+            }
+
+            .topbar,
+            .footer-status,
+            .ios-install-banner {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app">
+        <header class="topbar">
+            <div class="topbar-inner">
+                <div class="brand-mark">
+                    <div class="brand-logo" id="brandLogoMark">
+                        <img alt="Loyalty-4-All logo" src="../assets/logo.png" />
+                    </div>
+                    <div>
+                        <div class="brand-title" id="appBusinessName">loyalty-4-All</div>
+                        <div class="brand-subtitle">Loyalty-first CRM for small family businesses</div>
+                    </div>
+                </div>
+                <nav class="nav" aria-label="Main navigation">
+                    <button class="active" data-screen="counter">Counter</button>
+                    <button data-screen="dashboard">Dashboard</button>
+                    <button data-screen="customers">Customers</button>
+                    <button data-screen="cards">Card Studio</button>
+                    <button data-screen="qrtools">QR Tools</button>
+                    <button data-screen="printing">Printing</button>
+                    <button data-screen="campaigns">Campaigns</button>
+                    <button data-screen="settings">Settings</button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <section id="screen-counter" class="screen active">
+                <div class="hero-band">
+                    <h1>Counter Mode</h1>
+                    <p>Find a customer, check them in, add a quick note, or give a manual reward without slowing the counter down.</p>
+                </div>
+                <div class="grid two">
+                    <div class="card">
+                        <h2>Find Customer</h2>
+                        <label for="scanToken">Manual token, name, phone, or email</label>
+                        <input id="scanToken" autocomplete="off" placeholder="Paste QR token or search by name" />
+                        <div class="button-row">
+                            <button class="primary" id="manualLookupBtn">Look up customer</button>
+                            <button class="ghost" id="cameraBtn">QR / camera scan</button>
+                        </div>
+                        <div id="reader">Camera support is checked only after you press QR / camera scan.</div>
+                        <div id="counterCustomer" class="customer-panel">
+                            <div class="muted">No customer selected yet.</div>
+                        </div>
+                        <div class="button-row three-wide">
+                            <button class="primary" id="checkinBtn">Check-in Visit</button>
+                            <button class="secondary" id="rewardBtn">Manual Reward</button>
+                            <button class="ghost" id="clearCounterBtn">Clear</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Quick Note</h2>
+                        <label for="counterNote">Note</label>
+                        <textarea id="counterNote" placeholder="Example: prefers SMS, birthday in June, likes the family pack"></textarea>
+                        <button class="primary" id="addNoteBtn">Add Note</button>
+                        <div class="status" id="rewardFeedback">Ready for the next customer.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-dashboard" class="screen">
+                <div class="hero-band">
+                    <h1>Owner Dashboard</h1>
+                    <p>A calm snapshot of loyalty activity, top customers, and recent notes.</p>
+                </div>
+                <div class="grid three">
+                    <div class="kpi"><span>Total customers</span><strong id="metricCustomers">0</strong></div>
+                    <div class="kpi"><span>Total visits</span><strong id="metricVisits">0</strong></div>
+                    <div class="kpi"><span>Rewards given</span><strong id="metricRewards">0</strong></div>
+                </div>
+                <div class="grid three" style="margin-top:16px;">
+                    <div class="kpi"><span>Reward ready</span><strong id="metricRewardReady">0</strong></div>
+                    <div class="kpi"><span>VIP customers</span><strong id="metricVipCustomers">0</strong></div>
+                    <div class="kpi"><span>Need follow-up</span><strong id="metricFollowUps">0</strong></div>
+                </div>
+                <div class="card" style="margin-top:16px;">
+                    <h2>Readiness Indicators</h2>
+                    <div id="dashboardIndicators" class="indicator-grid"></div>
+                </div>
+                <div class="card" style="margin-top:16px;">
+                    <h2>Dashboard Controls</h2>
+                    <div class="grid three">
+                        <div>
+                            <label for="dashboardSegment">View</label>
+                            <select id="dashboardSegment">
+                                <option value="all">All customers</option>
+                                <option value="rewardReady">Reward ready</option>
+                                <option value="vip">VIP customers</option>
+                                <option value="followUp">Need follow-up</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dashboardSort">Sort by</label>
+                            <select id="dashboardSort">
+                                <option value="value">Best customers</option>
+                                <option value="points">Most points</option>
+                                <option value="visits">Most visits</option>
+                                <option value="recent">Recent updates</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="dashboardActivityType">Activity</label>
+                            <select id="dashboardActivityType">
+                                <option value="all">All activity</option>
+                                <option value="visit">Visits</option>
+                                <option value="reward">Rewards</option>
+                                <option value="note">Notes</option>
+                                <option value="campaign">Campaigns</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid two" style="margin-top:16px;">
+                    <div class="card">
+                        <h2 id="dashboardListTitle">Top Customers</h2>
+                        <div id="topCustomers" class="list"></div>
+                    </div>
+                    <div class="card">
+                        <h2>Recent Activity</h2>
+                        <div id="recentActivity" class="list"></div>
+                    </div>
+                </div>
+                <div class="grid two" style="margin-top:16px;">
+                    <div class="card">
+                        <h2>Ready For Reward</h2>
+                        <div id="rewardReadyList" class="list"></div>
+                    </div>
+                    <div class="card">
+                        <h2>Follow-up Ideas</h2>
+                        <div id="followUpList" class="list"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-customers" class="screen">
+                <div class="hero-band">
+                    <h1>Customers / CRM</h1>
+                    <p>Create and update members, track points and visits, and keep simple notes that are ready for reminders later.</p>
+                </div>
+                <div class="grid two">
+                    <div class="card">
+                        <h2>Customer Details</h2>
+                        <input type="hidden" id="customerId" />
+                        <label for="customerName">Name</label>
+                        <input id="customerName" placeholder="Customer name" />
+                        <label for="customerPhone">Phone</label>
+                        <input id="customerPhone" placeholder="Mobile number" />
+                        <label for="customerEmail">Email</label>
+                        <input id="customerEmail" placeholder="Email address" />
+                        <div class="customer-panel">
+                            <h3>Contact Permissions</h3>
+                            <p class="muted">Record what the customer is comfortable receiving. Campaigns are blocked when permission is not saved.</p>
+                            <label><input id="consentSms" type="checkbox" /> SMS messages ok</label>
+                            <label><input id="consentEmail" type="checkbox" /> Email messages ok</label>
+                            <label><input id="doNotContact" type="checkbox" /> Do not contact for campaigns</label>
+                            <label for="consentNote">Consent note</label>
+                            <input id="consentNote" placeholder="Example: asked in store, 24 Apr 2026" />
+                        </div>
+                        <label for="customerTier">Tier</label>
+                        <select id="customerTier">
+                            <option>Standard</option>
+                            <option>Regular</option>
+                            <option>VIP</option>
+                        </select>
+                        <label for="customerPoints">Points</label>
+                        <input id="customerPoints" type="number" min="0" value="0" />
+                        <div class="button-row three-wide">
+                            <button class="primary" id="saveCustomerBtn">Save Customer</button>
+                            <button class="ghost" id="newCustomerBtn">New</button>
+                            <button class="danger" id="deleteCustomerBtn">Delete</button>
+                        </div>
+                        <div class="customer-panel">
+                            <h3>Points Manager</h3>
+                            <p class="muted">Change points anytime. Use a reason so the history makes sense later.</p>
+                            <label for="pointsAmount">Points amount</label>
+                            <input id="pointsAmount" type="number" min="0" value="5" />
+                            <label for="pointsReason">Reason</label>
+                            <input id="pointsReason" placeholder="Example: bonus, correction, birthday reward" />
+                            <div class="button-row three-wide">
+                                <button class="primary" id="addPointsBtn">Add Points</button>
+                                <button class="secondary" id="removePointsBtn">Remove Points</button>
+                                <button class="ghost" id="setPointsBtn">Set Balance</button>
+                            </div>
+                            <div class="status" id="pointsManagerStatus">Choose a customer to manage points.</div>
+                        </div>
+                        <div id="customerHistory" class="list history-list">
+                            <div class="list-item"><div class="muted">Choose a customer to see their visits, rewards, and notes.</div></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>Customer List</h2>
+                        <label for="customerSearch">Search</label>
+                        <input id="customerSearch" placeholder="Search customers" />
+                        <div id="customerList" class="list" style="margin-top:12px;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-cards" class="screen">
+                <div class="hero-band">
+                    <h1>Card Studio</h1>
+                    <p>Preview, export, print, and email membership cards sized for Australian wallet-card printing.</p>
+                </div>
+                <div class="grid two">
+                    <div class="card">
+                        <h2>Card Settings</h2>
+                        <label for="cardCustomerSelect">Customer</label>
+                        <select id="cardCustomerSelect"></select>
+                        <label for="cardDisplayName">Display name on card</label>
+                        <input id="cardDisplayName" placeholder="Leave blank to use the customer name" />
+                        <label for="membershipType">Membership type</label>
+                        <input id="membershipType" value="Rewards Member" />
+                        <label for="footerText">Footer text</label>
+                        <input id="footerText" value="Scan in-store for points and perks" />
+                        <div class="button-row">
+                            <button class="primary" id="previewCardBtn">Preview Card</button>
+                            <button class="secondary" id="saveDisplayNameBtn">Save Display Name</button>
+                        </div>
+                        <div class="button-row">
+                            <button class="secondary" id="downloadCardBtn">PNG Export</button>
+                            <button class="ghost" id="printCardBtn">Print Card</button>
+                            <button class="ghost" id="emailCardBtn">Email Card Image</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>Preview</h2>
+                        <div id="cardPreview" class="card-preview">
+                            <div class="card-left">
+                                <div>
+                                    <div id="cardType" class="card-type">Rewards Member</div>
+                                    <div id="cardBusiness" class="card-business">Family Business</div>
+                                    <div id="cardName" class="card-name">Choose a customer</div>
+                                </div>
+                                <div>
+                                    <div id="cardId" class="card-id">Member No: --</div>
+                                    <div id="cardFooter" class="card-footer">Scan in-store for points and perks</div>
+                                </div>
+                            </div>
+                            <div class="qr-box">
+                                <canvas id="cardQrCanvas" width="180" height="180"></canvas>
+                                <div id="cardQrText" class="qr-text">No token</div>
+                            </div>
+                        </div>
+                        <div class="status" id="cardStatus">Card studio ready.</div>
+                        <h3 style="margin-top:18px;">Scan Test QR</h3>
+                        <div class="qr-box" style="max-width:360px;">
+                            <canvas id="cardLargeQrCanvas" width="320" height="320"></canvas>
+                            <div id="cardLargeQrText" class="qr-text">No token</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-qrtools" class="screen">
+                <div class="hero-band">
+                    <h1>QR Tools</h1>
+                    <p>Make real scannable QR labels for customers, promotions, inventory, tracking, or custom text.</p>
+                </div>
+                <div class="grid two">
+                    <div class="card">
+                        <h2>Generator</h2>
+                        <label for="qrType">QR type</label>
+                        <select id="qrType">
+                            <option value="customer">Customer QR</option>
+                            <option value="inventory">Inventory QR</option>
+                            <option value="promotion">Promotion QR</option>
+                            <option value="tracking">Tracking QR</option>
+                            <option value="custom">Custom QR</option>
+                        </select>
+                        <label for="qrCustomerSelect">Customer</label>
+                        <select id="qrCustomerSelect"></select>
+                        <label for="qrTitle">Label / title</label>
+                        <input id="qrTitle" placeholder="Promo, stock code, or tracking label" />
+                        <label for="qrSize">Print size</label>
+                        <select id="qrSize">
+                            <option value="label">Label - 60mm square</option>
+                            <option value="card">Counter card - 90mm square</option>
+                            <option value="a4">A4 sign</option>
+                        </select>
+                        <label for="qrCustomText">Custom text</label>
+                        <textarea id="qrCustomText" placeholder="Any text to place in the QR payload"></textarea>
+                        <div class="button-row">
+                            <button class="primary" id="generateQrBtn">Generate QR</button>
+                            <button class="secondary" id="downloadQrBtn">Download PNG</button>
+                            <button class="ghost" id="printQrBtn">Print QR</button>
+                        </div>
+                        <div class="button-row">
+                            <button class="ghost" id="copyQrBtn">Copy Payload</button>
+                            <button class="ghost" id="clearQrBtn">Clear</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>QR Preview</h2>
+                        <div class="qr-box" style="max-width:320px;">
+                            <canvas id="qrToolCanvas" width="240" height="240"></canvas>
+                            <div id="qrToolText" class="qr-text">Ready</div>
+                        </div>
+                        <div class="status" id="qrStatus">QR tools ready.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-printing" class="screen">
+                <div class="hero-band">
+                    <h1>Printing</h1>
+                    <p>Prepare A4 card batches, use browser print, or try WebUSB only where the browser supports it.</p>
+                </div>
+                <div class="grid two">
+                    <div class="card">
+                        <h2>A4 Batch Cards</h2>
+                        <label for="batchCustomerSelect">Add customer to batch</label>
+                        <select id="batchCustomerSelect"></select>
+                        <div class="button-row">
+                            <button class="primary" id="addBatchCustomerBtn">Add to Batch</button>
+                            <button class="ghost" id="selectAllBatchBtn">Select All</button>
+                        </div>
+                        <div class="button-row three-wide">
+                            <button class="secondary" id="downloadBatchBtn">Download A4 PNG</button>
+                            <button class="primary" id="printBatchBtn">Print A4 Sheet</button>
+                            <button class="ghost" id="clearBatchBtn">Clear Batch</button>
+                        </div>
+                        <div class="button-row">
+                            <button class="ghost" id="connectUsbBtn">Connect USB Printer</button>
+                            <button class="ghost" id="printUsbBtn">Print Via USB</button>
+                        </div>
+                        <div class="status" id="printStatus">Printing tools ready.</div>
+                    </div>
+                    <div class="card">
+                        <h2>Sheet Preview</h2>
+                        <div id="batchList" class="muted">No customers selected.</div>
+                        <div id="sheetPreview" class="sheet-preview"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-campaigns" class="screen">
+                <div class="hero-band">
+                    <h1>Campaigns</h1>
+                    <p>Open consent-aware SMS and email campaigns in your device app, ready to review and send.</p>
+                </div>
+                <div class="grid two">
+                    <div class="card">
+                        <h2>Message Sender</h2>
+                        <label for="campaignTemplate">Template</label>
+                        <select id="campaignTemplate">
+                            <option value="rewardReady">Reward ready</option>
+                            <option value="visitBack">Win-back visit</option>
+                            <option value="birthday">Birthday treat</option>
+                            <option value="vipThanks">VIP thank you</option>
+                            <option value="pointsBalance">Points balance</option>
+                            <option value="cardPickup">Card pickup</option>
+                            <option value="reviewInvite">Review invite</option>
+                            <option value="welcome">New member welcome</option>
+                            <option value="specialOffer">Simple offer</option>
+                            <option value="referral">Referral thank you</option>
+                            <option value="eventInvite">Event invite</option>
+                            <option value="quietDay">Quiet day boost</option>
+                        </select>
+                        <label for="campaignCustomerSelect">Customer</label>
+                        <select id="campaignCustomerSelect"></select>
+                        <label for="campaignChannel">Channel</label>
+                        <select id="campaignChannel">
+                            <option value="email">Email</option>
+                            <option value="sms">SMS</option>
+                        </select>
+                        <button class="primary" id="loadTemplateBtn">Load Template</button>
+                        <label for="campaignOffer">Offer / call-to-action</label>
+                        <input id="campaignOffer" placeholder="Example: 10% off this week, free upgrade, double points Friday" />
+                        <label for="campaignSubject">Email subject</label>
+                        <input id="campaignSubject" placeholder="Subject line for email campaigns" />
+                        <label for="campaignMessage">Message</label>
+                        <textarea id="campaignMessage"></textarea>
+                        <div class="muted" id="campaignMeta">Choose a customer and template.</div>
+                        <div class="button-row three-wide">
+                            <button class="secondary" id="prepareCampaignBtn">Preview</button>
+                            <button class="ghost" id="copyCampaignBtn">Copy Text</button>
+                            <button class="primary" id="sendCampaignBtn">Open Send Link</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <h2>Campaign Preview</h2>
+                        <div class="status" id="campaignStatus">Choose a template to begin.</div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="screen-settings" class="screen">
+                <div class="hero-band">
+                    <h1>Settings</h1>
+                    <p>Manage business setup, loyalty rules, campaign services, API settings, and backups. Everything saves in this browser.</p>
+                </div>
+                <div class="grid two">
+                    <div class="card">
+                        <h2>Branding</h2>
+                        <label for="businessName">Business name</label>
+                        <input id="businessName" value="Family Business" />
+                        <label for="businessContactName">Owner / contact name</label>
+                        <input id="businessContactName" placeholder="Example: Sam" />
+                        <label for="businessEmail">Business email</label>
+                        <input id="businessEmail" placeholder="hello@yourshop.com" />
+                        <label for="businessPhone">Business phone</label>
+                        <input id="businessPhone" placeholder="08 8123 4567" />
+                        <label for="businessSuburb">Suburb / town</label>
+                        <input id="businessSuburb" placeholder="Example: Glenelg, Mount Gambier, Whyalla" />
+                        <label for="businessAbn">ABN (optional)</label>
+                        <input id="businessAbn" placeholder="Optional" />
+                        <label for="brandColor">Brand colour</label>
+                        <input id="brandColor" type="color" value="#2f9461" />
+                        <label for="brandLogo">Brand logo</label>
+                        <input id="brandLogo" type="file" accept="image/*" />
+                        <div class="button-row">
+                            <button class="primary" id="saveBrandingBtn">Save Branding</button>
+                            <button class="ghost" id="runSelfTestBtn">Run Self-Test</button>
+                        </div>
+                        <h2 style="margin-top:22px;">Backup</h2>
+                        <p class="muted">Save a copy of customers, points, notes, and settings. Restore it if you change browser or device.</p>
+                        <label for="restoreFile">Restore backup file</label>
+                        <input id="restoreFile" type="file" accept="application/json,.json" />
+                        <label for="backupReminder">Backup reminder</label>
+                        <select id="backupReminder">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="off">Off</option>
+                        </select>
+                        <div class="button-row">
+                            <button class="secondary" id="exportBackupBtn">Save Backup</button>
+                            <button class="ghost" id="restoreBackupBtn">Restore Backup</button>
+                        </div>
+                        <div class="status" id="backupReminderStatus">Backup reminder ready.</div>
+                        <h2 style="margin-top:22px;">Privacy & Customer Agency</h2>
+                        <p class="muted">Customer records stay in this browser unless you export a backup. Keep backups private, delete customers on request, and only send campaign messages when the customer has agreed to that channel.</p>
+                    </div>
+                    <div class="card">
+                        <h2>Loyalty Rules</h2>
+                        <label for="visitPoints">Points per visit</label>
+                        <input id="visitPoints" type="number" min="0" value="5" />
+                        <label for="rewardCost">Points used by manual reward</label>
+                        <input id="rewardCost" type="number" min="0" value="50" />
+                        <label for="rewardName">Reward name</label>
+                        <input id="rewardName" placeholder="Example: free coffee, $10 off, bonus item" />
+                        <label><input id="blockSameDayQrCheckin" type="checkbox" /> Block repeat QR check-ins on the same day</label>
+                        <button class="primary" id="saveSettingsBtn">Save Settings</button>
+                        <div class="status" id="settingsStatus">Settings ready.</div>
+                    </div>
+                    <div class="card">
+                        <h2>QR Scanner</h2>
+                        <label><input id="qrAutoCheckin" type="checkbox" /> Add visit points automatically after a successful QR scan</label>
+                        <label for="scanCooldownSeconds">Scan cooldown seconds</label>
+                        <input id="scanCooldownSeconds" type="number" min="1" max="15" value="3" />
+                        <label for="preferredCamera">Preferred camera</label>
+                        <select id="preferredCamera">
+                            <option value="environment">Back camera / counter scanner</option>
+                            <option value="user">Front camera</option>
+                        </select>
+                        <p class="muted">Manual lookup always remains available if camera permission or scanning is unavailable.</p>
+                    </div>
+                    <div class="card">
+                        <h2>Services</h2>
+                        <label for="smsService">SMS service</label>
+                        <select id="smsService">
+                            <option value="device">Device SMS app</option>
+                            <option value="api">External SMS API</option>
+                        </select>
+                        <label for="smsApiEndpoint">SMS API endpoint</label>
+                        <input id="smsApiEndpoint" placeholder="https://api.example.com/send-sms" />
+                        <label for="smsApiKey">SMS API key / token</label>
+                        <input id="smsApiKey" type="password" placeholder="Saved locally in this browser" />
+
+                        <label for="emailService">Email service</label>
+                        <select id="emailService">
+                            <option value="device">Device email app</option>
+                            <option value="api">External Email API</option>
+                        </select>
+                        <label for="emailApiEndpoint">Email API endpoint</label>
+                        <input id="emailApiEndpoint" placeholder="https://api.example.com/send-email" />
+                        <label for="emailApiKey">Email API key / token</label>
+                        <input id="emailApiKey" type="password" placeholder="Saved locally in this browser" />
+
+                        <label for="campaignContact">Campaign contact details</label>
+                        <input id="campaignContact" placeholder="Example: hello@yourshop.com or 08 8123 4567" />
+
+                        <label for="servicesNotes">Service notes</label>
+                        <textarea id="servicesNotes" placeholder="Example: API keys are for the shop owner only. Device apps are safest for launch."></textarea>
+                        <button class="primary" id="saveServicesBtn">Save Services</button>
+                        <div class="status" id="servicesStatus">Campaigns use device SMS and email apps by default.</div>
+                    </div>
+                    <div class="card">
+                        <h2>Setup Checklist</h2>
+                        <div id="setupChecklist" class="list"></div>
+                    </div>
+                    <div class="card">
+                        <h2>Readiness Indicators</h2>
+                        <div id="settingsIndicators" class="indicator-grid"></div>
+                    </div>
+                </div>
+            </section>
+
+            <div id="printArea" class="hidden"></div>
+        </main>
+
+        <div class="footer-status">
+            <div id="appStatus" class="status">Ready.</div>
+        </div>
+
+        <div id="iosInstallBanner" class="ios-install-banner" role="status" aria-live="polite">
+            <p>To install this business tool, tap the Share icon <span class="share-icon-placeholder">[icon placeholder]</span> and select Add to Home Screen.</p>
+            <button class="ios-install-dismiss" id="iosInstallDismissBtn" type="button">Dismiss</button>
+        </div>
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'loyalty-4-all-state-v2';
+        const IOS_INSTALL_DISMISSED_KEY = 'loyalty-4-all-ios-install-dismissed';
+        const todayISO = () => new Date().toISOString();
+        let activeCustomerId = null;
+        let usbPrinterDevice = null;
+        let scannerStream = null;
+        let scannerFrame = null;
+        let scannerDetector = null;
+        let lastScannerPayload = '';
+        let lastScannerAt = 0;
+        let cardDisplayCustomerId = '';
+
+        const defaultState = {
+            branding: {
+                businessName: 'Family Business',
+                brandColor: '#2f9461',
+                logoDataUrl: '',
+                contactName: '',
+                email: '',
+                phone: '',
+                suburb: '',
+                abn: ''
+            },
+            settings: {
+                visitPoints: 5,
+                rewardCost: 50,
+                rewardName: 'reward',
+                blockSameDayQrCheckin: true,
+                qrAutoCheckin: true,
+                scanCooldownSeconds: 3,
+                preferredCamera: 'environment',
+                backupReminder: 'weekly',
+                lastBackupAt: '',
+                lastSelfTestAt: ''
+            },
+            services: {
+                smsService: 'device',
+                smsApiEndpoint: '',
+                smsApiKey: '',
+                emailService: 'device',
+                emailApiEndpoint: '',
+                emailApiKey: '',
+                campaignContact: '',
+                notes: ''
+            },
+            selectedBatchIds: [],
+            activity: [],
+            customers: {}
+        };
+
+        let state = loadState();
+
+        function clone(value) {
+            return JSON.parse(JSON.stringify(value));
+        }
+
+        function loadState() {
+            try {
+                const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
+                if (!parsed || typeof parsed !== 'object') return clone(defaultState);
+                return {
+                    ...clone(defaultState),
+                    ...parsed,
+                    branding: { ...defaultState.branding, ...(parsed.branding || {}) },
+                    settings: { ...defaultState.settings, ...(parsed.settings || {}) },
+                    services: { ...defaultState.services, ...(parsed.services || {}) },
+                    customers: { ...defaultState.customers, ...(parsed.customers || {}) },
+                    activity: Array.isArray(parsed.activity) ? parsed.activity : [],
+                    selectedBatchIds: Array.isArray(parsed.selectedBatchIds) ? parsed.selectedBatchIds : []
+                };
+            } catch (error) {
+                console.warn('Could not load saved loyalty data. Fresh state used.', error);
+                return clone(defaultState);
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        }
+
+        function byId(id) {
+            return document.getElementById(id);
+        }
+
+        function setText(id, text) {
+            const el = byId(id);
+            if (el) el.textContent = text;
+        }
+
+        function setStatus(message, isWarning = false) {
+            const el = byId('appStatus');
+            el.textContent = message;
+            el.classList.toggle('warning', Boolean(isWarning));
+        }
+
+        function setPanelStatus(id, message, isWarning = false) {
+            const el = byId(id);
+            if (!el) return;
+            el.textContent = message;
+            el.classList.toggle('warning', Boolean(isWarning));
+        }
+
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function makeId() {
+            return 'L4A-' + Date.now().toString(36).toUpperCase() + '-' + Math.floor(Math.random() * 999).toString().padStart(3, '0');
+        }
+
+        function formatDate(value) {
+            if (!value) return 'Never';
+            try {
+                return new Date(value).toLocaleString([], { dateStyle: 'medium', timeStyle: 'short' });
+            } catch (_) {
+                return 'Unknown';
+            }
+        }
+
+        function getCustomers() {
+            return Object.values(state.customers).sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        function getCustomer(id) {
+            return state.customers[id] || null;
+        }
+
+        function addActivity(type, customerId, detail) {
+            const customer = getCustomer(customerId);
+            state.activity.unshift({
+                id: makeId(),
+                type,
+                customerId,
+                customerName: customer ? customer.name : 'Unknown customer',
+                detail,
+                date: todayISO()
+            });
+            state.activity = state.activity.slice(0, 120);
+        }
+
+        function deriveTier(customer) {
+            if (customer.tier === 'VIP' || customer.points >= 250 || customer.visits >= 12) return 'VIP';
+            if (customer.tier === 'Regular' || customer.points >= 80 || customer.visits >= 4) return 'Regular';
+            return 'Standard';
+        }
+
+        function rewardMessage(customer) {
+            if (!customer) return 'No customer selected.';
+            const points = Number(customer.points) || 0;
+            const cost = Number(state.settings.rewardCost) || 0;
+            const rewardName = String(state.settings.rewardName || 'reward').trim() || 'reward';
+            if (!cost) return 'Rewards are free to give.';
+            if (points >= cost) return 'Ready for ' + rewardName;
+            return 'Needs ' + (cost - points) + ' more points';
+        }
+
+        function cardDisplayName(customer) {
+            if (!customer) return '';
+            return String(customer.displayName || customer.name || '').trim();
+        }
+
+        function currentCardDisplayName(customer) {
+            if (!customer) return '';
+            const select = byId('cardCustomerSelect');
+            const input = byId('cardDisplayName');
+            if (select && input && select.value === customer.id) {
+                return input.value.trim() || cardDisplayName(customer);
+            }
+            return cardDisplayName(customer);
+        }
+
+        function applyBranding() {
+            const brand = state.branding.brandColor || '#2f9461';
+            document.documentElement.style.setProperty('--brand', brand);
+            document.documentElement.style.setProperty('--brand-dark', shadeColor(brand, -25));
+            byId('businessName').value = state.branding.businessName;
+            byId('businessContactName').value = state.branding.contactName || '';
+            byId('businessEmail').value = state.branding.email || '';
+            byId('businessPhone').value = state.branding.phone || '';
+            byId('businessSuburb').value = state.branding.suburb || '';
+            byId('businessAbn').value = state.branding.abn || '';
+            byId('brandColor').value = brand;
+            setText('appBusinessName', state.branding.businessName || 'loyalty-4-All');
+            setText('cardBusiness', state.branding.businessName || 'Family Business');
+            const logo = byId('brandLogoMark');
+            if (state.branding.logoDataUrl) {
+                logo.innerHTML = '<img alt="Business logo" src="' + state.branding.logoDataUrl + '">';
+            } else {
+                logo.innerHTML = '<img alt="Loyalty-4-All logo" src="../assets/logo.png">';
+            }
+        }
+
+        function shadeColor(hex, percent) {
+            const clean = String(hex || '#2f9461').replace('#', '');
+            const num = parseInt(clean.length === 3 ? clean.split('').map(ch => ch + ch).join('') : clean, 16);
+            if (Number.isNaN(num)) return '#1e6743';
+            const amt = Math.round(2.55 * percent);
+            const r = Math.max(0, Math.min(255, (num >> 16) + amt));
+            const g = Math.max(0, Math.min(255, ((num >> 8) & 255) + amt));
+            const b = Math.max(0, Math.min(255, (num & 255) + amt));
+            return '#' + (0x1000000 + r * 0x10000 + g * 0x100 + b).toString(16).slice(1);
+        }
+
+        function initials(name) {
+            return String(name || 'L4A').split(/\s+/).filter(Boolean).slice(0, 2).map(part => part[0]).join('').toUpperCase() || 'L4A';
+        }
+
+        function saveBranding() {
+            state.branding.businessName = byId('businessName').value.trim() || 'Family Business';
+            state.branding.contactName = byId('businessContactName').value.trim();
+            state.branding.email = byId('businessEmail').value.trim();
+            state.branding.phone = byId('businessPhone').value.trim();
+            state.branding.suburb = byId('businessSuburb').value.trim();
+            state.branding.abn = byId('businessAbn').value.trim();
+            state.branding.brandColor = byId('brandColor').value || '#2f9461';
+            saveState();
+            applyBranding();
+            renderAll();
+            setPanelStatus('settingsStatus', 'Branding saved and applied across the app.');
+            setStatus('Branding saved.');
+            return true;
+        }
+
+        function saveSettings() {
+            state.settings.visitPoints = Math.max(0, Number(byId('visitPoints').value) || 0);
+            state.settings.rewardCost = Math.max(0, Number(byId('rewardCost').value) || 0);
+            state.settings.rewardName = byId('rewardName').value.trim() || 'reward';
+            state.settings.blockSameDayQrCheckin = byId('blockSameDayQrCheckin').checked;
+            state.settings.qrAutoCheckin = byId('qrAutoCheckin').checked;
+            state.settings.scanCooldownSeconds = Math.max(1, Math.min(15, Math.floor(Number(byId('scanCooldownSeconds').value) || 3)));
+            state.settings.preferredCamera = byId('preferredCamera').value || 'environment';
+            state.settings.backupReminder = byId('backupReminder').value || 'weekly';
+            saveState();
+            renderAll();
+            setPanelStatus('settingsStatus', 'Loyalty rules saved.');
+            setStatus('Settings saved.');
+        }
+
+        function populateServiceSettings() {
+            const services = { ...defaultState.services, ...(state.services || {}) };
+            byId('smsService').value = services.smsService || 'device';
+            byId('smsApiEndpoint').value = services.smsApiEndpoint || '';
+            byId('smsApiKey').value = services.smsApiKey || '';
+            byId('emailService').value = services.emailService || 'device';
+            byId('emailApiEndpoint').value = services.emailApiEndpoint || '';
+            byId('emailApiKey').value = services.emailApiKey || '';
+            byId('campaignContact').value = services.campaignContact || '';
+            byId('servicesNotes').value = services.notes || '';
+        }
+
+        function saveServices() {
+            state.services = {
+                smsService: byId('smsService').value,
+                smsApiEndpoint: byId('smsApiEndpoint').value.trim(),
+                smsApiKey: byId('smsApiKey').value.trim(),
+                emailService: byId('emailService').value,
+                emailApiEndpoint: byId('emailApiEndpoint').value.trim(),
+                emailApiKey: byId('emailApiKey').value.trim(),
+                campaignContact: byId('campaignContact').value.trim(),
+                notes: byId('servicesNotes').value.trim()
+            };
+            saveState();
+            setPanelStatus('servicesStatus', servicesSummary());
+            setStatus('Services saved.');
+            return true;
+        }
+
+        function servicesSummary() {
+            const services = { ...defaultState.services, ...(state.services || {}) };
+            const sms = services.smsService === 'api' ? 'SMS API configured' : 'Device SMS app';
+            const email = services.emailService === 'api' ? 'Email API configured' : 'Device email app';
+            const contact = services.campaignContact ? 'Campaign contact saved' : 'Campaign contact needed';
+            return sms + ' · ' + email + ' · ' + contact + '.';
+        }
+
+        function populateSettingsControls() {
+            const settings = { ...defaultState.settings, ...(state.settings || {}) };
+            byId('visitPoints').value = settings.visitPoints;
+            byId('rewardCost').value = settings.rewardCost;
+            byId('rewardName').value = settings.rewardName || 'reward';
+            byId('blockSameDayQrCheckin').checked = settings.blockSameDayQrCheckin !== false;
+            byId('qrAutoCheckin').checked = settings.qrAutoCheckin !== false;
+            byId('scanCooldownSeconds').value = settings.scanCooldownSeconds || 3;
+            byId('preferredCamera').value = settings.preferredCamera || 'environment';
+            byId('backupReminder').value = settings.backupReminder || 'weekly';
+        }
+
+        function sameLocalDay(a, b) {
+            if (!a || !b) return false;
+            const left = new Date(a);
+            const right = new Date(b);
+            if (Number.isNaN(left.getTime()) || Number.isNaN(right.getTime())) return false;
+            return left.getFullYear() === right.getFullYear() && left.getMonth() === right.getMonth() && left.getDate() === right.getDate();
+        }
+
+        function backupReminderMessage() {
+            const settings = { ...defaultState.settings, ...(state.settings || {}) };
+            if (settings.backupReminder === 'off') return 'Backup reminders are off.';
+            if (!settings.lastBackupAt) return 'No backup saved yet. Save one before selling widely.';
+            const days = daysSince(settings.lastBackupAt);
+            const dueAfter = settings.backupReminder === 'daily' ? 1 : settings.backupReminder === 'monthly' ? 30 : 7;
+            const label = settings.backupReminder.charAt(0).toUpperCase() + settings.backupReminder.slice(1);
+            return days >= dueAfter ? label + ' backup due. Last backup: ' + formatDate(settings.lastBackupAt) + '.' : 'Backup current. Last backup: ' + formatDate(settings.lastBackupAt) + '.';
+        }
+
+        function setupChecklistItems() {
+            const settings = { ...defaultState.settings, ...(state.settings || {}) };
+            const services = { ...defaultState.services, ...(state.services || {}) };
+            const businessNamed = Boolean(state.branding.businessName && state.branding.businessName !== 'Family Business');
+            return [
+                ['Business profile saved', businessNamed && Boolean(state.branding.email || state.branding.phone)],
+                ['Loyalty rules saved', Number(settings.visitPoints) > 0 && Number(settings.rewardCost) >= 0 && Boolean(settings.rewardName)],
+                ['QR libraries ready', typeof window.qrcode === 'function' && typeof window.jsQR === 'function'],
+                ['Campaign contact saved', Boolean(services.campaignContact)],
+                ['Self-test passed', Boolean(settings.lastSelfTestAt)],
+                ['Backup saved', Boolean(settings.lastBackupAt)],
+                ['First customer added', getCustomers().length > 0]
+            ];
+        }
+
+        function deviceIndicators() {
+            const services = { ...defaultState.services, ...(state.services || {}) };
+            const customers = getCustomers();
+            const consentReady = customers.length ? customers.some(customer => {
+                const consent = customerConsent(customer);
+                return !consent.doNotContact && (consent.sms || consent.email);
+            }) : false;
+            const checklist = setupChecklistItems();
+            const complete = checklist.every(([, done]) => done);
+            const cameraApi = Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
+            const cameraContext = Boolean(window.isSecureContext || window.location.protocol === 'file:');
+            const qrReady = typeof window.qrcode === 'function' && typeof window.jsQR === 'function';
+            const smsLink = services.smsService === 'device';
+            const emailLink = services.emailService === 'device';
+            const backupOk = Boolean(state.settings.lastBackupAt) && !backupReminderMessage().toLowerCase().includes('due');
+            return [
+                { label: 'QR Ready', ok: qrReady, detail: qrReady ? 'Generator and scanner loaded' : 'QR library missing' },
+                { label: 'Camera Access', ok: cameraApi && cameraContext, detail: !cameraApi ? 'Camera API unavailable' : cameraContext ? 'Browser can request camera' : 'Use HTTPS or localhost' },
+                { label: 'SMS Link', ok: smsLink, detail: smsLink ? 'Opens device SMS app' : 'External SMS API mode' },
+                { label: 'Email Link', ok: emailLink, detail: emailLink ? 'Opens device email app' : 'External Email API mode' },
+                { label: 'Campaign Consent', ok: consentReady, detail: consentReady ? 'At least one contactable customer' : 'Save customer SMS/email permission' },
+                { label: 'Backup Status', ok: backupOk, detail: backupReminderMessage() },
+                { label: 'Setup Complete', ok: complete, detail: complete ? 'Ready for counter use' : 'Checklist still has items' }
+            ];
+        }
+
+        function renderIndicators(targetId) {
+            const wrap = byId(targetId);
+            if (!wrap) return;
+            wrap.innerHTML = deviceIndicators().map(item => `
+                <div class="indicator ${item.ok ? 'ok' : 'warn'}">
+                    <strong>${escapeHtml(item.label)}</strong>
+                    <span>${escapeHtml(item.detail)}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderSetupChecklist() {
+            const wrap = byId('setupChecklist');
+            if (!wrap) return;
+            wrap.innerHTML = setupChecklistItems().map(([label, done]) => `
+                <div class="list-item">
+                    <div><strong>${done ? 'Done' : 'Needed'}</strong><div class="muted">${escapeHtml(label)}</div></div>
+                </div>
+            `).join('');
+            setPanelStatus('backupReminderStatus', backupReminderMessage(), !state.settings.lastBackupAt && state.settings.backupReminder !== 'off');
+            renderIndicators('dashboardIndicators');
+            renderIndicators('settingsIndicators');
+        }
+
+        function showScreen(name) {
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
+            const screen = byId('screen-' + name);
+            if (screen) screen.classList.add('active');
+            document.querySelectorAll('.nav button').forEach(btn => btn.classList.toggle('active', btn.dataset.screen === name));
+            renderAll();
+        }
+
+        function findCustomerByLookup(raw) {
+            const value = normaliseLookupValue(raw).toLowerCase();
+            if (!value) return null;
+            return getCustomers().find(customer => {
+                return [customer.id, customer.token, customer.name, customer.displayName, customer.phone, customer.email]
+                    .filter(Boolean)
+                    .some(field => String(field).toLowerCase().includes(value));
+            }) || null;
+        }
+
+        function normaliseLookupValue(raw) {
+            const value = String(raw || '').trim();
+            if (!value) return '';
+
+            try {
+                const parsed = JSON.parse(value);
+                if (parsed && typeof parsed === 'object') {
+                    const jsonToken = parsed.token || parsed.customerToken || parsed.customerId || parsed.memberId || parsed.id;
+                    if (jsonToken) return String(jsonToken).trim();
+                }
+            } catch (_) {}
+
+            try {
+                const url = new URL(value);
+                const queryToken = ['token', 'customerToken', 'customerId', 'memberId', 'member', 'id']
+                    .map(key => url.searchParams.get(key))
+                    .find(Boolean);
+                if (queryToken) return queryToken.trim();
+            } catch (_) {}
+
+            const tokenMatch = value.match(/\bL4A-[A-Z0-9-]+\b/i);
+            return tokenMatch ? tokenMatch[0] : value;
+        }
+
+        function isValidEmail(value) {
+            if (!value) return true;
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        }
+
+        function customerConsent(customer) {
+            const consent = customer && customer.consent && typeof customer.consent === 'object' ? customer.consent : {};
+            return {
+                sms: Boolean(consent.sms),
+                email: Boolean(consent.email),
+                doNotContact: Boolean(consent.doNotContact),
+                note: String(consent.note || '')
+            };
+        }
+
+        function contactPermissionLabel(customer) {
+            const consent = customerConsent(customer);
+            if (consent.doNotContact) return 'Do not contact for campaigns';
+            const channels = [];
+            if (consent.sms) channels.push('SMS ok');
+            if (consent.email) channels.push('Email ok');
+            return channels.length ? channels.join(' · ') : 'No campaign permission saved';
+        }
+
+        function canContactCustomer(customer, channel) {
+            const consent = customerConsent(customer);
+            if (consent.doNotContact) return { ok: false, reason: customer.name + ' is marked do not contact.' };
+            if (channel === 'sms' && !consent.sms) return { ok: false, reason: 'SMS permission is not saved for ' + customer.name + '.' };
+            if (channel === 'email' && !consent.email) return { ok: false, reason: 'Email permission is not saved for ' + customer.name + '.' };
+            return { ok: true, reason: '' };
+        }
+
+        function handleManualLookup() {
+            const customer = findCustomerByLookup(byId('scanToken').value);
+            if (!customer) {
+                setStatus('No matching customer found. Create them in Customers first.', true);
+                setPanelStatus('rewardFeedback', 'No customer found for that token or search.', true);
+                return false;
+            }
+            handleScan(customer.token || customer.id);
+            return true;
+        }
+
+        function handleScan(token) {
+            const lookupToken = normaliseLookupValue(token);
+            const customer = findCustomerByLookup(lookupToken);
+            if (!customer) {
+                setStatus('QR token was read, but no customer matched it.', true);
+                byId('scanToken').value = lookupToken || token || '';
+                return false;
+            }
+            activeCustomerId = customer.id;
+            byId('scanToken').value = customer.token || customer.id;
+            renderCounterCustomer();
+            renderCardPreviewForCustomer(customer.id);
+            setPanelStatus('rewardFeedback', 'Welcome ' + customer.name + '.');
+            setStatus('Customer selected: ' + customer.name);
+            return true;
+        }
+
+        function startScan() {
+            const reader = byId('reader');
+            reader.style.display = 'block';
+            if (scannerStream) {
+                stopScan();
+                return;
+            }
+            lastScannerPayload = '';
+            lastScannerAt = 0;
+            if (!window.isSecureContext && window.location.protocol !== 'file:') {
+                reader.innerHTML = '<div class="status warning">Camera scanning needs HTTPS or localhost. Manual lookup still works.</div>';
+                setStatus('Camera needs HTTPS or localhost. Manual lookup is ready.', true);
+                return;
+            }
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                reader.innerHTML = '<div class="status warning">Camera is not available in this browser. Please use manual token lookup.</div>';
+                setStatus('Camera unavailable. Manual lookup is ready.', true);
+                return;
+            }
+            reader.innerHTML = `
+                <video id="scanVideo" muted playsinline></video>
+                <canvas id="scanCanvas" class="hidden"></canvas>
+                <div class="reader-tools">
+                    <button class="danger small-btn" id="stopScanBtn">Stop camera</button>
+                    <span class="muted">Hold the card steady until the scan confirms. Manual lookup still works.</span>
+                </div>
+                <div class="status" id="scanStatus">Camera starting. Waiting for video...</div>
+                <div class="scan-meta" id="scanMeta">
+                    <strong>Last scan</strong>
+                    <span>No QR code read yet.</span>
+                </div>
+            `;
+            byId('stopScanBtn').addEventListener('click', stopScan);
+            setStatus('Starting camera scanner...');
+
+            navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: { ideal: state.settings.preferredCamera || 'environment' },
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                },
+                audio: false
+            })
+                .then(stream => {
+                    scannerStream = stream;
+                    const video = byId('scanVideo');
+                    video.srcObject = stream;
+                    return video.play().then(() => {
+                        byId('cameraBtn').textContent = 'Stop QR scan';
+                        setPanelStatus('scanStatus', scannerSupportMessage());
+                        setStatus('QR scanner ready. Show a membership card to the camera.');
+                        scanLoop();
+                    });
+                })
+                .catch(error => {
+                    console.error(error);
+                    stopScan();
+                    reader.style.display = 'block';
+                    reader.innerHTML = '<div class="status warning">Camera permission was blocked or unavailable. Please use manual token lookup.</div>';
+                    setStatus('Camera blocked. Manual lookup is ready.', true);
+                });
+        }
+
+        function stopScan() {
+            if (scannerFrame) {
+                cancelAnimationFrame(scannerFrame);
+                scannerFrame = null;
+            }
+            if (scannerStream) {
+                scannerStream.getTracks().forEach(track => track.stop());
+                scannerStream = null;
+            }
+            scannerDetector = null;
+            lastScannerPayload = '';
+            lastScannerAt = 0;
+            const reader = byId('reader');
+            if (reader) {
+                reader.style.display = 'none';
+                reader.innerHTML = 'Camera support is checked only after you press QR / camera scan.';
+            }
+            const btn = byId('cameraBtn');
+            if (btn) btn.textContent = 'QR / camera scan';
+        }
+
+        async function scanLoop() {
+            const video = byId('scanVideo');
+            const canvas = byId('scanCanvas');
+            if (!scannerStream || !video || !canvas) return;
+            if (video.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA) {
+                const payload = await readQrFromVideo(video, canvas);
+                const token = normaliseLookupValue(payload);
+                if (token) {
+                    const now = Date.now();
+                    const cooldownMs = Math.max(1, Number(state.settings.scanCooldownSeconds) || 3) * 1000;
+                    if (payload === lastScannerPayload && now - lastScannerAt < cooldownMs) {
+                        scannerFrame = requestAnimationFrame(scanLoop);
+                        return;
+                    }
+                    lastScannerPayload = payload;
+                    lastScannerAt = now;
+                    setScanMeta('Read: ' + token + (payload !== token ? '\nParsed from QR payload.' : ''));
+                    setPanelStatus('scanStatus', 'Checking token: ' + token);
+                    const found = handleScan(token);
+                    if (found) {
+                        stopScan();
+                        if (state.settings.qrAutoCheckin !== false) {
+                            addVisit(activeCustomerId, { autoClear: false, source: 'QR scan' });
+                        } else {
+                            setPanelStatus('rewardFeedback', 'QR matched ' + getCustomer(activeCustomerId).name + '. Auto check-in is off, so no points were added.');
+                            setStatus('QR scan matched. Add visit manually when ready.');
+                        }
+                        return;
+                    }
+                    setPanelStatus('scanStatus', 'No customer matched that QR. Keep the camera open or use manual lookup.', true);
+                    setPanelStatus('rewardFeedback', 'QR scanned, but no customer matched: ' + token, true);
+                } else if (byId('scanStatus')) {
+                    setPanelStatus('scanStatus', scannerSupportMessage() + ' Looking for a QR code...');
+                }
+            }
+            scannerFrame = requestAnimationFrame(scanLoop);
+        }
+
+        function setScanMeta(message) {
+            const meta = byId('scanMeta');
+            if (!meta) return;
+            meta.innerHTML = '<strong>Last scan</strong><span>' + escapeHtml(message) + '</span>';
+        }
+
+        function scannerSupportMessage() {
+            const nativeScanner = 'BarcodeDetector' in window;
+            const jsQrScanner = typeof window.jsQR === 'function';
+            if (nativeScanner && jsQrScanner) return 'Camera active. Native scanner and fallback scanner are ready.';
+            if (nativeScanner) return 'Camera active. Native QR scanner is ready.';
+            if (jsQrScanner) return 'Camera active. Fallback QR scanner is ready.';
+            return 'Camera active, but the QR scanner library did not load. Use manual lookup.';
+        }
+
+        async function readQrFromVideo(video, canvas) {
+            if ('BarcodeDetector' in window) {
+                try {
+                    if (!scannerDetector) {
+                        scannerDetector = new BarcodeDetector({ formats: ['qr_code'] });
+                    }
+                    const codes = await scannerDetector.detect(video);
+                    if (codes && codes[0] && codes[0].rawValue) return codes[0].rawValue;
+                } catch (_) {
+                    scannerDetector = null;
+                }
+            }
+            if (typeof window.jsQR !== 'function') return '';
+            const width = video.videoWidth;
+            const height = video.videoHeight;
+            if (!width || !height) return '';
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d', { willReadFrequently: true });
+            ctx.drawImage(video, 0, 0, width, height);
+            const image = ctx.getImageData(0, 0, width, height);
+            const code = window.jsQR(image.data, width, height, { inversionAttempts: 'attemptBoth' });
+            return code && code.data ? code.data : '';
+        }
+
+        function renderCounterCustomer() {
+            const panel = byId('counterCustomer');
+            const customer = getCustomer(activeCustomerId);
+            if (!customer) {
+                panel.innerHTML = '<div class="muted">No customer selected yet.</div>';
+                return;
+            }
+            panel.innerHTML = `
+                <div class="customer-name">${escapeHtml(customer.name)}</div>
+                <div class="muted">${escapeHtml(customer.phone || 'No phone')} · ${escapeHtml(customer.email || 'No email')}</div>
+                <div class="pill-row">
+                    <span class="pill brand">${escapeHtml(deriveTier(customer))}</span>
+                    <span class="pill">${Number(customer.points) || 0} points</span>
+                    <span class="pill">${Number(customer.visits) || 0} visits</span>
+                    <span class="pill">${Number(customer.rewards) || 0} rewards</span>
+                    <span class="pill">${escapeHtml(rewardMessage(customer))}</span>
+                </div>
+                <div class="muted" style="margin-top:10px;">Last visit: ${escapeHtml(formatDate(customer.lastVisitAt))}</div>
+            `;
+        }
+
+        function addVisit(customerId = activeCustomerId, options = {}) {
+            const shouldAutoClear = options.autoClear !== false;
+            const source = options.source || 'visit check-in';
+            const customer = getCustomer(customerId);
+            if (!customer) {
+                setStatus('Select a customer before checking in.', true);
+                return false;
+            }
+            if (source === 'QR scan' && state.settings.blockSameDayQrCheckin !== false && sameLocalDay(customer.lastVisitAt, todayISO())) {
+                setPanelStatus('rewardFeedback', customer.name + ' already had a QR check-in today. No extra points added.', true);
+                setStatus('Repeat QR check-in blocked for today.', true);
+                renderAll();
+                return false;
+            }
+            customer.visits = (Number(customer.visits) || 0) + 1;
+            customer.points = (Number(customer.points) || 0) + (Number(state.settings.visitPoints) || 0);
+            customer.lastVisitAt = todayISO();
+            customer.updatedAt = todayISO();
+            customer.tier = deriveTier(customer);
+            addActivity('visit', customer.id, '+' + state.settings.visitPoints + ' points from ' + source);
+            saveState();
+            renderAll();
+            setPanelStatus('rewardFeedback', customer.name + ' checked in. +' + state.settings.visitPoints + ' points. ' + rewardMessage(customer) + '.');
+            setStatus(source === 'QR scan' ? 'QR scan saved and points added.' : 'Visit check-in saved.');
+            if (shouldAutoClear) autoClearCounter();
+            return true;
+        }
+
+        function addNote(customerId = activeCustomerId, noteText) {
+            const customer = getCustomer(customerId);
+            const text = String(noteText ?? byId('counterNote').value ?? '').trim();
+            if (!customer) {
+                setStatus('Select a customer before adding a note.', true);
+                return false;
+            }
+            if (!text) {
+                setStatus('Write a note first.', true);
+                return false;
+            }
+            customer.notes = Array.isArray(customer.notes) ? customer.notes : [];
+            customer.notes.unshift({ text, date: todayISO() });
+            customer.updatedAt = todayISO();
+            addActivity('note', customer.id, text);
+            saveState();
+            byId('counterNote').value = '';
+            renderAll();
+            setPanelStatus('rewardFeedback', 'Note saved for ' + customer.name + '.');
+            setStatus('Note saved.');
+            return true;
+        }
+
+        function triggerReward(customerId = activeCustomerId) {
+            const customer = getCustomer(customerId);
+            if (!customer) {
+                setStatus('Select a customer before giving a reward.', true);
+                return false;
+            }
+            const cost = Number(state.settings.rewardCost) || 0;
+            customer.points = Math.max(0, (Number(customer.points) || 0) - cost);
+            customer.rewards = (Number(customer.rewards) || 0) + 1;
+            customer.updatedAt = todayISO();
+            addActivity('reward', customer.id, (state.settings.rewardName || 'Reward') + ' given' + (cost ? ' for ' + cost + ' points' : ''));
+            saveState();
+            renderAll();
+            setPanelStatus('rewardFeedback', (state.settings.rewardName || 'Reward') + ' given to ' + customer.name + '.');
+            setStatus('Manual reward saved.');
+            autoClearCounter();
+            return true;
+        }
+
+        function autoClearCounter() {
+            window.clearTimeout(autoClearCounter.timer);
+            autoClearCounter.timer = window.setTimeout(clearCounterFlow, 1800);
+        }
+
+        function clearCounterFlow() {
+            activeCustomerId = null;
+            byId('scanToken').value = '';
+            byId('counterNote').value = '';
+            renderCounterCustomer();
+            setPanelStatus('rewardFeedback', 'Ready for the next customer.');
+            setStatus('Counter cleared.');
+        }
+
+        function populateCustomerForm(customer) {
+            const consent = customerConsent(customer);
+            byId('customerId').value = customer ? customer.id : '';
+            byId('customerName').value = customer ? customer.name : '';
+            byId('customerPhone').value = customer ? customer.phone || '' : '';
+            byId('customerEmail').value = customer ? customer.email || '' : '';
+            byId('consentSms').checked = consent.sms;
+            byId('consentEmail').checked = consent.email;
+            byId('doNotContact').checked = consent.doNotContact;
+            byId('consentNote').value = consent.note;
+            byId('customerTier').value = customer ? deriveTier(customer) : 'Standard';
+            byId('customerPoints').value = customer ? Number(customer.points) || 0 : 0;
+            setPanelStatus('pointsManagerStatus', customer ? customer.name + ' has ' + (Number(customer.points) || 0) + ' points.' : 'Choose a customer to manage points.');
+            renderCustomerHistory(customer ? customer.id : '');
+        }
+
+        function renderCustomerHistory(customerId) {
+            const wrap = byId('customerHistory');
+            const customer = getCustomer(customerId);
+            if (!wrap) return;
+            if (!customer) {
+                wrap.innerHTML = '<div class="list-item"><div class="muted">Choose a customer to see their visits, rewards, and notes.</div></div>';
+                return;
+            }
+            const noteItems = (Array.isArray(customer.notes) ? customer.notes : []).map(note => ({
+                type: 'note',
+                detail: note.text,
+                date: note.date
+            }));
+            const consent = customerConsent(customer);
+            const consentItems = [{
+                type: 'privacy',
+                detail: contactPermissionLabel(customer) + (consent.note ? ': ' + consent.note : ''),
+                date: customer.updatedAt || customer.createdAt
+            }];
+            const activityItems = state.activity
+                .filter(item => item.customerId === customer.id)
+                .map(item => ({ type: item.type, detail: item.detail, date: item.date }));
+            const items = [...consentItems, ...noteItems, ...activityItems]
+                .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
+                .slice(0, 12);
+            if (!items.length) {
+                wrap.innerHTML = '<div class="list-item"><div class="muted">No history yet. Check-ins, rewards, and notes will appear here.</div></div>';
+                return;
+            }
+            wrap.innerHTML = items.map(item => `
+                <div class="list-item">
+                    <div>
+                        <strong>${escapeHtml(item.type.charAt(0).toUpperCase() + item.type.slice(1))}</strong>
+                        <div>${escapeHtml(item.detail || 'Saved activity')}</div>
+                        <div class="muted">${escapeHtml(formatDate(item.date))}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getSelectedCustomerForPoints() {
+            const id = byId('customerId').value;
+            const customer = getCustomer(id);
+            if (!customer) {
+                setPanelStatus('pointsManagerStatus', 'Choose or save a customer before changing points.', true);
+                setStatus('Choose a customer before changing points.', true);
+                return null;
+            }
+            return customer;
+        }
+
+        function getPointsAdjustmentInput(mode) {
+            const amount = Math.max(0, Math.floor(Number(byId('pointsAmount').value) || 0));
+            const reason = byId('pointsReason').value.trim() || 'Manual points adjustment';
+            if (!amount && mode !== 'set') {
+                setPanelStatus('pointsManagerStatus', 'Enter a points amount first.', true);
+                setStatus('Enter a points amount first.', true);
+                return null;
+            }
+            return { amount, reason };
+        }
+
+        function adjustCustomerPoints(mode) {
+            const customer = getSelectedCustomerForPoints();
+            const input = getPointsAdjustmentInput(mode);
+            if (!customer || !input) return false;
+            const before = Number(customer.points) || 0;
+            let after = before;
+            let detail = '';
+            if (mode === 'add') {
+                after = before + input.amount;
+                detail = '+' + input.amount + ' points: ' + input.reason;
+            } else if (mode === 'remove') {
+                after = Math.max(0, before - input.amount);
+                detail = '-' + Math.min(input.amount, before) + ' points: ' + input.reason;
+            } else if (mode === 'set') {
+                after = input.amount;
+                detail = 'Points set from ' + before + ' to ' + after + ': ' + input.reason;
+            } else {
+                return false;
+            }
+            customer.points = after;
+            customer.updatedAt = todayISO();
+            customer.tier = deriveTier(customer);
+            addActivity('points', customer.id, detail);
+            saveState();
+            populateCustomerForm(customer);
+            renderAll();
+            setPanelStatus('pointsManagerStatus', customer.name + ' now has ' + after + ' points.');
+            setStatus('Points updated.');
+            return true;
+        }
+
+        function saveCustomer() {
+            const id = byId('customerId').value || makeId();
+            const name = byId('customerName').value.trim();
+            const phone = byId('customerPhone').value.trim();
+            const email = byId('customerEmail').value.trim();
+            const points = Math.max(0, Number(byId('customerPoints').value) || 0);
+            const consent = {
+                sms: byId('consentSms').checked,
+                email: byId('consentEmail').checked,
+                doNotContact: byId('doNotContact').checked,
+                note: byId('consentNote').value.trim()
+            };
+            if (!name) {
+                setStatus('Customer name is required.', true);
+                return false;
+            }
+            if (!isValidEmail(email)) {
+                setStatus('Enter a valid email address, or leave email blank.', true);
+                return false;
+            }
+            const duplicate = getCustomers().find(customer => customer.id !== id && (
+                (email && customer.email && customer.email.toLowerCase() === email.toLowerCase()) ||
+                (phone && customer.phone && customer.phone === phone)
+            ));
+            if (duplicate) {
+                setStatus('That phone or email is already saved for ' + duplicate.name + '.', true);
+                return false;
+            }
+            const existing = getCustomer(id);
+            const customer = {
+                id,
+                token: (existing && existing.token) || id,
+                name,
+                displayName: existing ? existing.displayName || '' : '',
+                phone,
+                email,
+                points,
+                visits: (existing && existing.visits) || 0,
+                rewards: (existing && existing.rewards) || 0,
+                tier: byId('customerTier').value,
+                consent,
+                notes: (existing && existing.notes) || [],
+                createdAt: (existing && existing.createdAt) || todayISO(),
+                updatedAt: todayISO(),
+                lastVisitAt: (existing && existing.lastVisitAt) || '',
+                reminder: (existing && existing.reminder) || { preferredChannel: 'sms', ready: true }
+            };
+            customer.tier = deriveTier(customer);
+            state.customers[id] = customer;
+            addActivity(existing ? 'edit' : 'create', id, existing ? 'Customer updated' : 'Customer created');
+            saveState();
+            activeCustomerId = id;
+            populateCustomerForm(customer);
+            renderAll();
+            setStatus('Customer saved: ' + customer.name);
+            return true;
+        }
+
+        function deleteCustomer() {
+            const id = byId('customerId').value;
+            const customer = getCustomer(id);
+            if (!customer) {
+                setStatus('Choose a customer to delete.', true);
+                return false;
+            }
+            if (!window.confirm('Delete ' + customer.name + '? This only affects this browser.')) return false;
+            delete state.customers[id];
+            state.selectedBatchIds = state.selectedBatchIds.filter(value => value !== id);
+            if (activeCustomerId === id) activeCustomerId = null;
+            addActivity('delete', id, customer.name + ' deleted');
+            saveState();
+            populateCustomerForm(null);
+            renderAll();
+            setStatus('Customer deleted.');
+            return true;
+        }
+
+        function renderCustomerList() {
+            const term = byId('customerSearch').value.trim().toLowerCase();
+            const customers = getCustomers().filter(customer => {
+                return !term || [customer.name, customer.displayName, customer.phone, customer.email, customer.id].filter(Boolean).some(value => String(value).toLowerCase().includes(term));
+            });
+            const wrap = byId('customerList');
+            if (!customers.length) {
+                wrap.innerHTML = '<div class="list-item"><div class="muted">No customers found.</div></div>';
+                return;
+            }
+            wrap.innerHTML = customers.map(customer => `
+                <div class="list-item">
+                    <div>
+                        <strong>${escapeHtml(customer.name)}</strong>
+                        <div class="muted">${escapeHtml(customer.id)} · ${Number(customer.points) || 0} pts · ${Number(customer.visits) || 0} visits · ${escapeHtml(deriveTier(customer))} · ${escapeHtml(rewardMessage(customer))}</div>
+                        <div class="muted">${escapeHtml(contactPermissionLabel(customer))}</div>
+                    </div>
+                    <div class="list-actions">
+                        <button class="ghost small-btn" data-edit="${escapeHtml(customer.id)}">Edit</button>
+                        <button class="primary small-btn" data-select="${escapeHtml(customer.id)}">Counter</button>
+                    </div>
+                </div>
+            `).join('');
+            wrap.querySelectorAll('[data-edit]').forEach(btn => btn.addEventListener('click', () => populateCustomerForm(getCustomer(btn.dataset.edit))));
+            wrap.querySelectorAll('[data-select]').forEach(btn => btn.addEventListener('click', () => {
+                activeCustomerId = btn.dataset.select;
+                showScreen('counter');
+                renderCounterCustomer();
+                setStatus('Customer loaded in Counter Mode.');
+            }));
+        }
+
+        function renderDashboard() {
+            const customers = getCustomers();
+            const totalVisits = customers.reduce((sum, customer) => sum + (Number(customer.visits) || 0), 0);
+            const totalRewards = customers.reduce((sum, customer) => sum + (Number(customer.rewards) || 0), 0);
+            const rewardReady = customers.filter(customer => isRewardReady(customer));
+            const vipCustomers = customers.filter(customer => deriveTier(customer) === 'VIP');
+            const followUps = customers.filter(customer => needsFollowUp(customer));
+            setText('metricCustomers', customers.length);
+            setText('metricVisits', totalVisits);
+            setText('metricRewards', totalRewards);
+            setText('metricRewardReady', rewardReady.length);
+            setText('metricVipCustomers', vipCustomers.length);
+            setText('metricFollowUps', followUps.length);
+
+            const segment = byId('dashboardSegment') ? byId('dashboardSegment').value : 'all';
+            const sort = byId('dashboardSort') ? byId('dashboardSort').value : 'value';
+            const segmentMap = {
+                all: customers,
+                rewardReady,
+                vip: vipCustomers,
+                followUp: followUps
+            };
+            const segmentTitles = {
+                all: 'Top Customers',
+                rewardReady: 'Reward Ready Customers',
+                vip: 'VIP Customers',
+                followUp: 'Customers To Follow Up'
+            };
+            const visible = sortDashboardCustomers([...(segmentMap[segment] || customers)], sort).slice(0, 8);
+            setText('dashboardListTitle', segmentTitles[segment] || 'Top Customers');
+            byId('topCustomers').innerHTML = visible.length ? visible.map(customer => `
+                <div class="list-item">
+                    <div><strong>${escapeHtml(customer.name)}</strong><div class="muted">${Number(customer.points) || 0} pts · ${Number(customer.visits) || 0} visits · ${escapeHtml(rewardMessage(customer))}</div></div>
+                    <div class="list-actions">
+                        <button class="ghost small-btn" data-dashboard-counter="${escapeHtml(customer.id)}">Counter</button>
+                        <button class="primary small-btn" data-dashboard-campaign="${escapeHtml(customer.id)}">Campaign</button>
+                    </div>
+                </div>
+            `).join('') : '<div class="list-item"><div class="muted">No customers yet.</div></div>';
+
+            const activityType = byId('dashboardActivityType') ? byId('dashboardActivityType').value : 'all';
+            const activity = state.activity
+                .filter(item => activityType === 'all' || item.type === activityType)
+                .slice(0, 12);
+            byId('recentActivity').innerHTML = activity.map(item => `
+                <div class="list-item">
+                    <div><strong>${escapeHtml(item.customerName)}</strong><div>${escapeHtml(item.detail)}</div><div class="muted">${escapeHtml(formatDate(item.date))}</div></div>
+                </div>
+            `).join('') || '<div class="list-item"><div class="muted">No activity yet.</div></div>';
+
+            byId('rewardReadyList').innerHTML = rewardReady.slice(0, 6).map(customer => `
+                <div class="list-item">
+                    <div><strong>${escapeHtml(customer.name)}</strong><div class="muted">${Number(customer.points) || 0} pts · ${Number(customer.rewards) || 0} rewards given</div></div>
+                    <button class="primary small-btn" data-dashboard-counter="${escapeHtml(customer.id)}">Open</button>
+                </div>
+            `).join('') || '<div class="list-item"><div class="muted">No rewards ready yet.</div></div>';
+
+            byId('followUpList').innerHTML = followUps.slice(0, 6).map(customer => `
+                <div class="list-item">
+                    <div><strong>${escapeHtml(customer.name)}</strong><div class="muted">${escapeHtml(followUpReason(customer))}</div></div>
+                    <button class="secondary small-btn" data-dashboard-campaign="${escapeHtml(customer.id)}">Campaign</button>
+                </div>
+            `).join('') || '<div class="list-item"><div class="muted">No follow-up suggestions yet.</div></div>';
+
+            bindDashboardActions();
+        }
+
+        function isRewardReady(customer) {
+            const cost = Number(state.settings.rewardCost) || 0;
+            return cost > 0 && (Number(customer.points) || 0) >= cost;
+        }
+
+        function daysSince(value) {
+            if (!value) return Infinity;
+            const time = new Date(value).getTime();
+            if (Number.isNaN(time)) return Infinity;
+            return Math.floor((Date.now() - time) / 86400000);
+        }
+
+        function needsFollowUp(customer) {
+            return daysSince(customer.lastVisitAt) >= 21 || isRewardReady(customer);
+        }
+
+        function followUpReason(customer) {
+            if (isRewardReady(customer)) return 'Reward ready: invite them back.';
+            const days = daysSince(customer.lastVisitAt);
+            if (!Number.isFinite(days)) return 'No visit recorded yet.';
+            return days + ' days since last visit.';
+        }
+
+        function sortDashboardCustomers(customers, sort) {
+            const valueScore = customer => (Number(customer.points) || 0) + (Number(customer.visits) || 0) * 10 + (Number(customer.rewards) || 0) * 20;
+            return customers.sort((a, b) => {
+                if (sort === 'points') return (Number(b.points) || 0) - (Number(a.points) || 0);
+                if (sort === 'visits') return (Number(b.visits) || 0) - (Number(a.visits) || 0);
+                if (sort === 'recent') return new Date(b.updatedAt || b.createdAt || 0) - new Date(a.updatedAt || a.createdAt || 0);
+                return valueScore(b) - valueScore(a);
+            });
+        }
+
+        function bindDashboardActions() {
+            document.querySelectorAll('[data-dashboard-counter]').forEach(btn => btn.addEventListener('click', () => {
+                activeCustomerId = btn.dataset.dashboardCounter;
+                showScreen('counter');
+                renderCounterCustomer();
+                setStatus('Customer loaded in Counter Mode.');
+            }));
+            document.querySelectorAll('[data-dashboard-campaign]').forEach(btn => btn.addEventListener('click', () => {
+                byId('campaignCustomerSelect').value = btn.dataset.dashboardCampaign;
+                showScreen('campaigns');
+                loadCampaignTemplate();
+                setStatus('Customer loaded in Campaigns.');
+            }));
+        }
+
+        function populateSelects() {
+            const customers = getCustomers();
+            const options = customers.map(customer => '<option value="' + escapeHtml(customer.id) + '">' + escapeHtml(customer.name) + ' - ' + escapeHtml(customer.id) + '</option>').join('');
+            ['cardCustomerSelect', 'qrCustomerSelect', 'batchCustomerSelect', 'campaignCustomerSelect'].forEach(id => {
+                const select = byId(id);
+                const previous = select.value;
+                select.innerHTML = options || '<option value="">No customers yet</option>';
+                if (previous && getCustomer(previous)) select.value = previous;
+            });
+        }
+
+        function renderCardPreviewForCustomer(id) {
+            const customer = getCustomer(id || byId('cardCustomerSelect').value || activeCustomerId);
+            if (!customer) {
+                setPanelStatus('cardStatus', 'Choose a customer before previewing a card.', true);
+                return false;
+            }
+            byId('cardCustomerSelect').value = customer.id;
+            if (cardDisplayCustomerId !== customer.id) {
+                byId('cardDisplayName').value = customer.displayName || '';
+                cardDisplayCustomerId = customer.id;
+            }
+            const previewName = currentCardDisplayName(customer);
+            byId('cardType').textContent = byId('membershipType').value || 'Rewards Member';
+            byId('cardBusiness').textContent = state.branding.businessName || 'Family Business';
+            byId('cardName').textContent = previewName;
+            byId('cardId').textContent = 'Member No: ' + customer.id;
+            byId('cardFooter').textContent = byId('footerText').value || 'Scan in-store for points and perks';
+            byId('cardQrText').textContent = customer.token || customer.id;
+            byId('cardLargeQrText').textContent = customer.token || customer.id;
+            const smallQrReady = renderQrIntoCanvas(byId('cardQrCanvas'), customer.token || customer.id);
+            const largeQrReady = renderQrIntoCanvas(byId('cardLargeQrCanvas'), customer.token || customer.id);
+            if (!smallQrReady || !largeQrReady) {
+                setPanelStatus('cardStatus', 'QR generator did not load. Do not print this card until assets/vendor/qrcode-generator.js is available.', true);
+                return false;
+            }
+            setPanelStatus('cardStatus', 'Preview ready for ' + previewName + '.');
+            return true;
+        }
+
+        function saveCardDisplayName() {
+            const customer = getCustomer(byId('cardCustomerSelect').value || activeCustomerId);
+            if (!customer) {
+                setPanelStatus('cardStatus', 'Choose a customer before saving a display name.', true);
+                return false;
+            }
+            const displayName = byId('cardDisplayName').value.trim();
+            customer.displayName = displayName;
+            customer.updatedAt = todayISO();
+            addActivity('edit', customer.id, displayName ? 'Card display name set to ' + displayName : 'Card display name cleared');
+            saveState();
+            renderAll();
+            setPanelStatus('cardStatus', displayName ? 'Card will show "' + displayName + '". Private customer name stays saved in CRM.' : 'Card will use the customer name again.');
+            setStatus('Card display name saved.');
+            return true;
+        }
+
+        function renderQrIntoCanvas(canvasOrId, payload) {
+            const canvas = typeof canvasOrId === 'string' ? byId(canvasOrId) : canvasOrId;
+            if (!canvas || !canvas.getContext) return false;
+            const data = String(payload || 'loyalty-4-All');
+            if (renderRealQrIntoCanvas(canvas, data)) return true;
+            renderQrUnavailable(canvas);
+            return false;
+        }
+
+        function renderRealQrIntoCanvas(canvas, data) {
+            if (typeof window.qrcode !== 'function') return false;
+            try {
+                const qr = window.qrcode(0, 'H');
+                qr.addData(data);
+                qr.make();
+                const ctx = canvas.getContext('2d');
+                const size = canvas.width;
+                const moduleCount = qr.getModuleCount();
+                const margin = Math.max(14, Math.floor(size * 0.12));
+                const qrSize = size - margin * 2;
+                const cell = qrSize / moduleCount;
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, size, size);
+                ctx.fillStyle = '#111827';
+                for (let y = 0; y < moduleCount; y++) {
+                    for (let x = 0; x < moduleCount; x++) {
+                        if (qr.isDark(y, x)) {
+                            ctx.fillRect(
+                                Math.floor(margin + x * cell),
+                                Math.floor(margin + y * cell),
+                                Math.ceil(cell),
+                                Math.ceil(cell)
+                            );
+                        }
+                    }
+                }
+                return true;
+            } catch (error) {
+                console.warn('QR rendering failed.', error);
+                return false;
+            }
+        }
+
+        function renderQrUnavailable(canvas) {
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, size, size);
+            ctx.strokeStyle = '#ef4444';
+            ctx.lineWidth = Math.max(4, Math.round(size * 0.03));
+            ctx.strokeRect(ctx.lineWidth, ctx.lineWidth, size - ctx.lineWidth * 2, size - ctx.lineWidth * 2);
+            ctx.fillStyle = '#991b1b';
+            ctx.font = '700 ' + Math.max(14, Math.round(size * 0.08)) + 'px Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('QR unavailable', size / 2, size / 2);
+        }
+
+        function mmToPx(mm, dpi = 300) {
+            return Math.round((mm / 25.4) * dpi);
+        }
+
+        function buildCardCanvasForCustomer(id) {
+            const customer = getCustomer(id);
+            if (!customer) return null;
+            const canvas = document.createElement('canvas');
+            const width = mmToPx(96);
+            const height = mmToPx(61);
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            const gradient = ctx.createLinearGradient(0, 0, width, height);
+            gradient.addColorStop(0, state.branding.brandColor || '#2f9461');
+            gradient.addColorStop(0.62, '#55b47b');
+            gradient.addColorStop(1, '#e2f3e7');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, width, height);
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '700 34px system-ui';
+            ctx.fillText(byId('membershipType').value || 'Rewards Member', 54, 70);
+            ctx.font = '900 54px system-ui';
+            wrapCanvasText(ctx, state.branding.businessName || 'Family Business', 54, 132, width * 0.58, 58);
+            ctx.font = '900 64px system-ui';
+            wrapCanvasText(ctx, currentCardDisplayName(customer), 54, 260, width * 0.58, 68);
+            ctx.font = '700 30px system-ui';
+            ctx.fillText('Member No: ' + customer.id, 54, height - 72);
+            ctx.font = '600 24px system-ui';
+            ctx.fillText(byId('footerText').value || 'Scan in-store for points and perks', 54, height - 34);
+            const qrSize = Math.round(width * 0.28);
+            const qx = width - qrSize - 68;
+            const qy = 82;
+            drawRounded(ctx, qx - 18, qy - 18, qrSize + 36, qrSize + 70, 22, 'rgba(255,255,255,0.96)');
+            const qrCanvas = document.createElement('canvas');
+            qrCanvas.width = qrSize;
+            qrCanvas.height = qrSize;
+            if (!renderQrIntoCanvas(qrCanvas, customer.token || customer.id)) {
+                setPanelStatus('cardStatus', 'QR generator did not load. Card export is blocked so an unscannable card is not created.', true);
+                return null;
+            }
+            ctx.drawImage(qrCanvas, qx, qy, qrSize, qrSize);
+            ctx.fillStyle = '#254234';
+            ctx.font = '700 22px ui-monospace, monospace';
+            ctx.fillText(customer.id, qx, qy + qrSize + 38);
+            return canvas;
+        }
+
+        function wrapCanvasText(ctx, text, x, y, maxWidth, lineHeight) {
+            const words = String(text || '').split(/\s+/);
+            let line = '';
+            words.forEach(word => {
+                const test = line ? line + ' ' + word : word;
+                if (ctx.measureText(test).width > maxWidth && line) {
+                    ctx.fillText(line, x, y);
+                    line = word;
+                    y += lineHeight;
+                } else {
+                    line = test;
+                }
+            });
+            if (line) ctx.fillText(line, x, y);
+        }
+
+        function drawRounded(ctx, x, y, w, h, r, fill) {
+            ctx.fillStyle = fill;
+            ctx.beginPath();
+            ctx.moveTo(x + r, y);
+            ctx.arcTo(x + w, y, x + w, y + h, r);
+            ctx.arcTo(x + w, y + h, x, y + h, r);
+            ctx.arcTo(x, y + h, x, y, r);
+            ctx.arcTo(x, y, x + w, y, r);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        function downloadCanvas(canvas, filename) {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = filename;
+            link.click();
+        }
+
+        function downloadCardPng() {
+            const id = byId('cardCustomerSelect').value || activeCustomerId;
+            const canvas = buildCardCanvasForCustomer(id);
+            if (!canvas) {
+                setPanelStatus('cardStatus', id ? 'Card export is blocked until QR generation is available.' : 'Choose a customer before exporting.', true);
+                return false;
+            }
+            downloadCanvas(canvas, id + '-membership-card.png');
+            setPanelStatus('cardStatus', 'Card PNG exported.');
+            return true;
+        }
+
+        function printCard() {
+            const id = byId('cardCustomerSelect').value || activeCustomerId;
+            const canvas = buildCardCanvasForCustomer(id);
+            if (!canvas) {
+                setPanelStatus('cardStatus', id ? 'Card printing is blocked until QR generation is available.' : 'Choose a customer before printing.', true);
+                return false;
+            }
+            openPrintWindow(canvas.toDataURL('image/png'), '96mm', '61mm', 'Print membership card', 'cardStatus');
+            return true;
+        }
+
+        function emailCardImage() {
+            const id = byId('cardCustomerSelect').value || activeCustomerId;
+            const customer = getCustomer(id);
+            if (!customer) {
+                setPanelStatus('cardStatus', 'Choose a customer before emailing.', true);
+                return false;
+            }
+            const subject = encodeURIComponent('Your ' + state.branding.businessName + ' membership card');
+            const body = encodeURIComponent('Hi ' + customer.name + ',\n\nYour membership number is ' + customer.id + '. Please show this code in store.\n\n' + state.branding.businessName);
+            window.location.href = 'mailto:' + encodeURIComponent(customer.email || '') + '?subject=' + subject + '&body=' + body;
+            setPanelStatus('cardStatus', 'Email app opened. Attach the exported PNG if needed.');
+            return true;
+        }
+
+        function buildQrPayload() {
+            const type = byId('qrType').value;
+            const customer = getCustomer(byId('qrCustomerSelect').value);
+            const title = byId('qrTitle').value.trim();
+            const custom = byId('qrCustomText').value.trim();
+            if (type === 'customer' && customer) return customer.token || customer.id;
+            if (type === 'custom' && custom) return custom;
+            return JSON.stringify({
+                app: 'loyalty-4-All',
+                type,
+                title,
+                customerId: customer ? customer.id : '',
+                text: custom,
+                createdAt: todayISO()
+            });
+        }
+
+        function qrPrintSize() {
+            const value = byId('qrSize').value;
+            if (value === 'a4') return { widthMm: 210, heightMm: 297, qrRatio: 0.58, filename: 'loyalty-qr-a4.png' };
+            if (value === 'card') return { widthMm: 90, heightMm: 90, qrRatio: 0.56, filename: 'loyalty-qr-card.png' };
+            return { widthMm: 60, heightMm: 60, qrRatio: 0.52, filename: 'loyalty-qr-label.png' };
+        }
+
+        function qrDisplayTitle() {
+            const customer = getCustomer(byId('qrCustomerSelect').value);
+            const title = byId('qrTitle').value.trim();
+            if (title) return title;
+            if (byId('qrType').value === 'customer' && customer) return cardDisplayName(customer);
+            return byId('qrType').options[byId('qrType').selectedIndex].text;
+        }
+
+        function generateQrTool() {
+            const payload = buildQrPayload();
+            byId('qrToolText').textContent = payload;
+            if (!renderQrIntoCanvas(byId('qrToolCanvas'), payload)) {
+                setPanelStatus('qrStatus', 'QR generator did not load. Do not print this label until assets/vendor/qrcode-generator.js is available.', true);
+                return false;
+            }
+            setPanelStatus('qrStatus', 'QR preview generated for ' + qrDisplayTitle() + '. If a scanner cannot read it, use the printed text token as fallback.');
+            return true;
+        }
+
+        function buildQrPrintCanvas() {
+            const payload = buildQrPayload();
+            const size = qrPrintSize();
+            const width = mmToPx(size.widthMm);
+            const height = mmToPx(size.heightMm);
+            const compact = size.widthMm <= 60;
+            const canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, width, height);
+            ctx.fillStyle = '#064e3b';
+            ctx.font = '900 ' + Math.max(26, Math.round(width * (compact ? 0.04 : 0.045))) + 'px system-ui';
+            wrapCanvasText(ctx, state.branding.businessName || 'Family Business', Math.round(width * 0.08), Math.round(height * (compact ? 0.08 : 0.11)), width * 0.84, Math.round(width * 0.052));
+            ctx.fillStyle = '#1a2421';
+            ctx.font = '800 ' + Math.max(22, Math.round(width * (compact ? 0.032 : 0.038))) + 'px system-ui';
+            wrapCanvasText(ctx, qrDisplayTitle(), Math.round(width * 0.08), Math.round(height * (compact ? 0.17 : 0.21)), width * 0.84, Math.round(width * 0.045));
+            const qrSize = Math.round(Math.min(width, height) * size.qrRatio);
+            const qx = Math.round((width - qrSize) / 2);
+            const qy = Math.round(height * (compact ? 0.27 : 0.3));
+            drawRounded(ctx, qx - 18, qy - 18, qrSize + 36, qrSize + 36, 22, '#ffffff');
+            const qrCanvas = document.createElement('canvas');
+            qrCanvas.width = qrSize;
+            qrCanvas.height = qrSize;
+            if (!renderQrIntoCanvas(qrCanvas, payload)) {
+                setPanelStatus('qrStatus', 'QR generator did not load. QR export is blocked so an unscannable label is not created.', true);
+                return null;
+            }
+            ctx.drawImage(qrCanvas, qx, qy, qrSize, qrSize);
+            ctx.fillStyle = '#254234';
+            ctx.font = '700 ' + Math.max(15, Math.round(width * (compact ? 0.02 : 0.024))) + 'px ui-monospace, monospace';
+            wrapCanvasText(ctx, payload, Math.round(width * 0.08), Math.round(height * (compact ? 0.87 : 0.9)), width * 0.84, Math.round(width * 0.03));
+            return canvas;
+        }
+
+        function downloadQrPng() {
+            if (!generateQrTool()) return false;
+            const canvas = buildQrPrintCanvas();
+            if (!canvas) return false;
+            downloadCanvas(canvas, qrPrintSize().filename);
+            setPanelStatus('qrStatus', 'Printable QR PNG exported.');
+            return true;
+        }
+
+        function printQrTool() {
+            if (!generateQrTool()) return false;
+            const canvas = buildQrPrintCanvas();
+            if (!canvas) return false;
+            const size = qrPrintSize();
+            openPrintWindow(canvas.toDataURL('image/png'), size.widthMm + 'mm', size.heightMm + 'mm', 'Print QR code', 'qrStatus');
+            return true;
+        }
+
+        async function copyQrPayload() {
+            const payload = buildQrPayload();
+            try {
+                await navigator.clipboard.writeText(payload);
+                setPanelStatus('qrStatus', 'QR payload copied.');
+                return true;
+            } catch (_) {
+                setPanelStatus('qrStatus', 'Copy is blocked in this browser. Select the payload text and copy manually.', true);
+                return false;
+            }
+        }
+
+        function clearQrTool() {
+            byId('qrTitle').value = '';
+            byId('qrCustomText').value = '';
+            generateQrTool();
+            setPanelStatus('qrStatus', 'QR tool cleared.');
+            return true;
+        }
+
+        function renderSheetPreview() {
+            const wrap = byId('sheetPreview');
+            const ids = state.selectedBatchIds.filter(id => getCustomer(id));
+            byId('batchList').textContent = ids.length ? ids.map(id => getCustomer(id).name).join(', ') : 'No customers selected.';
+            wrap.innerHTML = '';
+            if (!ids.length) {
+                wrap.innerHTML = '<div class="muted" style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;">Add customers to preview A4 batch printing.</div>';
+                return;
+            }
+            const pageW = 210;
+            const pageH = 297;
+            const margin = 8;
+            const gap = 6;
+            const cardW = 96;
+            const cardH = 61;
+            const cols = 2;
+            const rows = Math.floor((pageH - margin * 2 + gap) / (cardH + gap));
+            ids.slice(0, cols * rows).forEach((id, index) => {
+                const col = index % cols;
+                const row = Math.floor(index / cols);
+                const div = document.createElement('div');
+                div.className = 'sheet-card';
+                div.style.left = ((margin + col * (cardW + gap)) / pageW * 100) + '%';
+                div.style.top = ((margin + row * (cardH + gap)) / pageH * 100) + '%';
+                div.style.width = (cardW / pageW * 100) + '%';
+                div.style.height = (cardH / pageH * 100) + '%';
+                div.title = getCustomer(id).name;
+                wrap.appendChild(div);
+            });
+        }
+
+        function addBatchCustomer() {
+            const id = byId('batchCustomerSelect').value;
+            if (!id || !getCustomer(id)) {
+                setPanelStatus('printStatus', 'Create a customer before adding to the print batch.', true);
+                return false;
+            }
+            if (id && !state.selectedBatchIds.includes(id)) state.selectedBatchIds.push(id);
+            saveState();
+            renderSheetPreview();
+            setPanelStatus('printStatus', 'Customer added to batch.');
+            return true;
+        }
+
+        function selectAllBatch() {
+            const customers = getCustomers();
+            if (!customers.length) {
+                setPanelStatus('printStatus', 'Create customers before batch printing.', true);
+                return false;
+            }
+            state.selectedBatchIds = customers.map(customer => customer.id);
+            saveState();
+            renderSheetPreview();
+            setPanelStatus('printStatus', 'All customers selected for batch printing.');
+            return true;
+        }
+
+        function clearBatch() {
+            state.selectedBatchIds = [];
+            saveState();
+            renderSheetPreview();
+            setPanelStatus('printStatus', 'Batch cleared.');
+            return true;
+        }
+
+        function buildBatchSheetCanvas() {
+            const ids = state.selectedBatchIds.filter(id => getCustomer(id));
+            if (!ids.length) return null;
+            const pageW = mmToPx(210);
+            const pageH = mmToPx(297);
+            const margin = mmToPx(8);
+            const gap = mmToPx(6);
+            const cardW = mmToPx(96);
+            const cardH = mmToPx(61);
+            const cols = 2;
+            const rows = Math.floor((pageH - margin * 2 + gap) / (cardH + gap));
+            const canvas = document.createElement('canvas');
+            canvas.width = pageW;
+            canvas.height = pageH;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, pageW, pageH);
+            let blockedByQr = false;
+            ids.slice(0, rows * cols).forEach((id, index) => {
+                const col = index % cols;
+                const row = Math.floor(index / cols);
+                const x = margin + col * (cardW + gap);
+                const y = margin + row * (cardH + gap);
+                const card = buildCardCanvasForCustomer(id);
+                if (card) {
+                    ctx.drawImage(card, x, y, cardW, cardH);
+                    drawCropMarks(ctx, x, y, cardW, cardH);
+                } else {
+                    blockedByQr = true;
+                }
+            });
+            if (blockedByQr) {
+                setPanelStatus('printStatus', 'A4 sheet is blocked until QR generation is available.', true);
+                return null;
+            }
+            return canvas;
+        }
+
+        function drawCropMarks(ctx, x, y, w, h) {
+            const length = 22;
+            ctx.save();
+            ctx.strokeStyle = '#555';
+            ctx.lineWidth = 2;
+            [[x, y, x + length, y], [x, y, x, y + length], [x + w, y, x + w - length, y], [x + w, y, x + w, y + length], [x, y + h, x + length, y + h], [x, y + h, x, y + h - length], [x + w, y + h, x + w - length, y + h], [x + w, y + h, x + w, y + h - length]].forEach(mark => {
+                ctx.beginPath();
+                ctx.moveTo(mark[0], mark[1]);
+                ctx.lineTo(mark[2], mark[3]);
+                ctx.stroke();
+            });
+            ctx.restore();
+        }
+
+        function downloadBatchPng() {
+            const canvas = buildBatchSheetCanvas();
+            if (!canvas) {
+                setPanelStatus('printStatus', 'Select at least one customer first.', true);
+                return false;
+            }
+            downloadCanvas(canvas, 'loyalty-cards-a4-sheet.png');
+            setPanelStatus('printStatus', 'A4 PNG exported.');
+            return true;
+        }
+
+        function printBatchSheet() {
+            const canvas = buildBatchSheetCanvas();
+            if (!canvas) {
+                setPanelStatus('printStatus', 'Select at least one customer first.', true);
+                return false;
+            }
+            openPrintWindow(canvas.toDataURL('image/png'), '210mm', '297mm', 'Print A4 card sheet', 'printStatus');
+            return true;
+        }
+
+        function openPrintWindow(dataUrl, width, height, title, statusId) {
+            const win = window.open('', '_blank', 'width=1000,height=760');
+            if (!win) {
+                setPanelStatus(statusId, 'Allow pop-ups to open the print window.', true);
+                return false;
+            }
+            win.document.write('<!DOCTYPE html><html><head><title>' + escapeHtml(title) + '</title><style>@page{size:' + width + ' ' + height + ';margin:0}html,body{margin:0;background:#fff}body{display:grid;place-items:center;min-height:100vh}img{width:' + width + ';height:' + height + ';display:block}</style></head><body><img src="' + dataUrl + '" alt="' + escapeHtml(title) + '"><script>window.onload=function(){setTimeout(function(){window.print();},160);};<\/script></body></html>');
+            win.document.close();
+            setPanelStatus(statusId, 'Print window opened.');
+            return true;
+        }
+
+        async function connectUsbPrinter() {
+            if (!('usb' in navigator)) {
+                setPanelStatus('printStatus', 'WebUSB is not supported here. Browser print is ready.', true);
+                return false;
+            }
+            try {
+                usbPrinterDevice = await navigator.usb.requestDevice({ filters: [] });
+                setPanelStatus('printStatus', 'USB printer selected: ' + (usbPrinterDevice.productName || 'printer'));
+                return true;
+            } catch (error) {
+                setPanelStatus('printStatus', 'USB printer was not connected. Browser print is ready.', true);
+                return false;
+            }
+        }
+
+        async function printViaUsbPrinter() {
+            if (!usbPrinterDevice) {
+                setPanelStatus('printStatus', 'Connect a USB printer first, or use browser print.', true);
+                return false;
+            }
+            setPanelStatus('printStatus', 'Direct USB printing depends on printer commands. Browser print is safer for this file.');
+            return false;
+        }
+
+        function exportBackup() {
+            state.settings.lastBackupAt = todayISO();
+            saveState();
+            const backup = {
+                app: 'loyalty-4-All',
+                version: 2,
+                exportedAt: state.settings.lastBackupAt,
+                state
+            };
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'loyalty-4-all-backup-' + new Date().toISOString().slice(0, 10) + '.json';
+            link.click();
+            URL.revokeObjectURL(url);
+            setPanelStatus('settingsStatus', 'Backup saved. Keep the file somewhere safe.');
+            setStatus('Backup saved.');
+            renderAll();
+            return true;
+        }
+
+        function normaliseImportedState(imported) {
+            const incoming = imported && imported.state ? imported.state : imported;
+            if (!incoming || typeof incoming !== 'object' || !incoming.customers || typeof incoming.customers !== 'object') {
+                return null;
+            }
+            return {
+                ...clone(defaultState),
+                ...incoming,
+                branding: { ...defaultState.branding, ...(incoming.branding || {}) },
+                settings: { ...defaultState.settings, ...(incoming.settings || {}) },
+                services: { ...defaultState.services, ...(incoming.services || {}) },
+                customers: incoming.customers,
+                activity: Array.isArray(incoming.activity) ? incoming.activity : [],
+                selectedBatchIds: Array.isArray(incoming.selectedBatchIds) ? incoming.selectedBatchIds : []
+            };
+        }
+
+        function restoreBackup() {
+            const file = byId('restoreFile').files && byId('restoreFile').files[0];
+            if (!file) {
+                setPanelStatus('settingsStatus', 'Choose a backup file first.', true);
+                return false;
+            }
+            const reader = new FileReader();
+            reader.onload = () => {
+                try {
+                    const imported = JSON.parse(String(reader.result || ''));
+                    const nextState = normaliseImportedState(imported);
+                    if (!nextState) {
+                        setPanelStatus('settingsStatus', 'That file does not look like a Loyalty-4-All backup.', true);
+                        return;
+                    }
+                    if (!window.confirm('Restore this backup? It will replace the customers and settings in this browser.')) return;
+                    state = nextState;
+                    activeCustomerId = null;
+                    saveState();
+                    applyBranding();
+                    populateSettingsControls();
+                    populateServiceSettings();
+                    renderAll();
+                    populateCustomerForm(null);
+                    setPanelStatus('settingsStatus', 'Backup restored.');
+                    setStatus('Backup restored.');
+                } catch (error) {
+                    console.error('Restore failed:', error);
+                    setPanelStatus('settingsStatus', 'Could not read that backup file.', true);
+                }
+            };
+            reader.readAsText(file);
+            return true;
+        }
+
+        const campaignTemplates = {
+            rewardReady: {
+                emailSubject: '{{business}} reward ready for you',
+                email: 'Hi {{firstName}},\n\nGood news - you have {{points}} loyalty points with {{business}}, so your next reward is ready.\n\nShow your membership card next time you visit and we will look after it at the counter.\n\nThanks,\n{{business}}',
+                sms: 'Hi {{firstName}}, your {{business}} reward is ready. You have {{points}} points. Show your loyalty card next time you visit.'
+            },
+            visitBack: {
+                emailSubject: 'We would love to see you again at {{business}}',
+                email: 'Hi {{firstName}},\n\nIt has been a little while since your last loyalty visit with {{business}}. We would love to see you again soon.\n\nYour member number is {{memberNo}}, and you currently have {{points}} points waiting for you.\n\nThanks,\n{{business}}',
+                sms: 'Hi {{firstName}}, we would love to see you again at {{business}}. You have {{points}} points waiting on your loyalty card.'
+            },
+            birthday: {
+                emailSubject: 'A birthday treat from {{business}}',
+                email: 'Hi {{firstName}},\n\nHappy birthday from all of us at {{business}}.\n\nPop in this week and show your loyalty card so we can add a small birthday treat to your visit.\n\nBest wishes,\n{{business}}',
+                sms: 'Happy birthday {{firstName}} from {{business}}. Pop in this week with your loyalty card for a small birthday treat.'
+            },
+            vipThanks: {
+                emailSubject: 'Thank you for being a {{business}} VIP',
+                email: 'Hi {{firstName}},\n\nThank you for being one of our VIP customers at {{business}}. We genuinely appreciate your support.\n\nYou currently have {{points}} points and {{visits}} loyalty visits with us.\n\nSee you again soon,\n{{business}}',
+                sms: 'Hi {{firstName}}, thank you for being a {{business}} VIP. You have {{points}} points with us. We appreciate your support.'
+            },
+            pointsBalance: {
+                emailSubject: 'Your {{business}} points balance',
+                email: 'Hi {{firstName}},\n\nHere is your current {{business}} loyalty update:\n\nPoints: {{points}}\nTier: {{tier}}\nReward status: {{rewardStatus}}\n\nShow your card next time you visit and we will add your new points at the counter.\n\nThanks,\n{{business}}',
+                sms: 'Hi {{firstName}}, your {{business}} loyalty balance is {{points}} points. {{rewardStatus}}.'
+            },
+            cardPickup: {
+                emailSubject: 'Your {{business}} loyalty card is ready',
+                email: 'Hi {{firstName}},\n\nYour {{business}} loyalty card is ready.\n\nYour member number is {{memberNo}}. Ask for your card next time you visit, or show this email at the counter.\n\nThanks,\n{{business}}',
+                sms: 'Hi {{firstName}}, your {{business}} loyalty card is ready. Your member number is {{memberNo}}.'
+            },
+            reviewInvite: {
+                emailSubject: 'Thanks for visiting {{business}}',
+                email: 'Hi {{firstName}},\n\nThanks for visiting {{business}}. If you enjoyed your experience, a quick review or recommendation to a friend would mean a lot to our small business.\n\nYour loyalty balance is {{points}} points.\n\nThanks again,\n{{business}}',
+                sms: 'Hi {{firstName}}, thanks for visiting {{business}}. If you enjoyed it, a quick review or recommendation would mean a lot.'
+            },
+            welcome: {
+                emailSubject: 'Welcome to {{business}} rewards',
+                email: 'Hi {{firstName}},\n\nWelcome to {{business}} rewards. Your member number is {{memberNo}}, and we will add points each time you visit.\n\nShow your card at the counter so we can keep your rewards moving.\n\nThanks,\n{{business}}',
+                sms: 'Hi {{firstName}}, welcome to {{business}} rewards. Your member number is {{memberNo}}. Show your card each visit to earn points.'
+            },
+            specialOffer: {
+                emailSubject: '{{offer}} at {{business}}',
+                email: 'Hi {{firstName}},\n\nA quick offer from {{business}}: {{offer}}.\n\nYou currently have {{points}} loyalty points. Show your card when you visit and we will add your new points too.\n\nThanks,\n{{business}}',
+                sms: 'Hi {{firstName}}, {{business}} offer: {{offer}}. You have {{points}} loyalty points waiting.'
+            },
+            referral: {
+                emailSubject: 'Bring a friend to {{business}}',
+                email: 'Hi {{firstName}},\n\nThanks for supporting {{business}}. If you know someone who would enjoy us too, bring them along next time.\n\n{{offer}}\n\nWe appreciate every recommendation.\n{{business}}',
+                sms: 'Hi {{firstName}}, know someone who would enjoy {{business}}? Bring them next time. {{offer}}'
+            },
+            eventInvite: {
+                emailSubject: 'You are invited: {{offer}}',
+                email: 'Hi {{firstName}},\n\nYou are invited to {{offer}} at {{business}}.\n\nShow your loyalty card when you arrive so we can add your visit points.\n\nThanks,\n{{business}}',
+                sms: 'Hi {{firstName}}, you are invited to {{offer}} at {{business}}. Show your loyalty card when you arrive.'
+            },
+            quietDay: {
+                emailSubject: 'A little extra from {{business}}',
+                email: 'Hi {{firstName}},\n\nWe have a little extra for loyalty members: {{offer}}.\n\nYou have {{points}} points with {{business}}. Pop in soon and show your card at the counter.\n\nThanks,\n{{business}}',
+                sms: 'Hi {{firstName}}, loyalty member offer from {{business}}: {{offer}}. You have {{points}} points with us.'
+            }
+        };
+
+        function campaignName(customer) {
+            return cardDisplayName(customer) || customer.name || 'there';
+        }
+
+        function campaignTokens(customer) {
+            const name = customer ? campaignName(customer) : 'there';
+            const firstName = name.split(/\s+/).filter(Boolean)[0] || name;
+            return {
+                business: state.branding.businessName || 'our shop',
+                name,
+                firstName,
+                points: customer ? String(Number(customer.points) || 0) : '0',
+                visits: customer ? String(Number(customer.visits) || 0) : '0',
+                tier: customer ? deriveTier(customer) : 'Standard',
+                memberNo: customer ? customer.id : '',
+                lastVisit: customer ? formatDate(customer.lastVisitAt) : 'Never',
+                rewardGap: customer ? String(Math.max(0, (Number(state.settings.rewardCost) || 0) - (Number(customer.points) || 0))) : '0',
+                offer: byId('campaignOffer') ? byId('campaignOffer').value.trim() || 'a small loyalty treat' : 'a small loyalty treat',
+                campaignContact: ({ ...defaultState.services, ...(state.services || {}) }).campaignContact || 'your shop',
+                rewardStatus: customer ? rewardMessage(customer) : 'No customer selected'
+            };
+        }
+
+        function fillCampaignTokens(text, customer) {
+            const tokens = campaignTokens(customer);
+            return String(text || '').replace(/\{\{(\w+)\}\}/g, (_, key) => tokens[key] ?? '');
+        }
+
+        function campaignFooter(channel) {
+            if (channel === 'sms') {
+                return ' Reply STOP to opt out. Contact {{campaignContact}}.';
+            }
+            return '\n\n--\nYou are receiving this because you joined {{business}} rewards. To stop these messages, reply with "unsubscribe". Contact: {{campaignContact}}.';
+        }
+
+        function ensureCampaignFooter(message, channel, customer) {
+            const lower = String(message || '').toLowerCase();
+            const hasOptOut = channel === 'sms' ? lower.includes('stop') || lower.includes('opt out') : lower.includes('unsubscribe') || lower.includes('opt out');
+            if (hasOptOut) return message;
+            return message + fillCampaignTokens(campaignFooter(channel), customer);
+        }
+
+        function getCampaignTemplate(key, channel) {
+            const template = campaignTemplates[key] || campaignTemplates.rewardReady;
+            const message = channel === 'sms' ? template.sms : template.email;
+            return {
+                subject: channel === 'email' ? template.emailSubject : '',
+                message: message + campaignFooter(channel)
+            };
+        }
+
+        function loadCampaignTemplate(templateKey) {
+            const key = templateKey || byId('campaignTemplate').value;
+            const channel = byId('campaignChannel').value;
+            const customer = getCustomer(byId('campaignCustomerSelect').value) || getCustomers()[0];
+            const template = getCampaignTemplate(key, channel);
+            const subject = fillCampaignTokens(template.subject, customer);
+            const message = fillCampaignTokens(template.message, customer);
+            byId('campaignSubject').value = subject;
+            byId('campaignMessage').value = message;
+            updateCampaignMeta();
+            setPanelStatus('campaignStatus', (channel === 'sms' ? 'SMS' : 'Email') + ' template loaded.');
+            return message;
+        }
+
+        function updateCampaignMeta() {
+            const meta = byId('campaignMeta');
+            if (!meta) return;
+            const customer = getCustomer(byId('campaignCustomerSelect').value);
+            const channel = byId('campaignChannel').value;
+            const message = byId('campaignMessage').value || '';
+            const permission = customer ? ' · ' + contactPermissionLabel(customer) : '';
+            const target = customer ? (channel === 'sms' ? customer.phone || 'No phone saved' : customer.email || 'No email saved') : 'No customer selected';
+            const warning = channel === 'sms' && message.length > 160 ? ' · Long SMS' : '';
+            meta.textContent = channel.toUpperCase() + ' to ' + target + ' · ' + message.length + ' characters' + warning + permission;
+        }
+
+        function prepareCampaign() {
+            const customer = getCustomer(byId('campaignCustomerSelect').value);
+            const channel = byId('campaignChannel').value;
+            let subject = byId('campaignSubject').value.trim();
+            let message = byId('campaignMessage').value.trim();
+            if (!message) {
+                message = loadCampaignTemplate();
+                subject = byId('campaignSubject').value.trim();
+            }
+            if (!customer) {
+                setPanelStatus('campaignStatus', 'Choose a customer first.', true);
+                return null;
+            }
+            const services = { ...defaultState.services, ...(state.services || {}) };
+            if (!services.campaignContact) {
+                setPanelStatus('campaignStatus', 'Add campaign contact details in Settings > Services before sending marketing messages.', true);
+                return null;
+            }
+            const permission = canContactCustomer(customer, channel);
+            if (!permission.ok) {
+                setPanelStatus('campaignStatus', permission.reason + ' Update Contact Permissions in Customers before preparing this campaign.', true);
+                return null;
+            }
+            if (channel === 'email' && !subject) {
+                subject = fillCampaignTokens(getCampaignTemplate(byId('campaignTemplate').value, channel).subject, customer);
+                byId('campaignSubject').value = subject;
+            }
+            if (channel === 'sms' && !customer.phone) {
+                setPanelStatus('campaignStatus', 'SMS needs a phone number for ' + customer.name + '.', true);
+                return null;
+            }
+            if (channel === 'email' && !customer.email) {
+                setPanelStatus('campaignStatus', 'Email needs an email address for ' + customer.name + '.', true);
+                return null;
+            }
+            message = ensureCampaignFooter(message, channel, customer);
+            byId('campaignMessage').value = message;
+            const prepared = { customer, channel, subject, message };
+            const target = channel === 'sms' ? customer.phone : customer.email;
+            const preview = channel === 'email'
+                ? 'EMAIL ready for ' + customer.name + '\nTo: ' + target + '\nSubject: ' + subject + '\n\n' + message
+                : 'SMS ready for ' + customer.name + '\nTo: ' + target + '\n\n' + message;
+            updateCampaignMeta();
+            setPanelStatus('campaignStatus', preview);
+            return prepared;
+        }
+
+        async function copyCampaignText() {
+            const prepared = prepareCampaign();
+            if (!prepared) return false;
+            const text = prepared.channel === 'email'
+                ? 'Subject: ' + prepared.subject + '\n\n' + prepared.message
+                : prepared.message;
+            try {
+                await navigator.clipboard.writeText(text);
+                setPanelStatus('campaignStatus', 'Campaign text copied.');
+                return true;
+            } catch (_) {
+                setPanelStatus('campaignStatus', 'Copy is blocked in this browser. Select the message text and copy manually.', true);
+                return false;
+            }
+        }
+
+        function sendCampaign() {
+            const prepared = prepareCampaign();
+            if (!prepared) return false;
+            const services = { ...defaultState.services, ...(state.services || {}) };
+            if (prepared.channel === 'sms') {
+                if (services.smsService === 'api') {
+                    if (!services.smsApiEndpoint) {
+                        setPanelStatus('campaignStatus', 'SMS API mode is selected in Settings, but no SMS API endpoint is saved.', true);
+                        return false;
+                    }
+                    setPanelStatus('campaignStatus', 'SMS API payload ready.\nEndpoint: ' + services.smsApiEndpoint + '\nTo: ' + prepared.customer.phone + '\n\n' + prepared.message);
+                    addActivity('campaign', prepared.customer.id, 'SMS API campaign prepared');
+                    saveState();
+                    renderAll();
+                    return true;
+                }
+                window.location.href = 'sms:' + encodeURIComponent(prepared.customer.phone) + '?&body=' + encodeURIComponent(prepared.message);
+                addActivity('campaign', prepared.customer.id, 'SMS campaign opened');
+            } else {
+                if (services.emailService === 'api') {
+                    if (!services.emailApiEndpoint) {
+                        setPanelStatus('campaignStatus', 'Email API mode is selected in Settings, but no Email API endpoint is saved.', true);
+                        return false;
+                    }
+                    setPanelStatus('campaignStatus', 'Email API payload ready.\nEndpoint: ' + services.emailApiEndpoint + '\nTo: ' + prepared.customer.email + '\nSubject: ' + prepared.subject + '\n\n' + prepared.message);
+                    addActivity('campaign', prepared.customer.id, 'Email API campaign prepared: ' + prepared.subject);
+                    saveState();
+                    renderAll();
+                    return true;
+                }
+                window.location.href = 'mailto:' + encodeURIComponent(prepared.customer.email) + '?subject=' + encodeURIComponent(prepared.subject) + '&body=' + encodeURIComponent(prepared.message);
+                addActivity('campaign', prepared.customer.id, 'Email campaign opened: ' + prepared.subject);
+            }
+            saveState();
+            renderAll();
+            return true;
+        }
+
+        function runSelfTest() {
+            const testId = makeId();
+            const previousServices = clone(state.services || defaultState.services);
+            state.services = {
+                ...defaultState.services,
+                ...(state.services || {}),
+                campaignContact: 'selftest@example.com'
+            };
+            state.customers[testId] = {
+                id: testId,
+                token: testId,
+                name: 'Self Test Customer',
+                phone: '0400 000 000',
+                email: 'selftest@example.com',
+                points: 100,
+                visits: 0,
+                rewards: 0,
+                tier: 'Standard',
+                consent: {
+                    sms: true,
+                    email: true,
+                    doNotContact: false,
+                    note: 'Self-test campaign permission'
+                },
+                notes: [],
+                createdAt: todayISO(),
+                updatedAt: todayISO(),
+                lastVisitAt: '',
+                reminder: { preferredChannel: 'email', ready: true }
+            };
+            saveState();
+            renderAll();
+            const checks = [
+                ['handleScan', () => handleScan(testId)],
+                ['addVisit', () => addVisit(testId)],
+                ['addNote', () => addNote(testId, 'Self-test note')],
+                ['triggerReward', () => triggerReward(testId)],
+                ['renderCardPreviewForCustomer', () => renderCardPreviewForCustomer(testId)],
+                ['renderQrIntoCanvas', () => renderQrIntoCanvas(byId('qrToolCanvas'), testId)],
+                ['loadCampaignTemplate', () => Boolean(loadCampaignTemplate('rewardReady'))],
+                ['prepareCampaign', () => {
+                    byId('campaignCustomerSelect').value = testId;
+                    loadCampaignTemplate('rewardReady');
+                    return Boolean(prepareCampaign());
+                }],
+                ['saveBranding', () => saveBranding()],
+                ['saveServices', () => saveServices()],
+                ['connectUsbPrinter', () => typeof connectUsbPrinter === 'function'],
+                ['printViaUsbPrinter', () => typeof printViaUsbPrinter === 'function']
+            ];
+            const results = checks.map(([name, fn]) => {
+                try {
+                    return { name, ok: Boolean(fn()) };
+                } catch (error) {
+                    console.error('Self-test failed:', name, error);
+                    return { name, ok: false };
+                }
+            });
+            renderAll();
+            const failed = results.filter(result => !result.ok);
+            delete state.customers[testId];
+            state.services = previousServices;
+            state.selectedBatchIds = state.selectedBatchIds.filter(id => id !== testId);
+            state.activity = state.activity.filter(item => item.customerId !== testId);
+            if (activeCustomerId === testId) activeCustomerId = null;
+            if (!failed.length) state.settings.lastSelfTestAt = todayISO();
+            saveState();
+            renderAll();
+            setPanelStatus('settingsStatus', failed.length ? 'Self-test finished with issues: ' + failed.map(item => item.name).join(', ') : 'Self-test passed: all required functions responded.');
+            setStatus(failed.length ? 'Self-test found issues.' : 'Self-test passed.', Boolean(failed.length));
+            return results;
+        }
+
+        function renderAll() {
+            populateSelects();
+            renderCounterCustomer();
+            renderCustomerList();
+            renderCustomerHistory(byId('customerId').value);
+            renderDashboard();
+            renderSheetPreview();
+            renderSetupChecklist();
+            const firstCustomer = getCustomers()[0];
+            const currentCardId = byId('cardCustomerSelect').value || activeCustomerId || (firstCustomer && firstCustomer.id);
+            if (currentCardId) renderCardPreviewForCustomer(currentCardId);
+        }
+
+        function bindEvents() {
+            document.querySelectorAll('.nav button').forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.screen)));
+            byId('manualLookupBtn').addEventListener('click', handleManualLookup);
+            byId('scanToken').addEventListener('keydown', event => {
+                if (event.key === 'Enter') handleManualLookup();
+            });
+            byId('cameraBtn').addEventListener('click', startScan);
+            byId('checkinBtn').addEventListener('click', () => addVisit());
+            byId('rewardBtn').addEventListener('click', () => triggerReward());
+            byId('addNoteBtn').addEventListener('click', () => addNote());
+            byId('clearCounterBtn').addEventListener('click', clearCounterFlow);
+            byId('saveCustomerBtn').addEventListener('click', saveCustomer);
+            byId('newCustomerBtn').addEventListener('click', () => populateCustomerForm(null));
+            byId('deleteCustomerBtn').addEventListener('click', deleteCustomer);
+            byId('addPointsBtn').addEventListener('click', () => adjustCustomerPoints('add'));
+            byId('removePointsBtn').addEventListener('click', () => adjustCustomerPoints('remove'));
+            byId('setPointsBtn').addEventListener('click', () => adjustCustomerPoints('set'));
+            byId('customerSearch').addEventListener('input', renderCustomerList);
+            byId('dashboardSegment').addEventListener('change', renderDashboard);
+            byId('dashboardSort').addEventListener('change', renderDashboard);
+            byId('dashboardActivityType').addEventListener('change', renderDashboard);
+            byId('cardCustomerSelect').addEventListener('change', () => {
+                cardDisplayCustomerId = '';
+                renderCardPreviewForCustomer(byId('cardCustomerSelect').value);
+            });
+            byId('cardDisplayName').addEventListener('input', () => renderCardPreviewForCustomer(byId('cardCustomerSelect').value));
+            byId('previewCardBtn').addEventListener('click', () => renderCardPreviewForCustomer(byId('cardCustomerSelect').value));
+            byId('saveDisplayNameBtn').addEventListener('click', saveCardDisplayName);
+            byId('downloadCardBtn').addEventListener('click', downloadCardPng);
+            byId('printCardBtn').addEventListener('click', printCard);
+            byId('emailCardBtn').addEventListener('click', emailCardImage);
+            byId('membershipType').addEventListener('input', () => renderCardPreviewForCustomer(byId('cardCustomerSelect').value));
+            byId('footerText').addEventListener('input', () => renderCardPreviewForCustomer(byId('cardCustomerSelect').value));
+            byId('generateQrBtn').addEventListener('click', generateQrTool);
+            byId('downloadQrBtn').addEventListener('click', downloadQrPng);
+            byId('printQrBtn').addEventListener('click', printQrTool);
+            byId('copyQrBtn').addEventListener('click', copyQrPayload);
+            byId('clearQrBtn').addEventListener('click', clearQrTool);
+            byId('qrType').addEventListener('change', generateQrTool);
+            byId('qrCustomerSelect').addEventListener('change', generateQrTool);
+            byId('qrSize').addEventListener('change', generateQrTool);
+            byId('qrTitle').addEventListener('input', generateQrTool);
+            byId('qrCustomText').addEventListener('input', generateQrTool);
+            byId('addBatchCustomerBtn').addEventListener('click', addBatchCustomer);
+            byId('selectAllBatchBtn').addEventListener('click', selectAllBatch);
+            byId('downloadBatchBtn').addEventListener('click', downloadBatchPng);
+            byId('printBatchBtn').addEventListener('click', printBatchSheet);
+            byId('clearBatchBtn').addEventListener('click', clearBatch);
+            byId('connectUsbBtn').addEventListener('click', connectUsbPrinter);
+            byId('printUsbBtn').addEventListener('click', printViaUsbPrinter);
+            byId('loadTemplateBtn').addEventListener('click', () => loadCampaignTemplate());
+            byId('campaignTemplate').addEventListener('change', () => loadCampaignTemplate());
+            byId('campaignChannel').addEventListener('change', () => loadCampaignTemplate());
+            byId('campaignCustomerSelect').addEventListener('change', () => loadCampaignTemplate());
+            byId('campaignOffer').addEventListener('input', () => loadCampaignTemplate());
+            byId('campaignSubject').addEventListener('input', updateCampaignMeta);
+            byId('campaignMessage').addEventListener('input', updateCampaignMeta);
+            byId('prepareCampaignBtn').addEventListener('click', prepareCampaign);
+            byId('copyCampaignBtn').addEventListener('click', copyCampaignText);
+            byId('sendCampaignBtn').addEventListener('click', sendCampaign);
+            byId('saveBrandingBtn').addEventListener('click', saveBranding);
+            byId('saveSettingsBtn').addEventListener('click', saveSettings);
+            byId('saveServicesBtn').addEventListener('click', saveServices);
+            byId('runSelfTestBtn').addEventListener('click', runSelfTest);
+            byId('exportBackupBtn').addEventListener('click', exportBackup);
+            byId('restoreBackupBtn').addEventListener('click', restoreBackup);
+            byId('iosInstallDismissBtn').addEventListener('click', dismissIosInstallBanner);
+            byId('brandLogo').addEventListener('change', event => {
+                const file = event.target.files && event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    state.branding.logoDataUrl = String(reader.result || '');
+                    saveBranding();
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function init() {
+            bindEvents();
+            populateSettingsControls();
+            populateServiceSettings();
+            setPanelStatus('servicesStatus', servicesSummary());
+            applyBranding();
+            renderAll();
+            generateQrTool();
+            loadCampaignTemplate();
+            setStatus('Ready.');
+            registerServiceWorker();
+            maybeShowIosInstallBanner();
+        }
+
+        function isIosSafari() {
+            const userAgent = window.navigator.userAgent || '';
+            const isIosDevice = /iPad|iPhone|iPod/.test(userAgent) ||
+                (window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1);
+            const isSafari = /Safari/.test(userAgent) && !/CriOS|FxiOS|EdgiOS|OPiOS|Chrome|Android/.test(userAgent);
+            return isIosDevice && isSafari;
+        }
+
+        function isInstalledOnIos() {
+            return window.navigator.standalone === true;
+        }
+
+        function hasDismissedIosInstallBanner() {
+            try {
+                return localStorage.getItem(IOS_INSTALL_DISMISSED_KEY) === 'true';
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function maybeShowIosInstallBanner() {
+            const banner = byId('iosInstallBanner');
+            if (!banner) return;
+            const shouldShow = isIosSafari() && !isInstalledOnIos() && !hasDismissedIosInstallBanner();
+            banner.classList.toggle('show', shouldShow);
+            document.body.classList.toggle('ios-install-visible', shouldShow);
+        }
+
+        function dismissIosInstallBanner() {
+            try {
+                localStorage.setItem(IOS_INSTALL_DISMISSED_KEY, 'true');
+            } catch (_) {}
+            const banner = byId('iosInstallBanner');
+            if (banner) banner.classList.remove('show');
+            document.body.classList.remove('ios-install-visible');
+        }
+
+        function registerServiceWorker() {
+            const canRegister = 'serviceWorker' in navigator && (
+                window.location.protocol === 'https:' ||
+                window.location.hostname === 'localhost' ||
+                window.location.hostname === '127.0.0.1'
+            );
+            if (!canRegister) return;
+
+            window.addEventListener('online', () => setStatus('Back online.'));
+            window.addEventListener('offline', () => setStatus('Offline mode active. Saved customer data is still available.', true));
+
+            navigator.serviceWorker.register('./sw.js')
+                .then(registration => {
+                    registration.addEventListener('updatefound', () => {
+                        const worker = registration.installing;
+                        if (!worker) return;
+                        worker.addEventListener('statechange', () => {
+                            if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+                                setStatus('App update cached. Refresh when the counter is quiet.');
+                            }
+                        });
+                    });
+                })
+                .catch(error => {
+                    console.warn('Service worker registration failed.', error);
+                });
+        }
+
+        window.addVisit = addVisit;
+        window.addNote = addNote;
+        window.triggerReward = triggerReward;
+        window.handleScan = handleScan;
+        window.renderCardPreviewForCustomer = renderCardPreviewForCustomer;
+        window.renderQrIntoCanvas = renderQrIntoCanvas;
+        window.prepareCampaign = prepareCampaign;
+        window.loadCampaignTemplate = loadCampaignTemplate;
+        window.saveBranding = saveBranding;
+        window.connectUsbPrinter = connectUsbPrinter;
+        window.printViaUsbPrinter = printViaUsbPrinter;
+        window.exportBackup = exportBackup;
+        window.restoreBackup = restoreBackup;
+        window.runSelfTest = runSelfTest;
+
+        init();
+    </script>
+</body>
+
+</html>
