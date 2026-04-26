@@ -14,9 +14,10 @@
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&display=swap" rel="stylesheet" />
-    <script src="../assets/vendor/qrcode-generator.js"></script>
-    <script src="../assets/vendor/jsQR.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800;900&display=swap"
+        rel="stylesheet" />
+    <script src="./vendor/qrcode-generator.js"></script>
+    <script src="./vendor/jsQR.min.js"></script>
     <style>
         :root {
             --bg: #f5f9f6;
@@ -77,6 +78,15 @@
             transform: none;
         }
 
+        button:focus-visible,
+        input:focus-visible,
+        select:focus-visible,
+        textarea:focus-visible,
+        summary:focus-visible {
+            outline: 3px solid rgba(16, 185, 129, 0.36);
+            outline-offset: 3px;
+        }
+
         input,
         select,
         textarea {
@@ -88,7 +98,7 @@
             margin-top: 8px;
             padding: 14px 16px;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
         input:focus,
@@ -97,6 +107,34 @@
             outline: none;
             border-color: var(--brand);
             box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+        }
+
+        input[type="checkbox"] {
+            accent-color: var(--brand);
+            flex: 0 0 auto;
+            box-shadow: none;
+            height: 18px;
+            margin: 0 8px 0 0;
+            padding: 0;
+            vertical-align: -3px;
+            width: 18px;
+        }
+
+        label:has(input[type="checkbox"]) {
+            align-items: flex-start;
+            background: rgba(255, 255, 255, 0.62);
+            border: 1px solid rgba(16, 185, 129, 0.12);
+            border-radius: 10px;
+            color: var(--text);
+            display: flex;
+            gap: 8px;
+            line-height: 1.3;
+            margin-top: 10px;
+            padding: 10px 12px;
+        }
+
+        label:has(input[type="checkbox"]) input {
+            margin-top: 1px;
         }
 
         textarea {
@@ -119,16 +157,16 @@
             margin: 0 0 12px;
             color: #064e3b;
             font-weight: 800;
-            letter-spacing: -0.02em;
+            letter-spacing: 0;
         }
 
         h1 {
-            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-size: 2.5rem;
             font-weight: 900;
         }
 
         h2 {
-            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-size: 1.65rem;
         }
 
         h3 {
@@ -162,6 +200,7 @@
         .brand-mark {
             align-items: center;
             display: flex;
+            flex-wrap: wrap;
             gap: 16px;
             min-width: 0;
         }
@@ -179,7 +218,7 @@
             place-items: center;
             overflow: hidden;
             width: 64px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
         .brand-logo img {
@@ -194,7 +233,7 @@
             font-size: 1.4rem;
             font-weight: 900;
             overflow-wrap: anywhere;
-            letter-spacing: -0.02em;
+            letter-spacing: 0;
         }
 
         .brand-subtitle {
@@ -203,11 +242,66 @@
             font-weight: 500;
         }
 
+        .brand-project {
+            color: var(--muted);
+            font-size: 0.82rem;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        .product-brand {
+            align-items: center;
+            align-self: center;
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: #064e3b;
+            display: inline-flex;
+            flex: 0 0 auto;
+            gap: 8px;
+            margin-left: 4px;
+            padding: 7px 12px 7px 8px;
+            white-space: nowrap;
+        }
+
+        .product-brand img {
+            border-radius: 999px;
+            height: 26px;
+            object-fit: contain;
+            width: 26px;
+        }
+
+        .product-brand span {
+            color: var(--muted);
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .product-brand strong {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 900;
+            line-height: 1.1;
+        }
+
+        .product-brand em {
+            color: var(--muted);
+            display: block;
+            font-size: 0.72rem;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 1.15;
+            margin-top: 2px;
+        }
+
         .nav {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             justify-content: flex-end;
+            max-width: 100%;
         }
 
         .nav button {
@@ -229,10 +323,15 @@
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
         }
 
+        .nav button.quiet {
+            font-size: 0.95rem;
+            opacity: 0.78;
+        }
+
         .main {
             margin: 0 auto;
             max-width: 1240px;
-            padding: 32px 24px 64px;
+            padding: 32px 24px 128px;
         }
 
         .screen {
@@ -241,8 +340,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .screen.active {
@@ -268,6 +374,101 @@
             font-size: 1.1rem;
         }
 
+        .quick-actions {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            margin-top: 20px;
+            max-width: 760px;
+        }
+
+        .quick-actions button {
+            font-size: 1.05rem;
+            min-height: 70px;
+            padding: 16px 14px;
+        }
+
+        .first-use-panel,
+        .demo-panel {
+            background: #ffffff;
+            border: 1px solid rgba(16, 185, 129, 0.22);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            padding: 22px;
+        }
+
+        .first-use-panel.hidden,
+        .demo-panel.hidden {
+            display: none;
+        }
+
+        .first-use-fields {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: 1.2fr 0.7fr 1fr;
+            margin-top: 12px;
+        }
+
+        .demo-grid {
+            align-items: center;
+            display: grid;
+            gap: 18px;
+            grid-template-columns: minmax(0, 1fr) 180px;
+        }
+
+        .demo-qr {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            display: grid;
+            justify-items: center;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .demo-qr canvas {
+            height: 150px;
+            width: 150px;
+        }
+
+        .demo-pill {
+            background: rgba(245, 158, 11, 0.14);
+            border: 1px solid rgba(245, 158, 11, 0.32);
+            border-radius: 999px;
+            color: #92400e;
+            display: inline-flex;
+            font-size: 0.82rem;
+            font-weight: 900;
+            padding: 5px 10px;
+        }
+
+        .reward-ready-card {
+            background: linear-gradient(135deg, #fef3c7, #dcfce7);
+            border: 2px solid rgba(245, 158, 11, 0.55);
+            border-radius: 16px;
+            color: #064e3b;
+            margin-top: 16px;
+            padding: 18px;
+        }
+
+        .reward-ready-card strong {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 4px;
+        }
+
+        .soft-note {
+            background: rgba(59, 130, 246, 0.08);
+            border: 1px solid rgba(59, 130, 246, 0.18);
+            border-radius: 12px;
+            color: #1e3a8a;
+            font-size: 0.96rem;
+            font-weight: 650;
+            margin-top: 14px;
+            padding: 12px 14px;
+        }
+
         .grid {
             display: grid;
             gap: 20px;
@@ -288,6 +489,7 @@
             border: 1px solid rgba(255, 255, 255, 0.6);
             border-radius: var(--radius);
             box-shadow: var(--shadow);
+            min-width: 0;
             padding: 24px;
             transition: box-shadow 0.3s ease;
         }
@@ -305,6 +507,10 @@
 
         .button-row.three-wide {
             grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .button-row.single {
+            grid-template-columns: 1fr;
         }
 
         .primary {
@@ -338,7 +544,10 @@
         }
 
         .small-btn {
+            align-items: center;
+            display: inline-flex;
             font-size: 0.92rem;
+            justify-content: center;
             min-height: 40px;
             padding: 8px 12px;
             border-radius: 8px;
@@ -369,7 +578,7 @@
         .big-number {
             font-size: 2.6rem;
             font-weight: 900;
-            letter-spacing: -0.03em;
+            letter-spacing: 0;
             background: linear-gradient(135deg, var(--brand), #059669);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -383,11 +592,112 @@
             padding: 20px;
         }
 
+        .starter-panel {
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            margin-top: 16px;
+            padding: 18px;
+        }
+
+        .launch-setup {
+            background: #ffffff;
+            border: 1px solid rgba(16, 185, 129, 0.18);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            padding: 24px;
+        }
+
+        .setup-header {
+            align-items: start;
+            display: grid;
+            gap: 16px;
+            grid-template-columns: 1fr auto;
+        }
+
+        .setup-score {
+            color: #064e3b;
+            font-size: 1.9rem;
+            font-weight: 900;
+            line-height: 1;
+            text-align: right;
+        }
+
+        .progress-track {
+            background: #e2e8f0;
+            border-radius: 999px;
+            height: 12px;
+            margin-top: 16px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, var(--brand), var(--brand-dark));
+            border-radius: inherit;
+            height: 100%;
+            transition: width 0.25s ease;
+            width: 0%;
+        }
+
+        .setup-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 18px;
+        }
+
+        .setup-step {
+            align-items: center;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            display: grid;
+            gap: 12px;
+            grid-template-columns: auto 1fr auto;
+            padding: 12px;
+        }
+
+        .setup-step.done {
+            background: rgba(16, 185, 129, 0.08);
+            border-color: rgba(16, 185, 129, 0.28);
+        }
+
+        .step-number {
+            background: #ffffff;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            color: #064e3b;
+            display: grid;
+            font-size: 0.9rem;
+            font-weight: 900;
+            height: 34px;
+            place-items: center;
+            width: 34px;
+        }
+
+        .step-copy strong,
+        .step-copy span {
+            display: block;
+        }
+
+        .step-copy span {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-top: 2px;
+        }
+
+        .step-status {
+            color: var(--muted);
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-align: right;
+        }
+
         .customer-name {
             font-size: 1.8rem;
             font-weight: 900;
             color: #064e3b;
-            letter-spacing: -0.02em;
+            letter-spacing: 0;
         }
 
         .pill-row {
@@ -405,7 +715,7 @@
             font-size: 0.95rem;
             font-weight: 700;
             padding: 6px 14px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
         }
 
         .pill.brand {
@@ -451,6 +761,140 @@
             background: rgba(245, 158, 11, 0.08);
         }
 
+        .help-flow {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            margin-top: 18px;
+        }
+
+        .help-step {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            display: grid;
+            gap: 8px;
+            min-height: 132px;
+            padding: 16px;
+        }
+
+        .help-icon {
+            align-items: center;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.22);
+            border-radius: 999px;
+            color: #064e3b;
+            display: inline-flex;
+            font-size: 1.2rem;
+            font-weight: 900;
+            height: 42px;
+            justify-content: center;
+            width: 42px;
+        }
+
+        .help-step strong {
+            color: #064e3b;
+            display: block;
+            font-size: 1rem;
+        }
+
+        .help-step span:last-child {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .help-accordion {
+            background: var(--surface);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+
+        .help-accordion summary {
+            color: #064e3b;
+            cursor: pointer;
+            display: grid;
+            font-size: 1.08rem;
+            font-weight: 900;
+            gap: 12px;
+            grid-template-columns: 1fr auto;
+            list-style: none;
+            min-height: 58px;
+            padding: 18px 22px;
+        }
+
+        .help-accordion summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .help-accordion summary::after {
+            content: '+';
+            font-size: 1.25rem;
+        }
+
+        .help-accordion[open] summary::after {
+            content: '-';
+        }
+
+        .help-body {
+            border-top: 1px solid var(--line);
+            padding: 20px 22px 22px;
+        }
+
+        .help-card-grid {
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .help-card-grid + .help-card-grid {
+            margin-top: 14px;
+        }
+
+        .help-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            display: grid;
+            gap: 10px;
+            padding: 16px;
+        }
+
+        .help-card h3 {
+            color: #064e3b;
+            margin: 0;
+        }
+
+        .help-card p {
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .help-card button {
+            justify-self: start;
+            margin-top: 4px;
+        }
+
+        .help-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .help-line {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 14px 16px;
+        }
+
+        .help-line strong {
+            color: #064e3b;
+            display: block;
+            margin-bottom: 3px;
+        }
+
         .list {
             border: 1px solid var(--line);
             border-radius: 12px;
@@ -489,7 +933,7 @@
             padding: 12px 16px;
             transition: background 0.2s ease;
         }
-        
+
         .activity-item:hover {
             background: #f8fafc;
         }
@@ -508,7 +952,7 @@
             border: 1px solid var(--line);
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
             transition: transform 0.2s ease;
         }
 
@@ -555,7 +999,7 @@
         .card-name {
             font-weight: 900;
             overflow-wrap: anywhere;
-            letter-spacing: -0.01em;
+            letter-spacing: 0;
         }
 
         .card-business {
@@ -565,7 +1009,7 @@
 
         .card-name {
             font-size: 2rem;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .card-type,
@@ -585,7 +1029,7 @@
             justify-items: center;
             padding: 12px;
             text-align: center;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
         }
 
         .qr-box canvas {
@@ -612,6 +1056,47 @@
             position: relative;
         }
 
+        .section-gap {
+            margin-top: 16px;
+        }
+
+        .section-subheading {
+            margin-top: 18px;
+        }
+
+        .settings-subheading {
+            margin-top: 22px;
+        }
+
+        .demo-title {
+            margin-top: 10px;
+        }
+
+        .list-spaced {
+            margin-top: 12px;
+        }
+
+        .last-visit {
+            margin-top: 10px;
+        }
+
+        .qr-box-medium {
+            max-width: 320px;
+        }
+
+        .qr-box-large {
+            max-width: 360px;
+        }
+
+        .sheet-empty {
+            display: grid;
+            inset: 0;
+            padding: 20px;
+            place-items: center;
+            position: absolute;
+            text-align: center;
+        }
+
         .sheet-card {
             background: linear-gradient(135deg, var(--brand), #34d399 58%, #a7f3d0 100%);
             border-radius: 6px;
@@ -621,6 +1106,14 @@
 
         .hidden {
             display: none !important;
+        }
+
+        .advanced-service-fields {
+            display: none;
+        }
+
+        .advanced-service-fields.visible {
+            display: block;
         }
 
         #reader {
@@ -674,19 +1167,21 @@
         .footer-status {
             bottom: 16px;
             left: 24px;
+            pointer-events: none;
             position: fixed;
             right: 24px;
             z-index: 20;
         }
 
         .footer-status .status {
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             margin: 0 auto;
             max-width: 760px;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border-color: rgba(16, 185, 129, 0.3);
+            pointer-events: auto;
         }
 
         .ios-install-banner {
@@ -719,7 +1214,7 @@
             margin: 0;
         }
 
-        .share-icon-placeholder {
+        .share-icon-badge {
             align-items: center;
             border: 1px solid rgba(16, 185, 129, 0.25);
             border-radius: 8px;
@@ -757,16 +1252,101 @@
                 font-size: 17px;
             }
 
+            h1 {
+                font-size: 2.1rem;
+            }
+
+            h2 {
+                font-size: 1.45rem;
+            }
+
             .topbar-inner,
             .two,
             .three,
+            .first-use-fields,
+            .demo-grid,
+            .help-flow,
+            .setup-header,
+            .setup-step,
             .button-row,
             .button-row.three-wide {
                 grid-template-columns: 1fr;
             }
 
+            .topbar-inner {
+                align-items: stretch;
+                gap: 12px;
+                padding: 12px 16px;
+            }
+
+            .brand-mark {
+                gap: 10px;
+            }
+
+            .brand-logo {
+                flex-basis: 52px;
+                height: 52px;
+                width: 52px;
+            }
+
+            .brand-title {
+                font-size: 1.16rem;
+            }
+
+            .brand-subtitle {
+                font-size: 0.86rem;
+            }
+
             .nav {
+                flex-wrap: nowrap;
                 justify-content: flex-start;
+                margin: 0 -16px;
+                overflow-x: auto;
+                padding: 0 16px 4px;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .nav::-webkit-scrollbar {
+                display: none;
+            }
+
+            .nav button {
+                flex: 0 0 auto;
+                min-height: 40px;
+                padding: 8px 12px;
+            }
+
+            .product-brand {
+                margin-left: 0;
+            }
+
+            .main {
+                padding: 20px 16px 140px;
+            }
+
+            .hero-band,
+            .card,
+            .launch-setup,
+            .first-use-panel,
+            .demo-panel {
+                padding: 18px;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                max-width: none;
+            }
+
+            .quick-actions button {
+                font-size: 0.98rem;
+                min-height: 58px;
+                padding: 12px 10px;
+            }
+
+            .setup-score,
+            .step-status {
+                text-align: left;
             }
 
             .card-preview {
@@ -790,6 +1370,25 @@
 
             .ios-install-dismiss {
                 width: 100%;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-mark {
+                align-items: flex-start;
+            }
+
+            .product-brand {
+                order: 3;
+            }
+
+            .footer-status {
+                left: 12px;
+                right: 12px;
             }
         }
 
@@ -830,26 +1429,83 @@
                     <div>
                         <div class="brand-title" id="appBusinessName">loyalty-4-All</div>
                         <div class="brand-subtitle">Loyalty-first CRM for small family businesses</div>
+                        <div class="brand-project">De-Omega-Point "Project"</div>
+                    </div>
+                    <div class="product-brand" aria-label="Powered by Loyalty-4-All">
+                        <img alt="" src="../assets/logo.png" />
+                        <div>
+                            <span>Powered by</span>
+                            <strong>loyalty-4-All</strong>
+                            <em>De-Omega-Point "Project"</em>
+                        </div>
                     </div>
                 </div>
                 <nav class="nav" aria-label="Main navigation">
-                    <button class="active" data-screen="counter">Counter</button>
-                    <button data-screen="dashboard">Dashboard</button>
+                    <button class="active" data-screen="counter" aria-current="page">Scan</button>
                     <button data-screen="customers">Customers</button>
-                    <button data-screen="cards">Card Studio</button>
-                    <button data-screen="qrtools">QR Tools</button>
-                    <button data-screen="printing">Printing</button>
-                    <button data-screen="campaigns">Campaigns</button>
-                    <button data-screen="settings">Settings</button>
+                    <button data-screen="dashboard">Dashboard</button>
+                    <button data-screen="campaigns">Messages</button>
+                    <button class="quiet" data-screen="cards">Cards</button>
+                    <button class="quiet" data-screen="qrtools">QR Labels</button>
+                    <button class="quiet" data-screen="printing">Print</button>
+                    <button data-screen="settings">Launch Setup</button>
+                    <button data-screen="help">Help</button>
                 </nav>
             </div>
         </header>
 
         <main class="main">
             <section id="screen-counter" class="screen active">
+                <div class="first-use-panel hidden" id="firstUsePanel">
+                    <h1>Ready to Trade</h1>
+                    <p class="muted">Start with defaults, try the demo, or add your first customer.</p>
+                    <div class="first-use-fields">
+                        <div>
+                            <label for="setupBusinessName">Business name</label>
+                            <input id="setupBusinessName" value="Family Business" />
+                        </div>
+                        <div>
+                            <label for="setupBrandColor">Brand colour</label>
+                            <input id="setupBrandColor" type="color" value="#2f9461" />
+                        </div>
+                        <div>
+                            <label for="setupRewardRule">Reward rule</label>
+                            <input id="setupRewardRule" value="Free coffee at 50 points" />
+                        </div>
+                    </div>
+                    <div class="button-row three-wide">
+                        <button class="primary" id="setupDemoBtn" type="button">Try Demo</button>
+                        <button class="secondary" id="setupFirstCustomerBtn" type="button">Add Customer</button>
+                        <button class="ghost" id="setupSkipBtn" type="button">Skip</button>
+                    </div>
+                </div>
                 <div class="hero-band">
-                    <h1>Counter Mode</h1>
-                    <p>Find a customer, check them in, add a quick note, or give a manual reward without slowing the counter down.</p>
+                    <h1>Scan & Serve</h1>
+                    <p>The daily counter flow: scan a QR code, add the visit, and move on quickly.</p>
+                    <div class="quick-actions" aria-label="Daily actions">
+                        <button class="primary" id="quickScanBtn" type="button">Scan QR</button>
+                        <button class="secondary" id="walkInCheckinBtn" type="button">Revisit</button>
+                        <button class="ghost" id="quickAddCustomerBtn" type="button">Add Customer</button>
+                        <button class="ghost" id="quickRewardsBtn" type="button">Reward Ready</button>
+                    </div>
+                </div>
+                <div class="demo-panel hidden" id="demoPanel">
+                    <div class="demo-grid">
+                        <div>
+                            <span class="demo-pill">Demo Mode</span>
+                            <h2 class="demo-title">Sample cafe data only</h2>
+                            <p class="muted">Ava starts with 45 points. Tap demo revisit to add 5 points and show Reward Ready.</p>
+                            <div class="button-row three-wide">
+                                <button class="primary" id="demoRevisitBtn" type="button">Demo Revisit</button>
+                                <button class="ghost" id="demoResetBtn" type="button">Reset Demo</button>
+                                <button class="ghost" id="demoExitBtn" type="button">Exit Demo</button>
+                            </div>
+                        </div>
+                        <div class="demo-qr">
+                            <canvas id="demoQrCanvas" width="180" height="180"></canvas>
+                            <div class="qr-text">Sample QR</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="grid two">
                     <div class="card">
@@ -857,15 +1513,16 @@
                         <label for="scanToken">Manual token, name, phone, or email</label>
                         <input id="scanToken" autocomplete="off" placeholder="Paste QR token or search by name" />
                         <div class="button-row">
-                            <button class="primary" id="manualLookupBtn">Look up customer</button>
-                            <button class="ghost" id="cameraBtn">QR / camera scan</button>
+                            <button class="primary" id="manualLookupBtn">Find customer</button>
+                            <button class="ghost" id="cameraBtn">Scan QR</button>
                         </div>
-                        <div id="reader">Camera support is checked only after you press QR / camera scan.</div>
+                        <div class="soft-note">Use Revisit when customers scan themselves as they walk in. It stays
+                            open and adds visit points automatically.</div>
+                        <div id="reader">Camera support is checked only after you press Scan QR.</div>
                         <div id="counterCustomer" class="customer-panel">
                             <div class="muted">No customer selected yet.</div>
                         </div>
-                        <div class="button-row three-wide">
-                            <button class="primary" id="checkinBtn">Check-in Visit</button>
+                        <div class="button-row">
                             <button class="secondary" id="rewardBtn">Manual Reward</button>
                             <button class="ghost" id="clearCounterBtn">Clear</button>
                         </div>
@@ -874,7 +1531,8 @@
                     <div class="card">
                         <h2>Quick Note</h2>
                         <label for="counterNote">Note</label>
-                        <textarea id="counterNote" placeholder="Example: prefers SMS, birthday in June, likes the family pack"></textarea>
+                        <textarea id="counterNote"
+                            placeholder="Example: prefers SMS, birthday in June, likes the family pack"></textarea>
                         <button class="primary" id="addNoteBtn">Add Note</button>
                         <div class="status" id="rewardFeedback">Ready for the next customer.</div>
                     </div>
@@ -891,16 +1549,16 @@
                     <div class="kpi"><span>Total visits</span><strong id="metricVisits">0</strong></div>
                     <div class="kpi"><span>Rewards given</span><strong id="metricRewards">0</strong></div>
                 </div>
-                <div class="grid three" style="margin-top:16px;">
+                <div class="grid three section-gap">
                     <div class="kpi"><span>Reward ready</span><strong id="metricRewardReady">0</strong></div>
                     <div class="kpi"><span>VIP customers</span><strong id="metricVipCustomers">0</strong></div>
                     <div class="kpi"><span>Need follow-up</span><strong id="metricFollowUps">0</strong></div>
                 </div>
-                <div class="card" style="margin-top:16px;">
+                <div class="card section-gap">
                     <h2>Readiness Indicators</h2>
                     <div id="dashboardIndicators" class="indicator-grid"></div>
                 </div>
-                <div class="card" style="margin-top:16px;">
+                <div class="card section-gap">
                     <h2>Dashboard Controls</h2>
                     <div class="grid three">
                         <div>
@@ -928,12 +1586,12 @@
                                 <option value="visit">Visits</option>
                                 <option value="reward">Rewards</option>
                                 <option value="note">Notes</option>
-                                <option value="campaign">Campaigns</option>
+                                <option value="campaign">Messages</option>
                             </select>
                         </div>
                     </div>
                 </div>
-                <div class="grid two" style="margin-top:16px;">
+                <div class="grid two section-gap">
                     <div class="card">
                         <h2 id="dashboardListTitle">Top Customers</h2>
                         <div id="topCustomers" class="list"></div>
@@ -943,7 +1601,7 @@
                         <div id="recentActivity" class="list"></div>
                     </div>
                 </div>
-                <div class="grid two" style="margin-top:16px;">
+                <div class="grid two section-gap">
                     <div class="card">
                         <h2>Ready For Reward</h2>
                         <div id="rewardReadyList" class="list"></div>
@@ -958,7 +1616,8 @@
             <section id="screen-customers" class="screen">
                 <div class="hero-band">
                     <h1>Customers / CRM</h1>
-                    <p>Create and update members, track points and visits, and keep simple notes that are ready for reminders later.</p>
+                    <p>Create and update members, track points and visits, and keep simple notes that are ready for
+                        reminders later.</p>
                 </div>
                 <div class="grid two">
                     <div class="card">
@@ -972,10 +1631,11 @@
                         <input id="customerEmail" placeholder="Email address" />
                         <div class="customer-panel">
                             <h3>Contact Permissions</h3>
-                            <p class="muted">Record what the customer is comfortable receiving. Campaigns are blocked when permission is not saved.</p>
+                            <p class="muted">Record what the customer is comfortable receiving. Messages are blocked
+                                when permission is not saved.</p>
                             <label><input id="consentSms" type="checkbox" /> SMS messages ok</label>
                             <label><input id="consentEmail" type="checkbox" /> Email messages ok</label>
-                            <label><input id="doNotContact" type="checkbox" /> Do not contact for campaigns</label>
+                            <label><input id="doNotContact" type="checkbox" /> Do not contact for messages</label>
                             <label for="consentNote">Consent note</label>
                             <input id="consentNote" placeholder="Example: asked in store, 24 Apr 2026" />
                         </div>
@@ -1007,21 +1667,23 @@
                             <div class="status" id="pointsManagerStatus">Choose a customer to manage points.</div>
                         </div>
                         <div id="customerHistory" class="list history-list">
-                            <div class="list-item"><div class="muted">Choose a customer to see their visits, rewards, and notes.</div></div>
+                            <div class="list-item">
+                                <div class="muted">Choose a customer to see their visits, rewards, and notes.</div>
+                            </div>
                         </div>
                     </div>
                     <div class="card">
                         <h2>Customer List</h2>
                         <label for="customerSearch">Search</label>
                         <input id="customerSearch" placeholder="Search customers" />
-                        <div id="customerList" class="list" style="margin-top:12px;"></div>
+                        <div id="customerList" class="list list-spaced"></div>
                     </div>
                 </div>
             </section>
 
             <section id="screen-cards" class="screen">
                 <div class="hero-band">
-                    <h1>Card Studio</h1>
+                    <h1>Cards</h1>
                     <p>Preview, export, print, and email membership cards sized for Australian wallet-card printing.</p>
                 </div>
                 <div class="grid two">
@@ -1065,8 +1727,8 @@
                             </div>
                         </div>
                         <div class="status" id="cardStatus">Card studio ready.</div>
-                        <h3 style="margin-top:18px;">Scan Test QR</h3>
-                        <div class="qr-box" style="max-width:360px;">
+                        <h3 class="section-subheading">Scan Test QR</h3>
+                        <div class="qr-box qr-box-large">
                             <canvas id="cardLargeQrCanvas" width="320" height="320"></canvas>
                             <div id="cardLargeQrText" class="qr-text">No token</div>
                         </div>
@@ -1076,7 +1738,7 @@
 
             <section id="screen-qrtools" class="screen">
                 <div class="hero-band">
-                    <h1>QR Tools</h1>
+                    <h1>QR Labels</h1>
                     <p>Make real scannable QR labels for customers, promotions, inventory, tracking, or custom text.</p>
                 </div>
                 <div class="grid two">
@@ -1090,7 +1752,7 @@
                             <option value="tracking">Tracking QR</option>
                             <option value="custom">Custom QR</option>
                         </select>
-                        <label for="qrCustomerSelect">Customer</label>
+                        <label for="qrCustomerSelect">Customer optional</label>
                         <select id="qrCustomerSelect"></select>
                         <label for="qrTitle">Label / title</label>
                         <input id="qrTitle" placeholder="Promo, stock code, or tracking label" />
@@ -1114,7 +1776,7 @@
                     </div>
                     <div class="card">
                         <h2>QR Preview</h2>
-                        <div class="qr-box" style="max-width:320px;">
+                        <div class="qr-box qr-box-medium">
                             <canvas id="qrToolCanvas" width="240" height="240"></canvas>
                             <div id="qrToolText" class="qr-text">Ready</div>
                         </div>
@@ -1158,8 +1820,8 @@
 
             <section id="screen-campaigns" class="screen">
                 <div class="hero-band">
-                    <h1>Campaigns</h1>
-                    <p>Open consent-aware SMS and email campaigns in your device app, ready to review and send.</p>
+                    <h1>Messages</h1>
+                    <p>Send simple, consent-aware SMS and email messages through the device apps already on hand.</p>
                 </div>
                 <div class="grid two">
                     <div class="card">
@@ -1188,20 +1850,21 @@
                         </select>
                         <button class="primary" id="loadTemplateBtn">Load Template</button>
                         <label for="campaignOffer">Offer / call-to-action</label>
-                        <input id="campaignOffer" placeholder="Example: 10% off this week, free upgrade, double points Friday" />
+                        <input id="campaignOffer"
+                            placeholder="Example: 10% off this week, free upgrade, double points Friday" />
                         <label for="campaignSubject">Email subject</label>
-                        <input id="campaignSubject" placeholder="Subject line for email campaigns" />
+                        <input id="campaignSubject" placeholder="Subject line for email messages" />
                         <label for="campaignMessage">Message</label>
                         <textarea id="campaignMessage"></textarea>
                         <div class="muted" id="campaignMeta">Choose a customer and template.</div>
                         <div class="button-row three-wide">
                             <button class="secondary" id="prepareCampaignBtn">Preview</button>
                             <button class="ghost" id="copyCampaignBtn">Copy Text</button>
-                            <button class="primary" id="sendCampaignBtn">Open Send Link</button>
+                            <button class="primary" id="sendCampaignBtn">Send using my device</button>
                         </div>
                     </div>
                     <div class="card">
-                        <h2>Campaign Preview</h2>
+                        <h2>Message Preview</h2>
                         <div class="status" id="campaignStatus">Choose a template to begin.</div>
                     </div>
                 </div>
@@ -1209,12 +1872,25 @@
 
             <section id="screen-settings" class="screen">
                 <div class="hero-band">
-                    <h1>Settings</h1>
-                    <p>Manage business setup, loyalty rules, campaign services, API settings, and backups. Everything saves in this browser.</p>
+                    <h1>Launch Setup</h1>
+                    <p>Set up the essentials once, then use Scan every day. Everything saves in this browser.</p>
+                </div>
+                <div class="launch-setup" aria-label="Launch setup progress">
+                    <div class="setup-header">
+                        <div>
+                            <h2>Ready To Trade</h2>
+                            <p class="muted">Finish these steps before handing the app to a busy counter team.</p>
+                        </div>
+                        <div class="setup-score" id="setupScore">0/7</div>
+                    </div>
+                    <div class="progress-track" aria-hidden="true">
+                        <div class="progress-fill" id="setupProgressFill"></div>
+                    </div>
+                    <div id="launchSetupSteps" class="setup-list"></div>
                 </div>
                 <div class="grid two">
-                    <div class="card">
-                        <h2>Branding</h2>
+                    <div class="card" id="settingsBusinessCard">
+                        <h2>Business Basics</h2>
                         <label for="businessName">Business name</label>
                         <input id="businessName" value="Family Business" />
                         <label for="businessContactName">Owner / contact name</label>
@@ -1235,8 +1911,9 @@
                             <button class="primary" id="saveBrandingBtn">Save Branding</button>
                             <button class="ghost" id="runSelfTestBtn">Run Self-Test</button>
                         </div>
-                        <h2 style="margin-top:22px;">Backup</h2>
-                        <p class="muted">Save a copy of customers, points, notes, and settings. Restore it if you change browser or device.</p>
+                        <h2 class="settings-subheading">Backup</h2>
+                        <p class="muted">Save a copy of customers, points, notes, and settings. Restore it if you change
+                            browser or device.</p>
                         <label for="restoreFile">Restore backup file</label>
                         <input id="restoreFile" type="file" accept="application/json,.json" />
                         <label for="backupReminder">Backup reminder</label>
@@ -1251,10 +1928,28 @@
                             <button class="ghost" id="restoreBackupBtn">Restore Backup</button>
                         </div>
                         <div class="status" id="backupReminderStatus">Backup reminder ready.</div>
-                        <h2 style="margin-top:22px;">Privacy & Customer Agency</h2>
-                        <p class="muted">Customer records stay in this browser unless you export a backup. Keep backups private, delete customers on request, and only send campaign messages when the customer has agreed to that channel.</p>
+                        <h2 class="settings-subheading">Privacy & Customer Agency</h2>
+                        <p class="muted">Customer records stay in this browser unless you export a backup. Keep backups
+                            private, delete customers on request, and only send messages when the customer has
+                            agreed to that channel.</p>
                     </div>
-                    <div class="card">
+                    <div class="card" id="settingsSupportCard">
+                        <h2>Support Details</h2>
+                        <p class="muted">Shown in Help so staff know who to contact when they are stuck. Default support email: support@Loyalty-4-All.com.</p>
+                        <div class="soft-note">Project: De-Omega-Point "Project".</div>
+                        <div class="soft-note">Optional buyer offer: free access to future Loyalty-4-All updates for life, when updates are released.</div>
+                        <label for="supportName">Support name</label>
+                        <input id="supportName" placeholder="Example: Loyalty-4-All Support" />
+                        <label for="supportEmail">Support email</label>
+                        <input id="supportEmail" placeholder="support@Loyalty-4-All.com" />
+                        <label for="supportPhone">Support phone</label>
+                        <input id="supportPhone" placeholder="08 8123 4567" />
+                        <label for="supportWebsite">Website / help link</label>
+                        <input id="supportWebsite" placeholder="https://example.com/help" />
+                        <button class="primary" id="saveSupportBtn">Save Support</button>
+                        <div class="status" id="supportStatus">Support details ready.</div>
+                    </div>
+                    <div class="card" id="settingsRulesCard">
                         <h2>Loyalty Rules</h2>
                         <label for="visitPoints">Points per visit</label>
                         <input id="visitPoints" type="number" min="0" value="5" />
@@ -1262,13 +1957,15 @@
                         <input id="rewardCost" type="number" min="0" value="50" />
                         <label for="rewardName">Reward name</label>
                         <input id="rewardName" placeholder="Example: free coffee, $10 off, bonus item" />
-                        <label><input id="blockSameDayQrCheckin" type="checkbox" /> Block repeat QR check-ins on the same day</label>
+                        <label><input id="blockSameDayQrCheckin" type="checkbox" /> Block repeat QR revisits on the
+                            same day</label>
                         <button class="primary" id="saveSettingsBtn">Save Settings</button>
                         <div class="status" id="settingsStatus">Settings ready.</div>
                     </div>
-                    <div class="card">
+                    <div class="card" id="settingsScannerCard">
                         <h2>QR Scanner</h2>
-                        <label><input id="qrAutoCheckin" type="checkbox" /> Add visit points automatically after a successful QR scan</label>
+                        <label><input id="qrAutoCheckin" type="checkbox" /> Add visit points automatically after a
+                            successful QR scan</label>
                         <label for="scanCooldownSeconds">Scan cooldown seconds</label>
                         <input id="scanCooldownSeconds" type="number" min="1" max="15" value="3" />
                         <label for="preferredCamera">Preferred camera</label>
@@ -1276,39 +1973,100 @@
                             <option value="environment">Back camera / counter scanner</option>
                             <option value="user">Front camera</option>
                         </select>
-                        <p class="muted">Manual lookup always remains available if camera permission or scanning is unavailable.</p>
+                        <p class="muted">Manual lookup always remains available if camera permission or scanning is
+                            unavailable.</p>
                     </div>
-                    <div class="card">
-                        <h2>Services</h2>
+                    <div class="card" id="settingsMessagesCard">
+                        <h2>Messages</h2>
                         <label for="smsService">SMS service</label>
                         <select id="smsService">
-                            <option value="device">Device SMS app</option>
-                            <option value="api">External SMS API</option>
+                            <option value="device">Send using my device</option>
+                            <option value="api">Connected service required</option>
                         </select>
-                        <label for="smsApiEndpoint">SMS API endpoint</label>
-                        <input id="smsApiEndpoint" placeholder="https://api.example.com/send-sms" />
-                        <label for="smsApiKey">SMS API key / token</label>
-                        <input id="smsApiKey" type="password" placeholder="Saved locally in this browser" />
+                        <div id="smsApiFields" class="advanced-service-fields">
+                            <p class="muted">To send SMS campaigns automatically, connect an SMS service through a secure backend/proxy.</p>
+                            <label for="smsServiceName">SMS service name</label>
+                            <input id="smsServiceName" placeholder="Example: Twilio, MessageMedia" />
+                            <label for="smsApiEndpoint">SMS API endpoint</label>
+                            <input id="smsApiEndpoint" placeholder="Secure backend/proxy endpoint" />
+                            <label for="smsSenderId">Sender ID / from number</label>
+                            <input id="smsSenderId" placeholder="Example: CafeName or +614..." />
+                            <label for="smsConnectionStatus">Connection status</label>
+                            <select id="smsConnectionStatus">
+                                <option value="notConnected">Not connected</option>
+                                <option value="backendRequired">Backend/proxy required</option>
+                            </select>
+                            <label for="smsLastTestedAt">Last tested date</label>
+                            <input id="smsLastTestedAt" placeholder="Not tested" />
+                        </div>
 
                         <label for="emailService">Email service</label>
                         <select id="emailService">
-                            <option value="device">Device email app</option>
-                            <option value="api">External Email API</option>
+                            <option value="device">Send using my device</option>
+                            <option value="api">Connected service required</option>
                         </select>
-                        <label for="emailApiEndpoint">Email API endpoint</label>
-                        <input id="emailApiEndpoint" placeholder="https://api.example.com/send-email" />
-                        <label for="emailApiKey">Email API key / token</label>
-                        <input id="emailApiKey" type="password" placeholder="Saved locally in this browser" />
+                        <div id="emailApiFields" class="advanced-service-fields">
+                            <p class="muted">To send email campaigns automatically, connect an email service through a secure backend/proxy.</p>
+                            <label for="emailServiceName">Email service name</label>
+                            <input id="emailServiceName" placeholder="Example: Mailchimp, SendGrid" />
+                            <label for="emailApiEndpoint">Email API endpoint</label>
+                            <input id="emailApiEndpoint" placeholder="Secure backend/proxy endpoint" />
+                            <label for="emailFromAddress">From email</label>
+                            <input id="emailFromAddress" placeholder="hello@yourshop.com" />
+                            <label for="emailReplyTo">Reply-to email</label>
+                            <input id="emailReplyTo" placeholder="reply@yourshop.com" />
+                            <label for="emailConnectionStatus">Connection status</label>
+                            <select id="emailConnectionStatus">
+                                <option value="notConnected">Not connected</option>
+                                <option value="backendRequired">Backend/proxy required</option>
+                            </select>
+                            <label for="emailLastTestedAt">Last tested date</label>
+                            <input id="emailLastTestedAt" placeholder="Not tested" />
+                        </div>
 
-                        <label for="campaignContact">Campaign contact details</label>
+                        <label for="campaignContact">Message contact details</label>
                         <input id="campaignContact" placeholder="Example: hello@yourshop.com or 08 8123 4567" />
 
                         <label for="servicesNotes">Service notes</label>
-                        <textarea id="servicesNotes" placeholder="Example: API keys are for the shop owner only. Device apps are safest for launch."></textarea>
+                        <textarea id="servicesNotes"
+                            placeholder="Example: Device mode is safest for launch. Do not store API secrets in this app."></textarea>
                         <button class="primary" id="saveServicesBtn">Save Services</button>
-                        <div class="status" id="servicesStatus">Campaigns use device SMS and email apps by default.</div>
+                        <div class="status" id="servicesStatus">Messages use device SMS and email apps by default.
+                        </div>
                     </div>
-                    <div class="card">
+                    <div class="card" id="settingsDataPortCard">
+                        <h2>My Data</h2>
+                        <p class="muted">Your customer data is saved on this device. Export, back up, or restore only when you choose.</p>
+                        <label for="dataPortMode">Data option</label>
+                        <select id="dataPortMode">
+                            <option value="internal">Saved on this device</option>
+                            <option value="googleSheets">Google Sheets</option>
+                            <option value="excelOnline">Microsoft Excel / OneDrive</option>
+                            <option value="airtable">Airtable</option>
+                            <option value="webhook">Other webhook / API</option>
+                        </select>
+                        <label for="dataPortSheetName">Spreadsheet name</label>
+                        <input id="dataPortSheetName" value="mydata" />
+                        <div id="dataPortExternalFields" class="advanced-service-fields">
+                            <label for="dataPortExternalUrl">External sheet or endpoint</label>
+                            <input id="dataPortExternalUrl"
+                                placeholder="Paste Google Sheet link, Apps Script URL, Airtable URL, or API endpoint" />
+                        </div>
+                        <label for="dataPortNotes">Data notes</label>
+                        <textarea id="dataPortNotes"
+                            placeholder="Example: mydata is exported weekly and uploaded to the owner Google Sheet."></textarea>
+                        <div class="button-row">
+                            <button class="primary" id="saveDataPortBtn">Save My Data</button>
+                            <button class="secondary" id="exportMyDataCsvBtn">Export mydata CSV</button>
+                        </div>
+                        <div class="button-row">
+                            <button class="ghost" id="copyMyDataJsonBtn">Copy Data JSON</button>
+                            <button class="ghost" id="openDataPortBtn">Open External</button>
+                        </div>
+                        <div class="status" id="dataPortStatus">Saved on this device. No hidden cloud sync.
+                        </div>
+                    </div>
+                    <div class="card" id="settingsChecklistCard">
                         <h2>Setup Checklist</h2>
                         <div id="setupChecklist" class="list"></div>
                     </div>
@@ -1319,6 +2077,228 @@
                 </div>
             </section>
 
+            <section id="screen-help" class="screen">
+                <div class="hero-band">
+                    <h1>Help</h1>
+                    <p>Quick help for busy counters. Open app &rarr; scan customer &rarr; reward loyalty &rarr; back up data.</p>
+                    <div class="quick-actions" aria-label="Help shortcuts">
+                        <button class="primary" data-help-screen="counter" type="button">Open Scan</button>
+                        <button class="secondary" data-help-screen="customers" type="button">Add Customer</button>
+                        <button class="ghost" data-help-screen="settings" data-help-focus="exportBackupBtn" type="button">Save Backup</button>
+                        <button class="ghost" data-help-screen="settings" data-help-focus="settingsSupportCard" type="button">Support</button>
+                    </div>
+                </div>
+
+                <details class="help-accordion" open>
+                    <summary>Quick Start</summary>
+                    <div class="help-body">
+                        <div class="help-flow" aria-label="Daily workflow">
+                            <div class="help-step">
+                                <span class="help-icon">1</span>
+                                <strong>Open app</strong>
+                                <span>Start on Scan.</span>
+                            </div>
+                            <div class="help-step">
+                                <span class="help-icon">2</span>
+                                <strong>Scan customer</strong>
+                                <span>Tap Scan QR.</span>
+                            </div>
+                            <div class="help-step">
+                                <span class="help-icon">3</span>
+                                <strong>Add points</strong>
+                                <span>Revisit adds visit points.</span>
+                            </div>
+                            <div class="help-step">
+                                <span class="help-icon">4</span>
+                                <strong>Reward customer</strong>
+                                <span>Tap Redeem Reward.</span>
+                            </div>
+                            <div class="help-step">
+                                <span class="help-icon">5</span>
+                                <strong>Backup data</strong>
+                                <span>Save a backup file.</span>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="help-accordion">
+                    <summary>What Each Tab Does</summary>
+                    <div class="help-body">
+                        <div class="help-list">
+                            <div class="help-line"><strong>Scan</strong>Scan customer QR codes and add visit points.</div>
+                            <div class="help-line"><strong>Customers</strong>Add and manage customers, points, notes, and contact permission.</div>
+                            <div class="help-line"><strong>Dashboard</strong>See a quick owner snapshot and reward-ready customers.</div>
+                            <div class="help-line"><strong>Cards</strong>Create customer loyalty cards.</div>
+                            <div class="help-line"><strong>QR Labels</strong>Create QR codes for customers, promos, inventory, or tracking.</div>
+                            <div class="help-line"><strong>Messages</strong>Prepare SMS or email messages the owner reviews first.</div>
+                            <div class="help-line"><strong>Print</strong>Print customer cards or A4 sheets.</div>
+                            <div class="help-line"><strong>Launch Setup</strong>Set up business details, loyalty rules, scanner, messages, support, and data.</div>
+                            <div class="help-line"><strong>My Data / Data Port</strong>Export, backup, restore, and manage owner data.</div>
+                            <div class="help-line"><strong>Help</strong>Learn what to tap next.</div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="help-accordion" open>
+                    <summary>Most Common Actions</summary>
+                    <div class="help-body">
+                        <div class="help-card-grid">
+                            <div class="help-card">
+                                <h3>Add a customer</h3>
+                                <p>Saves a new person and gives them a QR token.</p>
+                                <p>Use it when someone joins the loyalty program.</p>
+                                <button class="ghost small-btn" data-help-screen="customers" data-help-focus="customerName" type="button">Tap Add Customer</button>
+                            </div>
+                            <div class="help-card">
+                                <h3>Scan a customer</h3>
+                                <p>Finds the customer from their QR code.</p>
+                                <p>Use it at the counter when they show their card.</p>
+                                <button class="ghost small-btn" data-help-screen="counter" data-help-focus="quickScanBtn" type="button">Tap Scan QR</button>
+                            </div>
+                            <div class="help-card">
+                                <h3>Use Revisit mode</h3>
+                                <p>Keeps the scanner open for walk-in visit points.</p>
+                                <p>Use it when customers scan themselves as they arrive.</p>
+                                <button class="ghost small-btn" data-help-screen="counter" data-help-focus="walkInCheckinBtn" type="button">Tap Revisit</button>
+                            </div>
+                            <div class="help-card">
+                                <h3>Redeem a reward</h3>
+                                <p>Marks the reward as given and saves the history.</p>
+                                <p>Use it when Reward Ready appears.</p>
+                                <button class="ghost small-btn" data-help-screen="counter" data-help-focus="rewardBtn" type="button">Tap Redeem Reward</button>
+                            </div>
+                            <div class="help-card">
+                                <h3>Export customer list</h3>
+                                <p>Saves a CSV spreadsheet named mydata.</p>
+                                <p>Use it when the owner wants a customer list.</p>
+                                <button class="ghost small-btn" data-help-screen="settings" data-help-focus="exportMyDataCsvBtn" type="button">Tap Export mydata CSV</button>
+                            </div>
+                            <div class="help-card">
+                                <h3>Save backup</h3>
+                                <p>Saves customers, points, notes, and settings.</p>
+                                <p>Use it before changing device or browser.</p>
+                                <button class="ghost small-btn" data-help-screen="settings" data-help-focus="exportBackupBtn" type="button">Tap Save Backup</button>
+                            </div>
+                            <div class="help-card">
+                                <h3>Restore backup</h3>
+                                <p>Loads a saved Loyalty-4-All backup file.</p>
+                                <p>Use it when moving data back onto this device.</p>
+                                <button class="ghost small-btn" data-help-screen="settings" data-help-focus="restoreBackupBtn" type="button">Tap Restore Backup</button>
+                            </div>
+                            <div class="help-card">
+                                <h3>Send SMS/email</h3>
+                                <p>Opens the phone SMS app or email app.</p>
+                                <p>Use it only when the customer has agreed.</p>
+                                <button class="ghost small-btn" data-help-screen="campaigns" data-help-focus="sendCampaignBtn" type="button">Tap Send using my device</button>
+                            </div>
+                            <div class="help-card">
+                                <h3>Connect a service</h3>
+                                <p>Automatic campaigns need an SMS or email service.</p>
+                                <p>Use it later when a secure service is ready.</p>
+                                <button class="ghost small-btn" data-help-screen="settings" data-help-focus="settingsMessagesCard" type="button">Tap Connected service</button>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="help-accordion">
+                    <summary>Messaging Help</summary>
+                    <div class="help-body">
+                        <div class="help-card-grid">
+                            <div class="help-card">
+                                <h3>Device Mode</h3>
+                                <p>Opens the phone SMS app or email app.</p>
+                                <p>The owner reviews and sends manually.</p>
+                                <p>No service connection is required.</p>
+                            </div>
+                            <div class="help-card">
+                                <h3>Connected Service Mode</h3>
+                                <p>Required for automatic campaigns.</p>
+                                <p>Needs an SMS or email service through a secure backend.</p>
+                                <p>If it is not connected, send buttons stay locked.</p>
+                            </div>
+                            <div class="help-card">
+                                <h3>Secret Keys</h3>
+                                <p>Do not save secret API keys in this browser.</p>
+                                <p>Use a secure backend for real campaign sending.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="help-accordion">
+                    <summary>Data Safety</summary>
+                    <div class="help-body">
+                        <div class="help-list">
+                            <div class="help-line"><strong>Saved here</strong>Data is saved on this device.</div>
+                            <div class="help-line"><strong>Export CSV</strong>The owner can export a spreadsheet when needed.</div>
+                            <div class="help-line"><strong>Save backup</strong>The owner can save a backup JSON file.</div>
+                            <div class="help-line"><strong>Restore backup</strong>The owner can restore a backup JSON file.</div>
+                            <div class="help-line"><strong>No hidden cloud sync</strong>Data does not secretly leave the device.</div>
+                            <div class="help-line"><strong>Owner control</strong>The owner chooses where data goes.</div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="help-accordion">
+                    <summary>Troubleshooting</summary>
+                    <div class="help-body">
+                        <div class="help-card-grid">
+                            <div class="help-card">
+                                <h3>Camera will not open</h3>
+                                <p>Allow camera permission, then try Scan QR again.</p>
+                                <p>Use Find customer if the camera is blocked.</p>
+                            </div>
+                            <div class="help-card">
+                                <h3>QR code will not scan</h3>
+                                <p>Move closer, add light, and keep the QR flat.</p>
+                                <p>Print a larger QR if it keeps failing.</p>
+                            </div>
+                            <div class="help-card">
+                                <h3>Customer cannot be found</h3>
+                                <p>Search by name, phone, email, or token.</p>
+                                <p>Add the customer again only if they are not listed.</p>
+                            </div>
+                            <div class="help-card">
+                                <h3>SMS/email does not open</h3>
+                                <p>Check the device has a SMS or email app set up.</p>
+                                <p>Copy the message text if the app will not open.</p>
+                            </div>
+                            <div class="help-card">
+                                <h3>Data looks missing</h3>
+                                <p>Check you are using the same browser and device.</p>
+                                <p>Restore the latest backup if needed.</p>
+                            </div>
+                            <div class="help-card">
+                                <h3>Backup restore not working</h3>
+                                <p>Choose a Loyalty-4-All JSON backup file.</p>
+                                <p>If unsure, keep the old file and ask support.</p>
+                            </div>
+                            <div class="help-card">
+                                <h3>Printed QR is blurry</h3>
+                                <p>Use PNG export or print a larger size.</p>
+                                <p>Avoid tiny labels for customer cards.</p>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="help-accordion" open>
+                    <summary>Support / Contact</summary>
+                    <div class="help-body">
+                        <div class="help-card-grid">
+                            <div class="help-card">
+                                <h3>Optional Updates</h3>
+                                <p>Free access to future Loyalty-4-All updates for life can be offered to buyers.</p>
+                                <p>This is optional and does not stop the downloaded app from working.</p>
+                            </div>
+                        </div>
+                        <div id="helpSupportDetails" class="help-card-grid"></div>
+                    </div>
+                </details>
+            </section>
+
             <div id="printArea" class="hidden"></div>
         </main>
 
@@ -1327,14 +2307,22 @@
         </div>
 
         <div id="iosInstallBanner" class="ios-install-banner" role="status" aria-live="polite">
-            <p>To install this business tool, tap the Share icon <span class="share-icon-placeholder">[icon placeholder]</span> and select Add to Home Screen.</p>
+            <p>To install this business tool, tap <span class="share-icon-badge">Share</span> and select Add to Home Screen.</p>
             <button class="ios-install-dismiss" id="iosInstallDismissBtn" type="button">Dismiss</button>
         </div>
     </div>
 
     <script>
         const STORAGE_KEY = 'loyalty-4-all-state-v2';
+        const DB_NAME = 'loyalty-4-all-device-data';
+        const DB_VERSION = 1;
+        const DB_STORE = 'records';
+        const DB_STATE_KEY = 'app-state';
         const IOS_INSTALL_DISMISSED_KEY = 'loyalty-4-all-ios-install-dismissed';
+        const FIRST_USE_DISMISSED_KEY = 'loyalty-4-all-first-use-dismissed';
+        const DEMO_CUSTOMER_ID = 'DEMO-AVA-001';
+        const DEFAULT_SUPPORT_NAME = 'Loyalty-4-All Support';
+        const DEFAULT_SUPPORT_EMAIL = 'support@Loyalty-4-All.com';
         const todayISO = () => new Date().toISOString();
         let activeCustomerId = null;
         let usbPrinterDevice = null;
@@ -1343,7 +2331,12 @@
         let scannerDetector = null;
         let lastScannerPayload = '';
         let lastScannerAt = 0;
+        let scannerMode = 'select';
+        let checkinSessionCount = 0;
         let cardDisplayCustomerId = '';
+        let storageBackend = 'localStorage';
+        let demoMode = false;
+        let demoReturnState = null;
 
         const defaultState = {
             branding: {
@@ -1368,14 +2361,33 @@
                 lastBackupAt: '',
                 lastSelfTestAt: ''
             },
+            support: {
+                name: DEFAULT_SUPPORT_NAME,
+                email: DEFAULT_SUPPORT_EMAIL,
+                phone: '',
+                website: ''
+            },
             services: {
                 smsService: 'device',
+                smsServiceName: '',
                 smsApiEndpoint: '',
-                smsApiKey: '',
+                smsSenderId: '',
+                smsConnectionStatus: 'notConnected',
+                smsLastTestedAt: '',
                 emailService: 'device',
+                emailServiceName: '',
                 emailApiEndpoint: '',
-                emailApiKey: '',
+                emailFromAddress: '',
+                emailReplyTo: '',
+                emailConnectionStatus: 'notConnected',
+                emailLastTestedAt: '',
                 campaignContact: '',
+                notes: ''
+            },
+            dataPort: {
+                mode: 'internal',
+                spreadsheetName: 'mydata',
+                externalUrl: '',
                 notes: ''
             },
             selectedBatchIds: [],
@@ -1383,26 +2395,51 @@
             customers: {}
         };
 
-        let state = loadState();
+        let state = clone(defaultState);
 
         function clone(value) {
             return JSON.parse(JSON.stringify(value));
         }
 
+        function sanitiseServices(services) {
+            const incoming = services && typeof services === 'object' ? services : {};
+            const allowed = Object.keys(defaultState.services);
+            return allowed.reduce((next, key) => {
+                next[key] = incoming[key] ?? defaultState.services[key];
+                return next;
+            }, {});
+        }
+
+        function normaliseSupport(support) {
+            const incoming = support && typeof support === 'object' ? support : {};
+            const next = { ...defaultState.support, ...incoming };
+            if (!String(next.name || '').trim()) next.name = DEFAULT_SUPPORT_NAME;
+            if (!String(next.email || '').trim() || String(next.email).trim().toLowerCase() === 'help@example.com') {
+                next.email = DEFAULT_SUPPORT_EMAIL;
+            }
+            return next;
+        }
+
+        function mergeState(incoming) {
+            if (!incoming || typeof incoming !== 'object') return clone(defaultState);
+            return {
+                ...clone(defaultState),
+                ...incoming,
+                branding: { ...defaultState.branding, ...(incoming.branding || {}) },
+                settings: { ...defaultState.settings, ...(incoming.settings || {}) },
+                support: normaliseSupport(incoming.support),
+                services: sanitiseServices(incoming.services),
+                dataPort: { ...defaultState.dataPort, ...(incoming.dataPort || {}) },
+                customers: { ...defaultState.customers, ...(incoming.customers || {}) },
+                activity: Array.isArray(incoming.activity) ? incoming.activity : [],
+                selectedBatchIds: Array.isArray(incoming.selectedBatchIds) ? incoming.selectedBatchIds : []
+            };
+        }
+
         function loadState() {
             try {
                 const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || 'null');
-                if (!parsed || typeof parsed !== 'object') return clone(defaultState);
-                return {
-                    ...clone(defaultState),
-                    ...parsed,
-                    branding: { ...defaultState.branding, ...(parsed.branding || {}) },
-                    settings: { ...defaultState.settings, ...(parsed.settings || {}) },
-                    services: { ...defaultState.services, ...(parsed.services || {}) },
-                    customers: { ...defaultState.customers, ...(parsed.customers || {}) },
-                    activity: Array.isArray(parsed.activity) ? parsed.activity : [],
-                    selectedBatchIds: Array.isArray(parsed.selectedBatchIds) ? parsed.selectedBatchIds : []
-                };
+                return mergeState(parsed);
             } catch (error) {
                 console.warn('Could not load saved loyalty data. Fresh state used.', error);
                 return clone(defaultState);
@@ -1410,7 +2447,98 @@
         }
 
         function saveState() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            if (demoMode) return;
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (error) {
+                console.warn('Local storage mirror failed. IndexedDB remains the primary store when available.', error);
+            }
+            saveStateToDeviceDatabase(state).catch(error => {
+                console.warn('Device database save failed. Local storage mirror used as fallback.', error);
+            });
+        }
+
+        function openDeviceDatabase() {
+            return new Promise((resolve, reject) => {
+                if (!('indexedDB' in window)) {
+                    reject(new Error('IndexedDB unavailable'));
+                    return;
+                }
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onupgradeneeded = () => {
+                    const db = request.result;
+                    if (!db.objectStoreNames.contains(DB_STORE)) {
+                        db.createObjectStore(DB_STORE);
+                    }
+                };
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error || new Error('IndexedDB open failed'));
+            });
+        }
+
+        function readFromDeviceDatabase(key) {
+            return openDeviceDatabase().then(db => new Promise((resolve, reject) => {
+                const tx = db.transaction(DB_STORE, 'readonly');
+                const store = tx.objectStore(DB_STORE);
+                const request = store.get(key);
+                request.onsuccess = () => resolve(request.result || null);
+                request.onerror = () => reject(request.error || new Error('IndexedDB read failed'));
+                tx.oncomplete = () => db.close();
+                tx.onerror = () => {
+                    db.close();
+                    reject(tx.error || new Error('IndexedDB transaction failed'));
+                };
+            }));
+        }
+
+        function writeToDeviceDatabase(key, value) {
+            return openDeviceDatabase().then(db => new Promise((resolve, reject) => {
+                const tx = db.transaction(DB_STORE, 'readwrite');
+                const store = tx.objectStore(DB_STORE);
+                store.put(value, key);
+                tx.oncomplete = () => {
+                    db.close();
+                    resolve(true);
+                };
+                tx.onerror = () => {
+                    db.close();
+                    reject(tx.error || new Error('IndexedDB write failed'));
+                };
+            }));
+        }
+
+        async function saveStateToDeviceDatabase(nextState) {
+            await writeToDeviceDatabase(DB_STATE_KEY, {
+                app: 'loyalty-4-All',
+                schemaVersion: 1,
+                savedAt: todayISO(),
+                state: clone(nextState)
+            });
+            storageBackend = 'IndexedDB';
+        }
+
+        async function loadDeviceState() {
+            try {
+                const record = await readFromDeviceDatabase(DB_STATE_KEY);
+                if (record && record.state) {
+                    storageBackend = 'IndexedDB';
+                    return mergeState(record.state);
+                }
+                const migrated = loadState();
+                await saveStateToDeviceDatabase(migrated);
+                storageBackend = 'IndexedDB';
+                return migrated;
+            } catch (error) {
+                console.warn('IndexedDB unavailable. Falling back to local storage.', error);
+                storageBackend = 'localStorage';
+                return loadState();
+            }
+        }
+
+        function storageSummary() {
+            return storageBackend === 'IndexedDB'
+                ? 'Device database active. Backups and exports remain owner-controlled.'
+                : 'Local storage fallback active. Use Backup Now before changing browsers or devices.';
         }
 
         function byId(id) {
@@ -1433,6 +2561,59 @@
             if (!el) return;
             el.textContent = message;
             el.classList.toggle('warning', Boolean(isWarning));
+        }
+
+        function hasDismissedFirstUse() {
+            try {
+                return localStorage.getItem(FIRST_USE_DISMISSED_KEY) === 'true';
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function dismissFirstUse() {
+            try {
+                localStorage.setItem(FIRST_USE_DISMISSED_KEY, 'true');
+            } catch (_) { }
+            const panel = byId('firstUsePanel');
+            if (panel) panel.classList.add('hidden');
+        }
+
+        function shouldShowFirstUse() {
+            return !hasDismissedFirstUse() && !demoMode && getCustomers().length === 0;
+        }
+
+        function renderFirstUsePanel() {
+            const panel = byId('firstUsePanel');
+            if (!panel) return;
+            panel.classList.toggle('hidden', !shouldShowFirstUse());
+        }
+
+        function parseRewardRule(text) {
+            const value = String(text || '').trim();
+            const points = Number((value.match(/\d+/) || [50])[0]) || 50;
+            const rewardName = value.replace(/\bat\s+\d+\s*points?\b/i, '').replace(/\d+\s*points?/i, '').trim() || 'reward';
+            return { points, rewardName };
+        }
+
+        function applyQuickSetup() {
+            const rule = parseRewardRule(byId('setupRewardRule').value);
+            state.branding.businessName = byId('setupBusinessName').value.trim() || 'Family Business';
+            state.branding.brandColor = byId('setupBrandColor').value || '#2f9461';
+            state.settings.visitPoints = 5;
+            state.settings.rewardCost = rule.points;
+            state.settings.rewardName = rule.rewardName;
+            saveState();
+            populateSettingsControls();
+            applyBranding();
+            renderAll();
+        }
+
+        function populateFirstUseControls() {
+            const settings = { ...defaultState.settings, ...(state.settings || {}) };
+            byId('setupBusinessName').value = state.branding.businessName || 'Family Business';
+            byId('setupBrandColor').value = state.branding.brandColor || '#2f9461';
+            byId('setupRewardRule').value = (settings.rewardName || 'Free coffee') + ' at ' + (Number(settings.rewardCost) || 50) + ' points';
         }
 
         function escapeHtml(value) {
@@ -1576,41 +2757,141 @@
             setStatus('Settings saved.');
         }
 
+        function populateSupportSettings() {
+            const support = { ...defaultState.support, ...(state.support || {}) };
+            byId('supportName').value = support.name || '';
+            byId('supportEmail').value = support.email || '';
+            byId('supportPhone').value = support.phone || '';
+            byId('supportWebsite').value = support.website || '';
+            renderHelpSupport();
+        }
+
+        function saveSupportDetails() {
+            state.support = {
+                name: byId('supportName').value.trim(),
+                email: byId('supportEmail').value.trim(),
+                phone: byId('supportPhone').value.trim(),
+                website: byId('supportWebsite').value.trim()
+            };
+            saveState();
+            renderHelpSupport();
+            setPanelStatus('supportStatus', 'Support details saved.');
+            setStatus('Support details saved.');
+            return true;
+        }
+
         function populateServiceSettings() {
             const services = { ...defaultState.services, ...(state.services || {}) };
             byId('smsService').value = services.smsService || 'device';
+            byId('smsServiceName').value = services.smsServiceName || '';
             byId('smsApiEndpoint').value = services.smsApiEndpoint || '';
-            byId('smsApiKey').value = services.smsApiKey || '';
+            byId('smsSenderId').value = services.smsSenderId || '';
+            byId('smsConnectionStatus').value = services.smsConnectionStatus || 'notConnected';
+            byId('smsLastTestedAt').value = services.smsLastTestedAt || '';
             byId('emailService').value = services.emailService || 'device';
+            byId('emailServiceName').value = services.emailServiceName || '';
             byId('emailApiEndpoint').value = services.emailApiEndpoint || '';
-            byId('emailApiKey').value = services.emailApiKey || '';
+            byId('emailFromAddress').value = services.emailFromAddress || '';
+            byId('emailReplyTo').value = services.emailReplyTo || '';
+            byId('emailConnectionStatus').value = services.emailConnectionStatus || 'notConnected';
+            byId('emailLastTestedAt').value = services.emailLastTestedAt || '';
             byId('campaignContact').value = services.campaignContact || '';
             byId('servicesNotes').value = services.notes || '';
+            updateServiceFieldVisibility();
+            updateCampaignSendButton();
+        }
+
+        function updateServiceFieldVisibility() {
+            const smsFields = byId('smsApiFields');
+            const emailFields = byId('emailApiFields');
+            if (smsFields) smsFields.classList.toggle('visible', byId('smsService').value === 'api');
+            if (emailFields) emailFields.classList.toggle('visible', byId('emailService').value === 'api');
         }
 
         function saveServices() {
             state.services = {
                 smsService: byId('smsService').value,
+                smsServiceName: byId('smsServiceName').value.trim(),
                 smsApiEndpoint: byId('smsApiEndpoint').value.trim(),
-                smsApiKey: byId('smsApiKey').value.trim(),
+                smsSenderId: byId('smsSenderId').value.trim(),
+                smsConnectionStatus: byId('smsConnectionStatus').value,
+                smsLastTestedAt: byId('smsLastTestedAt').value.trim(),
                 emailService: byId('emailService').value,
+                emailServiceName: byId('emailServiceName').value.trim(),
                 emailApiEndpoint: byId('emailApiEndpoint').value.trim(),
-                emailApiKey: byId('emailApiKey').value.trim(),
+                emailFromAddress: byId('emailFromAddress').value.trim(),
+                emailReplyTo: byId('emailReplyTo').value.trim(),
+                emailConnectionStatus: byId('emailConnectionStatus').value,
+                emailLastTestedAt: byId('emailLastTestedAt').value.trim(),
                 campaignContact: byId('campaignContact').value.trim(),
                 notes: byId('servicesNotes').value.trim()
             };
             saveState();
+            updateServiceFieldVisibility();
+            updateCampaignSendButton();
             setPanelStatus('servicesStatus', servicesSummary());
             setStatus('Services saved.');
             return true;
         }
 
+        function populateDataPortSettings() {
+            const dataPort = { ...defaultState.dataPort, ...(state.dataPort || {}) };
+            byId('dataPortMode').value = dataPort.mode || 'internal';
+            byId('dataPortSheetName').value = dataPort.spreadsheetName || 'mydata';
+            byId('dataPortExternalUrl').value = dataPort.externalUrl || '';
+            byId('dataPortNotes').value = dataPort.notes || '';
+            updateDataPortVisibility();
+            setPanelStatus('dataPortStatus', dataPortSummary());
+        }
+
+        function updateDataPortVisibility() {
+            const fields = byId('dataPortExternalFields');
+            if (fields) fields.classList.toggle('visible', byId('dataPortMode').value !== 'internal');
+        }
+
+        function saveDataPort() {
+            state.dataPort = {
+                mode: byId('dataPortMode').value || 'internal',
+                spreadsheetName: cleanSpreadsheetName(byId('dataPortSheetName').value),
+                externalUrl: byId('dataPortExternalUrl').value.trim(),
+                notes: byId('dataPortNotes').value.trim()
+            };
+            byId('dataPortSheetName').value = state.dataPort.spreadsheetName;
+            saveState();
+            updateDataPortVisibility();
+            setPanelStatus('dataPortStatus', dataPortSummary());
+            setStatus('My Data saved.');
+            return true;
+        }
+
+        function cleanSpreadsheetName(value) {
+            return String(value || 'mydata').trim().replace(/[^\w -]/g, '').replace(/\s+/g, '-') || 'mydata';
+        }
+
+        function dataPortLabel(mode) {
+            return {
+                internal: 'Saved on this device',
+                googleSheets: 'Google Sheets',
+                excelOnline: 'Microsoft Excel / OneDrive',
+                airtable: 'Airtable',
+                webhook: 'Other webhook / API'
+            }[mode] || 'Internal browser data';
+        }
+
+        function dataPortSummary() {
+            const dataPort = { ...defaultState.dataPort, ...(state.dataPort || {}) };
+            const name = cleanSpreadsheetName(dataPort.spreadsheetName);
+            const storage = storageSummary();
+            if (dataPort.mode === 'internal') return storage + ' No hidden cloud sync. CSV exports use "' + name + '".';
+            return storage + ' ' + dataPortLabel(dataPort.mode) + ' selected. CSV exports use "' + name + '"' + (dataPort.externalUrl ? ', and the external target is saved.' : '. Add an external target when ready.');
+        }
+
         function servicesSummary() {
             const services = { ...defaultState.services, ...(state.services || {}) };
-            const sms = services.smsService === 'api' ? 'SMS API configured' : 'Device SMS app';
-            const email = services.emailService === 'api' ? 'Email API configured' : 'Device email app';
-            const contact = services.campaignContact ? 'Campaign contact saved' : 'Campaign contact needed';
-            return sms + ' · ' + email + ' · ' + contact + '.';
+            const sms = services.smsService === 'api' ? 'SMS service needs secure backend/proxy' : 'SMS sends using my device';
+            const email = services.emailService === 'api' ? 'Email service needs secure backend/proxy' : 'Email sends using my device';
+            const contact = services.campaignContact ? 'Message contact saved' : 'Message contact needed';
+            return sms + ' · ' + email + ' · ' + contact + '. No API secrets are stored here.';
         }
 
         function populateSettingsControls() {
@@ -1648,13 +2929,48 @@
             const services = { ...defaultState.services, ...(state.services || {}) };
             const businessNamed = Boolean(state.branding.businessName && state.branding.businessName !== 'Family Business');
             return [
-                ['Business profile saved', businessNamed && Boolean(state.branding.email || state.branding.phone)],
-                ['Loyalty rules saved', Number(settings.visitPoints) > 0 && Number(settings.rewardCost) >= 0 && Boolean(settings.rewardName)],
-                ['QR libraries ready', typeof window.qrcode === 'function' && typeof window.jsQR === 'function'],
-                ['Campaign contact saved', Boolean(services.campaignContact)],
-                ['Self-test passed', Boolean(settings.lastSelfTestAt)],
-                ['Backup saved', Boolean(settings.lastBackupAt)],
-                ['First customer added', getCustomers().length > 0]
+                {
+                    label: 'Business basics saved',
+                    detail: 'Name plus phone or email',
+                    done: businessNamed && Boolean(state.branding.email || state.branding.phone),
+                    action: 'business'
+                },
+                {
+                    label: 'Loyalty rules saved',
+                    detail: 'Points, reward name, repeat-scan rule',
+                    done: Number(settings.visitPoints) > 0 && Number(settings.rewardCost) >= 0 && Boolean(settings.rewardName),
+                    action: 'rules'
+                },
+                {
+                    label: 'QR scanner ready',
+                    detail: 'Generator and scanner libraries loaded',
+                    done: typeof window.qrcode === 'function' && typeof window.jsQR === 'function',
+                    action: 'scanner'
+                },
+                {
+                    label: 'Message contact saved',
+                    detail: 'Reply/contact detail for SMS and email',
+                    done: Boolean(services.campaignContact),
+                    action: 'messages'
+                },
+                {
+                    label: 'Self-test passed',
+                    detail: 'Core app functions respond',
+                    done: Boolean(settings.lastSelfTestAt),
+                    action: 'selftest'
+                },
+                {
+                    label: 'Backup saved',
+                    detail: 'A local copy exists outside the browser',
+                    done: Boolean(settings.lastBackupAt),
+                    action: 'backup'
+                },
+                {
+                    label: 'First customer added',
+                    detail: 'Confirms the daily workflow is ready',
+                    done: getCustomers().length > 0,
+                    action: 'customer'
+                }
             ];
         }
 
@@ -1666,7 +2982,7 @@
                 return !consent.doNotContact && (consent.sms || consent.email);
             }) : false;
             const checklist = setupChecklistItems();
-            const complete = checklist.every(([, done]) => done);
+            const complete = checklist.every(item => item.done);
             const cameraApi = Boolean(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
             const cameraContext = Boolean(window.isSecureContext || window.location.protocol === 'file:');
             const qrReady = typeof window.qrcode === 'function' && typeof window.jsQR === 'function';
@@ -1676,9 +2992,9 @@
             return [
                 { label: 'QR Ready', ok: qrReady, detail: qrReady ? 'Generator and scanner loaded' : 'QR library missing' },
                 { label: 'Camera Access', ok: cameraApi && cameraContext, detail: !cameraApi ? 'Camera API unavailable' : cameraContext ? 'Browser can request camera' : 'Use HTTPS or localhost' },
-                { label: 'SMS Link', ok: smsLink, detail: smsLink ? 'Opens device SMS app' : 'External SMS API mode' },
-                { label: 'Email Link', ok: emailLink, detail: emailLink ? 'Opens device email app' : 'External Email API mode' },
-                { label: 'Campaign Consent', ok: consentReady, detail: consentReady ? 'At least one contactable customer' : 'Save customer SMS/email permission' },
+                { label: 'SMS Mode', ok: smsLink, detail: smsLink ? 'Send using my device' : 'Connect service required' },
+                { label: 'Email Mode', ok: emailLink, detail: emailLink ? 'Send using my device' : 'Connect service required' },
+                { label: 'Message Consent', ok: consentReady, detail: consentReady ? 'At least one contactable customer' : 'Save customer SMS/email permission' },
                 { label: 'Backup Status', ok: backupOk, detail: backupReminderMessage() },
                 { label: 'Setup Complete', ok: complete, detail: complete ? 'Ready for counter use' : 'Checklist still has items' }
             ];
@@ -1698,22 +3014,287 @@
         function renderSetupChecklist() {
             const wrap = byId('setupChecklist');
             if (!wrap) return;
-            wrap.innerHTML = setupChecklistItems().map(([label, done]) => `
+            const items = setupChecklistItems();
+            wrap.innerHTML = items.map(item => `
                 <div class="list-item">
-                    <div><strong>${done ? 'Done' : 'Needed'}</strong><div class="muted">${escapeHtml(label)}</div></div>
+                    <div><strong>${item.done ? 'Done' : 'Needed'}</strong><div class="muted">${escapeHtml(item.label)}</div></div>
                 </div>
             `).join('');
+            renderLaunchSetup(items);
             setPanelStatus('backupReminderStatus', backupReminderMessage(), !state.settings.lastBackupAt && state.settings.backupReminder !== 'off');
             renderIndicators('dashboardIndicators');
             renderIndicators('settingsIndicators');
+        }
+
+        function supportWebsiteUrl(value) {
+            const link = String(value || '').trim();
+            if (!link) return '';
+            return /^https?:\/\//i.test(link) ? link : 'https://' + link;
+        }
+
+        function supportPhoneHref(value) {
+            const phone = String(value || '').replace(/[^\d+]/g, '');
+            return phone ? 'tel:' + phone : '';
+        }
+
+        function renderHelpSupport() {
+            const wrap = byId('helpSupportDetails');
+            if (!wrap) return;
+            const support = { ...defaultState.support, ...(state.support || {}) };
+            const hasSupport = support.name || support.email || support.phone || support.website;
+            if (!hasSupport) {
+                wrap.innerHTML = `
+                    <div class="help-card">
+                        <h3>No support saved yet</h3>
+                        <p>Add support details in Launch Setup.</p>
+                        <p>Staff will see them here when they need help.</p>
+                        <button class="ghost small-btn" data-help-screen="settings" data-help-focus="settingsSupportCard" type="button">Open Support Details</button>
+                    </div>
+                `;
+                bindHelpButtons(wrap);
+                return;
+            }
+            const email = support.email ? `<p>Email: <a href="mailto:${escapeHtml(support.email)}">${escapeHtml(support.email)}</a></p>` : '';
+            const phoneHref = supportPhoneHref(support.phone);
+            const phone = support.phone ? `<p>Phone: <a href="${escapeHtml(phoneHref)}">${escapeHtml(support.phone)}</a></p>` : '';
+            const websiteUrl = supportWebsiteUrl(support.website);
+            const website = support.website ? `<p>Website: <a href="${escapeHtml(websiteUrl)}" target="_blank" rel="noopener">${escapeHtml(support.website)}</a></p>` : '';
+            wrap.innerHTML = `
+                <div class="help-card">
+                    <h3>${escapeHtml(support.name || 'Support')}</h3>
+                    ${email}
+                    ${phone}
+                    ${website}
+                    <button class="ghost small-btn" data-help-screen="settings" data-help-focus="settingsSupportCard" type="button">Edit Support Details</button>
+                </div>
+            `;
+            bindHelpButtons(wrap);
+        }
+
+        function renderLaunchSetup(items = setupChecklistItems()) {
+            const wrap = byId('launchSetupSteps');
+            if (!wrap) return;
+            const doneCount = items.filter(item => item.done).length;
+            const total = items.length || 1;
+            setText('setupScore', doneCount + '/' + total);
+            const fill = byId('setupProgressFill');
+            if (fill) fill.style.width = Math.round((doneCount / total) * 100) + '%';
+            wrap.innerHTML = items.map((item, index) => `
+                <div class="setup-step ${item.done ? 'done' : ''}">
+                    <div class="step-number">${index + 1}</div>
+                    <div class="step-copy">
+                        <strong>${escapeHtml(item.label)}</strong>
+                        <span>${escapeHtml(item.detail)}</span>
+                    </div>
+                    <div>
+                        <div class="step-status">${item.done ? 'Done' : 'Needed'}</div>
+                        <button class="${item.done ? 'ghost' : 'primary'} small-btn" type="button" data-setup-action="${escapeHtml(item.action)}">${item.done ? 'Review' : 'Start'}</button>
+                    </div>
+                </div>
+            `).join('');
+            wrap.querySelectorAll('[data-setup-action]').forEach(btn => {
+                btn.addEventListener('click', () => handleSetupAction(btn.dataset.setupAction));
+            });
+        }
+
+        function focusSettingsCard(cardId, fieldId) {
+            showScreen('settings');
+            const card = byId(cardId);
+            if (card) card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            const field = byId(fieldId);
+            if (field) window.setTimeout(() => field.focus(), 250);
+        }
+
+        function focusAppTarget(screenName, targetId) {
+            showScreen(screenName);
+            if (!targetId) return;
+            const target = byId(targetId);
+            if (!target) return;
+            window.setTimeout(() => {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                if (typeof target.focus === 'function') target.focus();
+            }, 180);
+        }
+
+        function bindHelpButtons(root = document) {
+            root.querySelectorAll('[data-help-screen]').forEach(btn => {
+                if (btn.dataset.helpBound === 'true') return;
+                btn.dataset.helpBound = 'true';
+                btn.addEventListener('click', () => focusAppTarget(btn.dataset.helpScreen, btn.dataset.helpFocus || ''));
+            });
+        }
+
+        function handleSetupAction(action) {
+            const actions = {
+                business: () => focusSettingsCard('settingsBusinessCard', 'businessName'),
+                rules: () => focusSettingsCard('settingsRulesCard', 'visitPoints'),
+                scanner: () => focusSettingsCard('settingsScannerCard', 'preferredCamera'),
+                messages: () => focusSettingsCard('settingsMessagesCard', 'campaignContact'),
+                selftest: () => runSelfTest(),
+                backup: () => focusSettingsCard('settingsBusinessCard', 'exportBackupBtn'),
+                customer: () => goToNewCustomer()
+            };
+            const fn = actions[action];
+            if (fn) fn();
         }
 
         function showScreen(name) {
             document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
             const screen = byId('screen-' + name);
             if (screen) screen.classList.add('active');
-            document.querySelectorAll('.nav button').forEach(btn => btn.classList.toggle('active', btn.dataset.screen === name));
+            document.querySelectorAll('.nav button').forEach(btn => {
+                const isActive = btn.dataset.screen === name;
+                btn.classList.toggle('active', isActive);
+                if (isActive) {
+                    btn.setAttribute('aria-current', 'page');
+                } else {
+                    btn.removeAttribute('aria-current');
+                }
+            });
             renderAll();
+        }
+
+        function buildDemoState() {
+            const demo = mergeState(clone(defaultState));
+            const created = todayISO();
+            demo.branding = {
+                ...demo.branding,
+                businessName: 'Demo Cafe',
+                brandColor: '#0f766e',
+                contactName: 'Sam',
+                email: 'hello@democafe.example',
+                phone: '0400 000 000',
+                suburb: 'Adelaide'
+            };
+            demo.settings = {
+                ...demo.settings,
+                visitPoints: 5,
+                rewardCost: 50,
+                rewardName: 'free coffee',
+                blockSameDayQrCheckin: true,
+                qrAutoCheckin: true
+            };
+            demo.services = {
+                ...demo.services,
+                campaignContact: 'hello@democafe.example'
+            };
+            demo.customers[DEMO_CUSTOMER_ID] = {
+                id: DEMO_CUSTOMER_ID,
+                token: DEMO_CUSTOMER_ID,
+                name: 'Ava Sample',
+                displayName: 'Ava',
+                phone: '0400 111 222',
+                email: 'ava@example.com',
+                points: 45,
+                visits: 3,
+                rewards: 0,
+                tier: 'Regular',
+                consent: {
+                    sms: true,
+                    email: true,
+                    doNotContact: false,
+                    note: 'Sample consent for demo only'
+                },
+                notes: [{ text: 'Sample customer. Demo data only.', date: created }],
+                createdAt: created,
+                updatedAt: created,
+                lastVisitAt: '',
+                reminder: { preferredChannel: 'sms', ready: true }
+            };
+            demo.activity = [{
+                id: makeId(),
+                type: 'note',
+                customerId: DEMO_CUSTOMER_ID,
+                customerName: 'Ava Sample',
+                detail: 'Demo customer created',
+                date: created
+            }];
+            return demo;
+        }
+
+        function startDemoMode() {
+            if (!demoMode) demoReturnState = clone(state);
+            demoMode = true;
+            state = buildDemoState();
+            activeCustomerId = DEMO_CUSTOMER_ID;
+            cardDisplayCustomerId = '';
+            dismissFirstUse();
+            populateSettingsControls();
+            populateServiceSettings();
+            populateSupportSettings();
+            populateDataPortSettings();
+            applyBranding();
+            renderAll();
+            renderDemoModePanel();
+            showScreen('counter');
+            renderCardPreviewForCustomer(DEMO_CUSTOMER_ID);
+            setStatus('Demo Mode active. Sample data only.');
+        }
+
+        function resetDemoMode() {
+            if (!demoMode) return startDemoMode();
+            state = buildDemoState();
+            activeCustomerId = DEMO_CUSTOMER_ID;
+            cardDisplayCustomerId = '';
+            populateSettingsControls();
+            populateServiceSettings();
+            populateSupportSettings();
+            populateDataPortSettings();
+            applyBranding();
+            renderAll();
+            renderDemoModePanel();
+            renderCardPreviewForCustomer(DEMO_CUSTOMER_ID);
+            setStatus('Demo reset. Ava is ready to revisit.');
+            setPanelStatus('rewardFeedback', 'Demo reset. Tap Demo Revisit to trigger Reward Ready.');
+        }
+
+        function exitDemoMode() {
+            if (!demoMode) return;
+            state = demoReturnState ? mergeState(demoReturnState) : loadState();
+            demoMode = false;
+            demoReturnState = null;
+            activeCustomerId = null;
+            cardDisplayCustomerId = '';
+            populateSettingsControls();
+            populateServiceSettings();
+            populateSupportSettings();
+            populateDataPortSettings();
+            applyBranding();
+            renderAll();
+            setStatus('Demo closed. Real device data restored.');
+        }
+
+        function demoRevisit() {
+            if (!demoMode) startDemoMode();
+            activeCustomerId = DEMO_CUSTOMER_ID;
+            handleScan(DEMO_CUSTOMER_ID);
+            addVisit(DEMO_CUSTOMER_ID, { autoClear: false, source: 'QR scan' });
+            renderDemoModePanel();
+            setStatus('Demo revisit saved. Reward Ready is now visible.');
+        }
+
+        function renderDemoModePanel() {
+            const panel = byId('demoPanel');
+            if (!panel) return;
+            panel.classList.toggle('hidden', !demoMode);
+            if (demoMode) {
+                renderQrIntoCanvas(byId('demoQrCanvas'), DEMO_CUSTOMER_ID);
+            }
+        }
+
+        function goToNewCustomer() {
+            showScreen('customers');
+            populateCustomerForm(null);
+            const nameField = byId('customerName');
+            if (nameField) nameField.focus();
+            setStatus('New customer form ready.');
+        }
+
+        function goToRewardReady() {
+            showScreen('dashboard');
+            byId('dashboardSegment').value = 'rewardReady';
+            renderDashboard();
+            setStatus('Showing customers ready for rewards.');
         }
 
         function findCustomerByLookup(raw) {
@@ -1736,7 +3317,7 @@
                     const jsonToken = parsed.token || parsed.customerToken || parsed.customerId || parsed.memberId || parsed.id;
                     if (jsonToken) return String(jsonToken).trim();
                 }
-            } catch (_) {}
+            } catch (_) { }
 
             try {
                 const url = new URL(value);
@@ -1744,7 +3325,7 @@
                     .map(key => url.searchParams.get(key))
                     .find(Boolean);
                 if (queryToken) return queryToken.trim();
-            } catch (_) {}
+            } catch (_) { }
 
             const tokenMatch = value.match(/\bL4A-[A-Z0-9-]+\b/i);
             return tokenMatch ? tokenMatch[0] : value;
@@ -1767,11 +3348,11 @@
 
         function contactPermissionLabel(customer) {
             const consent = customerConsent(customer);
-            if (consent.doNotContact) return 'Do not contact for campaigns';
+            if (consent.doNotContact) return 'Do not contact for messages';
             const channels = [];
             if (consent.sms) channels.push('SMS ok');
             if (consent.email) channels.push('Email ok');
-            return channels.length ? channels.join(' · ') : 'No campaign permission saved';
+            return channels.length ? channels.join(' · ') : 'No message permission saved';
         }
 
         function canContactCustomer(customer, channel) {
@@ -1810,9 +3391,19 @@
             return true;
         }
 
-        function startScan() {
+        function startScan(mode = 'select') {
             const reader = byId('reader');
             reader.style.display = 'block';
+            if (scannerStream) {
+                if (scannerMode !== mode) {
+                    stopScan();
+                } else {
+                    stopScan();
+                    return;
+                }
+            }
+            scannerMode = mode;
+            if (mode === 'checkin') checkinSessionCount = 0;
             if (scannerStream) {
                 stopScan();
                 return;
@@ -1834,7 +3425,7 @@
                 <canvas id="scanCanvas" class="hidden"></canvas>
                 <div class="reader-tools">
                     <button class="danger small-btn" id="stopScanBtn">Stop camera</button>
-                    <span class="muted">Hold the card steady until the scan confirms. Manual lookup still works.</span>
+                    <span class="muted">${mode === 'checkin' ? 'Revisit is open. Customers can scan one after another.' : 'Hold the card steady until the scan confirms. Manual lookup still works.'}</span>
                 </div>
                 <div class="status" id="scanStatus">Camera starting. Waiting for video...</div>
                 <div class="scan-meta" id="scanMeta">
@@ -1858,9 +3449,9 @@
                     const video = byId('scanVideo');
                     video.srcObject = stream;
                     return video.play().then(() => {
-                        byId('cameraBtn').textContent = 'Stop QR scan';
+                        updateScannerButtons();
                         setPanelStatus('scanStatus', scannerSupportMessage());
-                        setStatus('QR scanner ready. Show a membership card to the camera.');
+                        setStatus(mode === 'checkin' ? 'Revisit is open. Customers can scan their QR codes.' : 'QR scanner ready. Show a membership card to the camera.');
                         scanLoop();
                     });
                 })
@@ -1885,13 +3476,26 @@
             scannerDetector = null;
             lastScannerPayload = '';
             lastScannerAt = 0;
+            scannerMode = 'select';
+            checkinSessionCount = 0;
             const reader = byId('reader');
             if (reader) {
                 reader.style.display = 'none';
-                reader.innerHTML = 'Camera support is checked only after you press QR / camera scan.';
+                reader.innerHTML = 'Camera support is checked only after you press Scan QR.';
             }
-            const btn = byId('cameraBtn');
-            if (btn) btn.textContent = 'QR / camera scan';
+            updateScannerButtons();
+        }
+
+        function updateScannerButtons() {
+            const scanning = Boolean(scannerStream);
+            const selectActive = scanning && scannerMode === 'select';
+            const checkinActive = scanning && scannerMode === 'checkin';
+            const cameraBtn = byId('cameraBtn');
+            const quickScanBtn = byId('quickScanBtn');
+            const checkinBtn = byId('walkInCheckinBtn');
+            if (cameraBtn) cameraBtn.textContent = selectActive ? 'Stop QR scan' : 'Scan QR';
+            if (quickScanBtn) quickScanBtn.textContent = selectActive ? 'Stop Scan' : 'Scan QR';
+            if (checkinBtn) checkinBtn.textContent = checkinActive ? 'Stop Revisit' : 'Revisit';
         }
 
         async function scanLoop() {
@@ -1914,11 +3518,20 @@
                     setPanelStatus('scanStatus', 'Checking token: ' + token);
                     const found = handleScan(token);
                     if (found) {
+                        if (scannerMode === 'checkin') {
+                            const added = addVisit(activeCustomerId, { autoClear: false, source: 'QR scan' });
+                            if (added) checkinSessionCount += 1;
+                            const customer = getCustomer(activeCustomerId);
+                            setScanMeta((customer ? customer.name : token) + '\n' + (added ? '+' + (Number(state.settings.visitPoints) || 0) + ' visit points added.' : 'Already revisited today or not eligible.') + '\nSession revisits: ' + checkinSessionCount);
+                            setPanelStatus('scanStatus', added ? 'Revisit saved. Next customer can scan now.' : 'Revisit is still open. No extra points added for that scan.', !added);
+                            scannerFrame = requestAnimationFrame(scanLoop);
+                            return;
+                        }
                         stopScan();
                         if (state.settings.qrAutoCheckin !== false) {
                             addVisit(activeCustomerId, { autoClear: false, source: 'QR scan' });
                         } else {
-                            setPanelStatus('rewardFeedback', 'QR matched ' + getCustomer(activeCustomerId).name + '. Auto check-in is off, so no points were added.');
+                            setPanelStatus('rewardFeedback', 'QR matched ' + getCustomer(activeCustomerId).name + '. Auto revisit is off, so no points were added.');
                             setStatus('QR scan matched. Add visit manually when ready.');
                         }
                         return;
@@ -1976,7 +3589,16 @@
             const panel = byId('counterCustomer');
             const customer = getCustomer(activeCustomerId);
             if (!customer) {
-                panel.innerHTML = '<div class="muted">No customer selected yet.</div>';
+                panel.innerHTML = `
+                    <div class="starter-panel">
+                        <strong>No customer selected.</strong>
+                        <div class="muted">Scan a QR code, search above, or add a customer before the next sale.</div>
+                        <div class="button-row single">
+                            <button class="ghost" id="counterAddCustomerBtn" type="button">Add Customer</button>
+                        </div>
+                    </div>
+                `;
+                byId('counterAddCustomerBtn').addEventListener('click', goToNewCustomer);
                 return;
             }
             panel.innerHTML = `
@@ -1989,21 +3611,33 @@
                     <span class="pill">${Number(customer.rewards) || 0} rewards</span>
                     <span class="pill">${escapeHtml(rewardMessage(customer))}</span>
                 </div>
-                <div class="muted" style="margin-top:10px;">Last visit: ${escapeHtml(formatDate(customer.lastVisitAt))}</div>
+                <div class="muted last-visit">Last visit: ${escapeHtml(formatDate(customer.lastVisitAt))}</div>
+                ${isRewardReady(customer) ? `
+                    <div class="reward-ready-card">
+                        <strong>Reward Ready</strong>
+                        <div>${escapeHtml(customer.name)} has ${Number(customer.points) || 0} points.</div>
+                        <div class="muted">${escapeHtml(state.settings.rewardName || 'Reward')} can be redeemed now.</div>
+                        <div class="button-row single">
+                            <button class="primary" id="redeemReadyRewardBtn" type="button">Redeem Reward</button>
+                        </div>
+                    </div>
+                ` : ''}
             `;
+            const rewardReadyBtn = byId('redeemReadyRewardBtn');
+            if (rewardReadyBtn) rewardReadyBtn.addEventListener('click', () => triggerReward(customer.id));
         }
 
         function addVisit(customerId = activeCustomerId, options = {}) {
             const shouldAutoClear = options.autoClear !== false;
-            const source = options.source || 'visit check-in';
+            const source = options.source || 'revisit';
             const customer = getCustomer(customerId);
             if (!customer) {
-                setStatus('Select a customer before checking in.', true);
+                setStatus('Select a customer before saving a revisit.', true);
                 return false;
             }
             if (source === 'QR scan' && state.settings.blockSameDayQrCheckin !== false && sameLocalDay(customer.lastVisitAt, todayISO())) {
-                setPanelStatus('rewardFeedback', customer.name + ' already had a QR check-in today. No extra points added.', true);
-                setStatus('Repeat QR check-in blocked for today.', true);
+                setPanelStatus('rewardFeedback', customer.name + ' already had a QR revisit today. No extra points added.', true);
+                setStatus('Repeat QR revisit blocked for today.', true);
                 renderAll();
                 return false;
             }
@@ -2015,8 +3649,8 @@
             addActivity('visit', customer.id, '+' + state.settings.visitPoints + ' points from ' + source);
             saveState();
             renderAll();
-            setPanelStatus('rewardFeedback', customer.name + ' checked in. +' + state.settings.visitPoints + ' points. ' + rewardMessage(customer) + '.');
-            setStatus(source === 'QR scan' ? 'QR scan saved and points added.' : 'Visit check-in saved.');
+            setPanelStatus('rewardFeedback', customer.name + ' revisit saved. +' + state.settings.visitPoints + ' points. ' + rewardMessage(customer) + '.');
+            setStatus(source === 'QR scan' ? 'QR revisit saved and points added.' : 'Revisit saved.');
             if (shouldAutoClear) autoClearCounter();
             return true;
         }
@@ -2119,7 +3753,7 @@
                 .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0))
                 .slice(0, 12);
             if (!items.length) {
-                wrap.innerHTML = '<div class="list-item"><div class="muted">No history yet. Check-ins, rewards, and notes will appear here.</div></div>';
+                wrap.innerHTML = '<div class="list-item"><div class="muted">No history yet. Revisits, rewards, and notes will appear here.</div></div>';
                 return;
             }
             wrap.innerHTML = items.map(item => `
@@ -2291,7 +3925,7 @@
                 activeCustomerId = btn.dataset.select;
                 showScreen('counter');
                 renderCounterCustomer();
-                setStatus('Customer loaded in Counter Mode.');
+                setStatus('Customer loaded for scanning.');
             }));
         }
 
@@ -2330,7 +3964,7 @@
                     <div><strong>${escapeHtml(customer.name)}</strong><div class="muted">${Number(customer.points) || 0} pts · ${Number(customer.visits) || 0} visits · ${escapeHtml(rewardMessage(customer))}</div></div>
                     <div class="list-actions">
                         <button class="ghost small-btn" data-dashboard-counter="${escapeHtml(customer.id)}">Counter</button>
-                        <button class="primary small-btn" data-dashboard-campaign="${escapeHtml(customer.id)}">Campaign</button>
+                        <button class="primary small-btn" data-dashboard-campaign="${escapeHtml(customer.id)}">Message</button>
                     </div>
                 </div>
             `).join('') : '<div class="list-item"><div class="muted">No customers yet.</div></div>';
@@ -2355,7 +3989,7 @@
             byId('followUpList').innerHTML = followUps.slice(0, 6).map(customer => `
                 <div class="list-item">
                     <div><strong>${escapeHtml(customer.name)}</strong><div class="muted">${escapeHtml(followUpReason(customer))}</div></div>
-                    <button class="secondary small-btn" data-dashboard-campaign="${escapeHtml(customer.id)}">Campaign</button>
+                    <button class="secondary small-btn" data-dashboard-campaign="${escapeHtml(customer.id)}">Message</button>
                 </div>
             `).join('') || '<div class="list-item"><div class="muted">No follow-up suggestions yet.</div></div>';
 
@@ -2400,25 +4034,29 @@
                 activeCustomerId = btn.dataset.dashboardCounter;
                 showScreen('counter');
                 renderCounterCustomer();
-                setStatus('Customer loaded in Counter Mode.');
+                setStatus('Customer loaded for scanning.');
             }));
             document.querySelectorAll('[data-dashboard-campaign]').forEach(btn => btn.addEventListener('click', () => {
                 byId('campaignCustomerSelect').value = btn.dataset.dashboardCampaign;
                 showScreen('campaigns');
                 loadCampaignTemplate();
-                setStatus('Customer loaded in Campaigns.');
+                setStatus('Customer loaded in Messages.');
             }));
         }
 
         function populateSelects() {
             const customers = getCustomers();
             const options = customers.map(customer => '<option value="' + escapeHtml(customer.id) + '">' + escapeHtml(customer.name) + ' - ' + escapeHtml(customer.id) + '</option>').join('');
-            ['cardCustomerSelect', 'qrCustomerSelect', 'batchCustomerSelect', 'campaignCustomerSelect'].forEach(id => {
+            ['cardCustomerSelect', 'batchCustomerSelect', 'campaignCustomerSelect'].forEach(id => {
                 const select = byId(id);
                 const previous = select.value;
                 select.innerHTML = options || '<option value="">No customers yet</option>';
                 if (previous && getCustomer(previous)) select.value = previous;
             });
+            const qrSelect = byId('qrCustomerSelect');
+            const previousQrCustomer = qrSelect.value;
+            qrSelect.innerHTML = '<option value="">Blank - no customer</option>' + options;
+            if (previousQrCustomer && getCustomer(previousQrCustomer)) qrSelect.value = previousQrCustomer;
         }
 
         function renderCardPreviewForCustomer(id) {
@@ -2443,7 +4081,7 @@
             const smallQrReady = renderQrIntoCanvas(byId('cardQrCanvas'), customer.token || customer.id);
             const largeQrReady = renderQrIntoCanvas(byId('cardLargeQrCanvas'), customer.token || customer.id);
             if (!smallQrReady || !largeQrReady) {
-                setPanelStatus('cardStatus', 'QR generator did not load. Do not print this card until assets/vendor/qrcode-generator.js is available.', true);
+                setPanelStatus('cardStatus', 'QR generator did not load. Do not print this card until app/vendor/qrcode-generator.js is available.', true);
                 return false;
             }
             setPanelStatus('cardStatus', 'Preview ready for ' + previewName + '.');
@@ -2681,7 +4319,7 @@
             const payload = buildQrPayload();
             byId('qrToolText').textContent = payload;
             if (!renderQrIntoCanvas(byId('qrToolCanvas'), payload)) {
-                setPanelStatus('qrStatus', 'QR generator did not load. Do not print this label until assets/vendor/qrcode-generator.js is available.', true);
+                setPanelStatus('qrStatus', 'QR generator did not load. Do not print this label until app/vendor/qrcode-generator.js is available.', true);
                 return false;
             }
             setPanelStatus('qrStatus', 'QR preview generated for ' + qrDisplayTitle() + '. If a scanner cannot read it, use the printed text token as fallback.');
@@ -2768,7 +4406,7 @@
             byId('batchList').textContent = ids.length ? ids.map(id => getCustomer(id).name).join(', ') : 'No customers selected.';
             wrap.innerHTML = '';
             if (!ids.length) {
-                wrap.innerHTML = '<div class="muted" style="position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:20px;">Add customers to preview A4 batch printing.</div>';
+                wrap.innerHTML = '<div class="muted sheet-empty">Add customers to preview A4 batch printing.</div>';
                 return;
             }
             const pageW = 210;
@@ -2936,12 +4574,118 @@
             return false;
         }
 
+        function dataPortFilename(extension) {
+            const dataPort = { ...defaultState.dataPort, ...(state.dataPort || {}) };
+            return cleanSpreadsheetName(dataPort.spreadsheetName) + '-' + new Date().toISOString().slice(0, 10) + '.' + extension;
+        }
+
+        function downloadTextFile(text, filename, type) {
+            const blob = new Blob([text], { type });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function csvCell(value) {
+            const text = String(value ?? '');
+            return /[",\n\r]/.test(text) ? '"' + text.replace(/"/g, '""') + '"' : text;
+        }
+
+        function customerDataRows() {
+            return getCustomers().map(customer => {
+                const consent = customerConsent(customer);
+                const latestNote = Array.isArray(customer.notes) && customer.notes[0] ? customer.notes[0].text : '';
+                return {
+                    memberNo: customer.id,
+                    token: customer.token || customer.id,
+                    name: customer.name || '',
+                    displayName: customer.displayName || '',
+                    phone: customer.phone || '',
+                    email: customer.email || '',
+                    points: Number(customer.points) || 0,
+                    visits: Number(customer.visits) || 0,
+                    rewards: Number(customer.rewards) || 0,
+                    tier: deriveTier(customer),
+                    lastVisitAt: customer.lastVisitAt || '',
+                    createdAt: customer.createdAt || '',
+                    updatedAt: customer.updatedAt || '',
+                    smsOk: consent.sms ? 'yes' : 'no',
+                    emailOk: consent.email ? 'yes' : 'no',
+                    doNotContact: consent.doNotContact ? 'yes' : 'no',
+                    consentNote: consent.note || '',
+                    latestNote
+                };
+            });
+        }
+
+        function customersToCsv() {
+            const rows = customerDataRows();
+            const headers = ['memberNo', 'token', 'name', 'displayName', 'phone', 'email', 'points', 'visits', 'rewards', 'tier', 'lastVisitAt', 'createdAt', 'updatedAt', 'smsOk', 'emailOk', 'doNotContact', 'consentNote', 'latestNote'];
+            return [
+                headers.join(','),
+                ...rows.map(row => headers.map(header => csvCell(row[header])).join(','))
+            ].join('\n');
+        }
+
+        function exportMyDataCsv() {
+            saveDataPort();
+            const csv = customersToCsv();
+            downloadTextFile(csv, dataPortFilename('csv'), 'text/csv;charset=utf-8');
+            setPanelStatus('dataPortStatus', 'CSV exported as ' + dataPortFilename('csv') + '.');
+            setStatus('mydata CSV exported.');
+            return true;
+        }
+
+        async function copyMyDataJson() {
+            saveDataPort();
+            const payload = {
+                app: 'loyalty-4-All',
+                exportedAt: todayISO(),
+                dataPort: { ...defaultState.dataPort, ...(state.dataPort || {}) },
+                customers: customerDataRows(),
+                activity: state.activity || []
+            };
+            try {
+                await navigator.clipboard.writeText(JSON.stringify(payload, null, 2));
+                setPanelStatus('dataPortStatus', 'Data JSON copied. Paste it into your external tool or automation.');
+                setStatus('Data JSON copied.');
+                return true;
+            } catch (_) {
+                downloadTextFile(JSON.stringify(payload, null, 2), dataPortFilename('json'), 'application/json');
+                setPanelStatus('dataPortStatus', 'Clipboard was blocked, so a JSON file was downloaded instead.');
+                setStatus('Data JSON downloaded.');
+                return false;
+            }
+        }
+
+        function openDataPortTarget() {
+            saveDataPort();
+            const dataPort = { ...defaultState.dataPort, ...(state.dataPort || {}) };
+            if (!dataPort.externalUrl) {
+                setPanelStatus('dataPortStatus', 'Add an external sheet or endpoint first.', true);
+                return false;
+            }
+            window.open(dataPort.externalUrl, '_blank', 'noopener');
+            setPanelStatus('dataPortStatus', dataPortLabel(dataPort.mode) + ' opened. Export mydata CSV when you need a clean upload.');
+            return true;
+        }
+
         function exportBackup() {
+            if (demoMode) {
+                setPanelStatus('settingsStatus', 'Exit Demo Mode before saving a real backup.', true);
+                setStatus('Demo data was not backed up.', true);
+                return false;
+            }
             state.settings.lastBackupAt = todayISO();
             saveState();
             const backup = {
                 app: 'loyalty-4-All',
-                version: 2,
+                version: 3,
+                schemaVersion: 1,
+                storage: 'device-first',
                 exportedAt: state.settings.lastBackupAt,
                 state
             };
@@ -2963,16 +4707,7 @@
             if (!incoming || typeof incoming !== 'object' || !incoming.customers || typeof incoming.customers !== 'object') {
                 return null;
             }
-            return {
-                ...clone(defaultState),
-                ...incoming,
-                branding: { ...defaultState.branding, ...(incoming.branding || {}) },
-                settings: { ...defaultState.settings, ...(incoming.settings || {}) },
-                services: { ...defaultState.services, ...(incoming.services || {}) },
-                customers: incoming.customers,
-                activity: Array.isArray(incoming.activity) ? incoming.activity : [],
-                selectedBatchIds: Array.isArray(incoming.selectedBatchIds) ? incoming.selectedBatchIds : []
-            };
+            return mergeState(incoming);
         }
 
         function restoreBackup() {
@@ -2997,6 +4732,8 @@
                     applyBranding();
                     populateSettingsControls();
                     populateServiceSettings();
+                    populateSupportSettings();
+                    populateDataPortSettings();
                     renderAll();
                     populateCustomerForm(null);
                     setPanelStatus('settingsStatus', 'Backup restored.');
@@ -3138,6 +4875,31 @@
             return message;
         }
 
+        function selectedMessageMode(channel) {
+            const services = { ...defaultState.services, ...(state.services || {}) };
+            if (channel === 'sms') return byId('smsService') ? byId('smsService').value : services.smsService;
+            return byId('emailService') ? byId('emailService').value : services.emailService;
+        }
+
+        function campaignBlockSummary(customer, channel) {
+            if (!customer) return { blocked: 1, reason: 'No customer selected' };
+            const permission = canContactCustomer(customer, channel);
+            if (!permission.ok) return { blocked: 1, reason: permission.reason };
+            if (channel === 'sms' && !customer.phone) return { blocked: 1, reason: 'No phone saved' };
+            if (channel === 'email' && !customer.email) return { blocked: 1, reason: 'No email saved' };
+            return { blocked: 0, reason: 'Ready for owner review' };
+        }
+
+        function updateCampaignSendButton() {
+            const btn = byId('sendCampaignBtn');
+            if (!btn) return;
+            const channel = byId('campaignChannel') ? byId('campaignChannel').value : 'email';
+            const connectedMode = selectedMessageMode(channel) === 'api';
+            btn.disabled = connectedMode;
+            btn.textContent = connectedMode ? 'Connect Service Required' : 'Send using my device';
+            btn.title = connectedMode ? 'Automatic sending needs a connected SMS/email service through a secure backend.' : 'Opens your device app so you can review and send.';
+        }
+
         function updateCampaignMeta() {
             const meta = byId('campaignMeta');
             if (!meta) return;
@@ -3147,7 +4909,10 @@
             const permission = customer ? ' · ' + contactPermissionLabel(customer) : '';
             const target = customer ? (channel === 'sms' ? customer.phone || 'No phone saved' : customer.email || 'No email saved') : 'No customer selected';
             const warning = channel === 'sms' && message.length > 160 ? ' · Long SMS' : '';
-            meta.textContent = channel.toUpperCase() + ' to ' + target + ' · ' + message.length + ' characters' + warning + permission;
+            const mode = selectedMessageMode(channel) === 'api' ? 'Connected service required' : 'Send using my device';
+            const block = campaignBlockSummary(customer, channel);
+            meta.textContent = mode + ' · ' + channel.toUpperCase() + ' to ' + target + ' · Blocked: ' + block.blocked + ' · ' + message.length + ' characters' + warning + permission;
+            updateCampaignSendButton();
         }
 
         function prepareCampaign() {
@@ -3165,12 +4930,17 @@
             }
             const services = { ...defaultState.services, ...(state.services || {}) };
             if (!services.campaignContact) {
-                setPanelStatus('campaignStatus', 'Add campaign contact details in Settings > Services before sending marketing messages.', true);
+                setPanelStatus('campaignStatus', 'Add message contact details in Launch Setup > Messages before sending messages.', true);
+                return null;
+            }
+            const block = campaignBlockSummary(customer, channel);
+            if (block.blocked) {
+                setPanelStatus('campaignStatus', 'Blocked recipients: ' + block.blocked + '. ' + block.reason, true);
                 return null;
             }
             const permission = canContactCustomer(customer, channel);
             if (!permission.ok) {
-                setPanelStatus('campaignStatus', permission.reason + ' Update Contact Permissions in Customers before preparing this campaign.', true);
+                setPanelStatus('campaignStatus', permission.reason + ' Update Contact Permissions in Customers before preparing this message.', true);
                 return null;
             }
             if (channel === 'email' && !subject) {
@@ -3189,9 +4959,10 @@
             byId('campaignMessage').value = message;
             const prepared = { customer, channel, subject, message };
             const target = channel === 'sms' ? customer.phone : customer.email;
+            const modeLabel = selectedMessageMode(channel) === 'api' ? 'Connected service required' : 'Send using my device';
             const preview = channel === 'email'
-                ? 'EMAIL ready for ' + customer.name + '\nTo: ' + target + '\nSubject: ' + subject + '\n\n' + message
-                : 'SMS ready for ' + customer.name + '\nTo: ' + target + '\n\n' + message;
+                ? modeLabel + '\nBlocked recipients: 0\n\nEMAIL ready for ' + customer.name + '\nTo: ' + target + '\nSubject: ' + subject + '\n\n' + message
+                : modeLabel + '\nBlocked recipients: 0\n\nSMS ready for ' + customer.name + '\nTo: ' + target + '\n\n' + message;
             updateCampaignMeta();
             setPanelStatus('campaignStatus', preview);
             return prepared;
@@ -3205,7 +4976,7 @@
                 : prepared.message;
             try {
                 await navigator.clipboard.writeText(text);
-                setPanelStatus('campaignStatus', 'Campaign text copied.');
+                setPanelStatus('campaignStatus', 'Message text copied.');
                 return true;
             } catch (_) {
                 setPanelStatus('campaignStatus', 'Copy is blocked in this browser. Select the message text and copy manually.', true);
@@ -3216,35 +4987,23 @@
         function sendCampaign() {
             const prepared = prepareCampaign();
             if (!prepared) return false;
-            const services = { ...defaultState.services, ...(state.services || {}) };
+            const mode = selectedMessageMode(prepared.channel);
             if (prepared.channel === 'sms') {
-                if (services.smsService === 'api') {
-                    if (!services.smsApiEndpoint) {
-                        setPanelStatus('campaignStatus', 'SMS API mode is selected in Settings, but no SMS API endpoint is saved.', true);
-                        return false;
-                    }
-                    setPanelStatus('campaignStatus', 'SMS API payload ready.\nEndpoint: ' + services.smsApiEndpoint + '\nTo: ' + prepared.customer.phone + '\n\n' + prepared.message);
-                    addActivity('campaign', prepared.customer.id, 'SMS API campaign prepared');
-                    saveState();
-                    renderAll();
-                    return true;
+                if (mode === 'api') {
+                    setPanelStatus('campaignStatus', 'Connect service required. To send SMS campaigns automatically, connect an SMS service through a secure backend/proxy. No API secrets are stored in this app.', true);
+                    updateCampaignSendButton();
+                    return false;
                 }
                 window.location.href = 'sms:' + encodeURIComponent(prepared.customer.phone) + '?&body=' + encodeURIComponent(prepared.message);
-                addActivity('campaign', prepared.customer.id, 'SMS campaign opened');
+                addActivity('campaign', prepared.customer.id, 'SMS message opened');
             } else {
-                if (services.emailService === 'api') {
-                    if (!services.emailApiEndpoint) {
-                        setPanelStatus('campaignStatus', 'Email API mode is selected in Settings, but no Email API endpoint is saved.', true);
-                        return false;
-                    }
-                    setPanelStatus('campaignStatus', 'Email API payload ready.\nEndpoint: ' + services.emailApiEndpoint + '\nTo: ' + prepared.customer.email + '\nSubject: ' + prepared.subject + '\n\n' + prepared.message);
-                    addActivity('campaign', prepared.customer.id, 'Email API campaign prepared: ' + prepared.subject);
-                    saveState();
-                    renderAll();
-                    return true;
+                if (mode === 'api') {
+                    setPanelStatus('campaignStatus', 'Connect service required. To send email campaigns automatically, connect an email service through a secure backend/proxy. No API secrets are stored in this app.', true);
+                    updateCampaignSendButton();
+                    return false;
                 }
                 window.location.href = 'mailto:' + encodeURIComponent(prepared.customer.email) + '?subject=' + encodeURIComponent(prepared.subject) + '&body=' + encodeURIComponent(prepared.message);
-                addActivity('campaign', prepared.customer.id, 'Email campaign opened: ' + prepared.subject);
+                addActivity('campaign', prepared.customer.id, 'Email message opened: ' + prepared.subject);
             }
             saveState();
             renderAll();
@@ -3273,7 +5032,7 @@
                     sms: true,
                     email: true,
                     doNotContact: false,
-                    note: 'Self-test campaign permission'
+                    note: 'Self-test message permission'
                 },
                 notes: [],
                 createdAt: todayISO(),
@@ -3332,6 +5091,9 @@
             renderDashboard();
             renderSheetPreview();
             renderSetupChecklist();
+            renderFirstUsePanel();
+            renderDemoModePanel();
+            renderHelpSupport();
             const firstCustomer = getCustomers()[0];
             const currentCardId = byId('cardCustomerSelect').value || activeCustomerId || (firstCustomer && firstCustomer.id);
             if (currentCardId) renderCardPreviewForCustomer(currentCardId);
@@ -3339,12 +5101,29 @@
 
         function bindEvents() {
             document.querySelectorAll('.nav button').forEach(btn => btn.addEventListener('click', () => showScreen(btn.dataset.screen)));
+            bindHelpButtons(document);
             byId('manualLookupBtn').addEventListener('click', handleManualLookup);
             byId('scanToken').addEventListener('keydown', event => {
                 if (event.key === 'Enter') handleManualLookup();
             });
-            byId('cameraBtn').addEventListener('click', startScan);
-            byId('checkinBtn').addEventListener('click', () => addVisit());
+            byId('cameraBtn').addEventListener('click', () => startScan('select'));
+            byId('quickScanBtn').addEventListener('click', () => startScan('select'));
+            byId('walkInCheckinBtn').addEventListener('click', () => startScan('checkin'));
+            byId('quickAddCustomerBtn').addEventListener('click', goToNewCustomer);
+            byId('quickRewardsBtn').addEventListener('click', goToRewardReady);
+            byId('setupDemoBtn').addEventListener('click', startDemoMode);
+            byId('setupFirstCustomerBtn').addEventListener('click', () => {
+                applyQuickSetup();
+                dismissFirstUse();
+                goToNewCustomer();
+            });
+            byId('setupSkipBtn').addEventListener('click', () => {
+                dismissFirstUse();
+                setStatus('Setup skipped. Defaults are ready.');
+            });
+            byId('demoRevisitBtn').addEventListener('click', demoRevisit);
+            byId('demoResetBtn').addEventListener('click', resetDemoMode);
+            byId('demoExitBtn').addEventListener('click', exitDemoMode);
             byId('rewardBtn').addEventListener('click', () => triggerReward());
             byId('addNoteBtn').addEventListener('click', () => addNote());
             byId('clearCounterBtn').addEventListener('click', clearCounterFlow);
@@ -3399,7 +5178,21 @@
             byId('sendCampaignBtn').addEventListener('click', sendCampaign);
             byId('saveBrandingBtn').addEventListener('click', saveBranding);
             byId('saveSettingsBtn').addEventListener('click', saveSettings);
+            byId('saveSupportBtn').addEventListener('click', saveSupportDetails);
             byId('saveServicesBtn').addEventListener('click', saveServices);
+            byId('smsService').addEventListener('change', () => {
+                updateServiceFieldVisibility();
+                updateCampaignMeta();
+            });
+            byId('emailService').addEventListener('change', () => {
+                updateServiceFieldVisibility();
+                updateCampaignMeta();
+            });
+            byId('dataPortMode').addEventListener('change', updateDataPortVisibility);
+            byId('saveDataPortBtn').addEventListener('click', saveDataPort);
+            byId('exportMyDataCsvBtn').addEventListener('click', exportMyDataCsv);
+            byId('copyMyDataJsonBtn').addEventListener('click', copyMyDataJson);
+            byId('openDataPortBtn').addEventListener('click', openDataPortTarget);
             byId('runSelfTestBtn').addEventListener('click', runSelfTest);
             byId('exportBackupBtn').addEventListener('click', exportBackup);
             byId('restoreBackupBtn').addEventListener('click', restoreBackup);
@@ -3416,16 +5209,21 @@
             });
         }
 
-        function init() {
+        async function init() {
+            setStatus('Loading device data...');
+            state = await loadDeviceState();
             bindEvents();
+            populateFirstUseControls();
             populateSettingsControls();
             populateServiceSettings();
+            populateSupportSettings();
+            populateDataPortSettings();
             setPanelStatus('servicesStatus', servicesSummary());
             applyBranding();
             renderAll();
             generateQrTool();
             loadCampaignTemplate();
-            setStatus('Ready.');
+            setStatus('Ready. ' + storageSummary());
             registerServiceWorker();
             maybeShowIosInstallBanner();
         }
@@ -3461,7 +5259,7 @@
         function dismissIosInstallBanner() {
             try {
                 localStorage.setItem(IOS_INSTALL_DISMISSED_KEY, 'true');
-            } catch (_) {}
+            } catch (_) { }
             const banner = byId('iosInstallBanner');
             if (banner) banner.classList.remove('show');
             document.body.classList.remove('ios-install-visible');
@@ -3510,7 +5308,10 @@
         window.restoreBackup = restoreBackup;
         window.runSelfTest = runSelfTest;
 
-        init();
+        init().catch(error => {
+            console.error('App initialisation failed.', error);
+            setStatus('App could not finish loading. Try refreshing or restore a backup.', true);
+        });
     </script>
 </body>
 
