@@ -1,7 +1,7 @@
 {
     "name": "loyalty-4-All",
     "short_name": "L4A",
-    "description": "Loyalty-first CRM for small family businesses.",
+    "description": "Loyalty-first CRM for small family businesses. De-Omega-Point \"Project\".",
     "start_url": "./index.html",
     "scope": "./",
     "display": "standalone",
