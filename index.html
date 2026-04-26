@@ -190,125 +190,92 @@
         .topbar-inner {
             align-items: center;
             display: grid;
-            gap: 16px;
-            grid-template-columns: 1fr auto;
+            gap: 8px;
+            grid-template-columns: 1fr;
             margin: 0 auto;
             max-width: 1240px;
-            padding: 16px 24px;
+            padding: 8px 24px 10px;
         }
 
         .brand-mark {
             align-items: center;
             display: flex;
-            flex-wrap: wrap;
-            gap: 16px;
+            gap: 10px;
             min-width: 0;
         }
 
         .brand-logo {
             background: #fff;
             border: 1px solid var(--line);
-            border-radius: 16px;
+            border-radius: 12px;
             color: #fff;
             display: grid;
-            flex: 0 0 64px;
+            flex: 0 0 42px;
             font-size: 1.35rem;
             font-weight: 900;
-            height: 64px;
+            height: 42px;
+            margin-left: auto;
+            order: 2;
             place-items: center;
             overflow: hidden;
-            width: 64px;
+            width: 42px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
 
+        .brand-copy {
+            min-width: 0;
+            order: 1;
+        }
+
         .brand-logo img {
-            border-radius: 14px;
+            border-radius: 10px;
             height: 100%;
             object-fit: contain;
-            padding: 4px;
+            padding: 3px;
             width: 100%;
         }
 
         .brand-title {
-            font-size: 1.4rem;
+            font-size: 1.12rem;
             font-weight: 900;
             overflow-wrap: anywhere;
             letter-spacing: 0;
+            line-height: 1.05;
         }
 
         .brand-subtitle {
             color: var(--muted);
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             font-weight: 500;
+            line-height: 1.2;
         }
 
         .brand-project {
-            color: var(--muted);
-            font-size: 0.82rem;
-            font-weight: 500;
-            margin-top: 2px;
-        }
-
-        .product-brand {
-            align-items: center;
-            align-self: center;
-            background: #ffffff;
-            border: 1px solid var(--line);
-            border-radius: 999px;
-            color: #064e3b;
-            display: inline-flex;
-            flex: 0 0 auto;
-            gap: 8px;
-            margin-left: 4px;
-            padding: 7px 12px 7px 8px;
-            white-space: nowrap;
-        }
-
-        .product-brand img {
-            border-radius: 999px;
-            height: 26px;
-            object-fit: contain;
-            width: 26px;
-        }
-
-        .product-brand span {
-            color: var(--muted);
-            display: block;
-            font-size: 0.72rem;
-            font-weight: 700;
-            line-height: 1;
-        }
-
-        .product-brand strong {
-            display: block;
-            font-size: 0.88rem;
-            font-weight: 900;
-            line-height: 1.1;
-        }
-
-        .product-brand em {
-            color: var(--muted);
-            display: block;
-            font-size: 0.72rem;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 1.15;
-            margin-top: 2px;
+            display: none;
         }
 
         .nav {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             gap: 8px;
-            justify-content: flex-end;
+            justify-content: flex-start;
             max-width: 100%;
+            overflow-x: auto;
+            padding-bottom: 2px;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .nav::-webkit-scrollbar {
+            display: none;
         }
 
         .nav button {
             background: transparent;
             color: var(--muted);
-            min-height: 44px;
-            padding: 10px 16px;
+            flex: 0 0 auto;
+            min-height: 36px;
+            padding: 7px 12px;
             font-weight: 600;
         }
 
@@ -1164,6 +1131,34 @@
             color: #064e3b;
         }
 
+        .app-footer {
+            align-items: center;
+            color: var(--muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin: 0 auto;
+            max-width: 1240px;
+            padding: 0 24px 32px;
+            text-align: center;
+        }
+
+        .app-footer img {
+            height: 24px;
+            object-fit: contain;
+            width: 24px;
+        }
+
+        .app-footer strong {
+            color: #064e3b;
+            font-weight: 900;
+        }
+
+        .app-footer span {
+            font-size: 0.92rem;
+        }
+
         .footer-status {
             bottom: 16px;
             left: 24px;
@@ -1275,50 +1270,36 @@
 
             .topbar-inner {
                 align-items: stretch;
-                gap: 12px;
-                padding: 12px 16px;
+                gap: 8px;
+                padding: 8px 16px 9px;
             }
 
             .brand-mark {
-                gap: 10px;
+                gap: 8px;
             }
 
             .brand-logo {
-                flex-basis: 52px;
-                height: 52px;
-                width: 52px;
+                flex-basis: 38px;
+                height: 38px;
+                width: 38px;
             }
 
             .brand-title {
-                font-size: 1.16rem;
+                font-size: 1rem;
             }
 
             .brand-subtitle {
-                font-size: 0.86rem;
+                font-size: 0.74rem;
             }
 
             .nav {
-                flex-wrap: nowrap;
-                justify-content: flex-start;
                 margin: 0 -16px;
-                overflow-x: auto;
-                padding: 0 16px 4px;
-                scrollbar-width: none;
-                -webkit-overflow-scrolling: touch;
-            }
-
-            .nav::-webkit-scrollbar {
-                display: none;
+                padding: 0 16px 3px;
             }
 
             .nav button {
-                flex: 0 0 auto;
-                min-height: 40px;
-                padding: 8px 12px;
-            }
-
-            .product-brand {
-                margin-left: 0;
+                min-height: 34px;
+                padding: 6px 10px;
             }
 
             .main {
@@ -1382,10 +1363,6 @@
                 align-items: flex-start;
             }
 
-            .product-brand {
-                order: 3;
-            }
-
             .footer-status {
                 left: 12px;
                 right: 12px;
@@ -1426,18 +1403,9 @@
                     <div class="brand-logo" id="brandLogoMark">
                         <img alt="Loyalty-4-All logo" src="../assets/logo.png" />
                     </div>
-                    <div>
+                    <div class="brand-copy">
                         <div class="brand-title" id="appBusinessName">loyalty-4-All</div>
-                        <div class="brand-subtitle">Loyalty-first CRM for small family businesses</div>
-                        <div class="brand-project">De-Omega-Point "Project"</div>
-                    </div>
-                    <div class="product-brand" aria-label="Powered by Loyalty-4-All">
-                        <img alt="" src="../assets/logo.png" />
-                        <div>
-                            <span>Powered by</span>
-                            <strong>loyalty-4-All</strong>
-                            <em>De-Omega-Point "Project"</em>
-                        </div>
+                        <div class="brand-subtitle">Loyalty-first CRM · De-Omega-Point "Project"</div>
                     </div>
                 </div>
                 <nav class="nav" aria-label="Main navigation">
@@ -2301,6 +2269,11 @@
 
             <div id="printArea" class="hidden"></div>
         </main>
+
+        <footer class="app-footer" aria-label="Product credit">
+            <img alt="" src="../assets/logo.png" />
+            <span>Powered by <strong>loyalty-4-All</strong> · De-Omega-Point "Project"</span>
+        </footer>
 
         <div class="footer-status">
             <div id="appStatus" class="status">Ready.</div>
