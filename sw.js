@@ -1,72 +1,26 @@
-const CACHE_NAME = 'loyalty-4-all-pwa-v1';
-const APP_SHELL = [
-    './',
-    './index.html',
-    './manifest.webmanifest',
-    './icons/icon-192.png',
-    './icons/icon-512.png',
-    './icons/apple-touch-icon.png',
-    '../assets/logo.png',
-    '../assets/vendor/qrcode-generator.js',
-    '../assets/vendor/jsQR.min.js'
-];
-
-self.addEventListener('install', event => {
-    event.waitUntil(
-        caches.open(CACHE_NAME)
-            .then(cache => cache.addAll(APP_SHELL))
-            .then(() => self.skipWaiting())
-    );
-});
-
-self.addEventListener('activate', event => {
-    event.waitUntil(
-        caches.keys()
-            .then(keys => Promise.all(
-                keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-            ))
-            .then(() => self.clients.claim())
-    );
-});
-
-self.addEventListener('fetch', event => {
-    const { request } = event;
-    if (request.method !== 'GET') return;
-
-    const requestUrl = new URL(request.url);
-    if (request.mode === 'navigate') {
-        event.respondWith(
-            fetch(request)
-                .then(response => {
-                    const copy = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put('./index.html', copy));
-                    return response;
-                })
-                .catch(() => caches.match('./index.html'))
-        );
-        return;
-    }
-
-    if (requestUrl.origin === location.origin) {
-        event.respondWith(
-            caches.match(request).then(cached => {
-                return cached || fetch(request).then(response => {
-                    const copy = response.clone();
-                    caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-                    return response;
-                });
-            })
-        );
-        return;
-    }
-
-    event.respondWith(
-        caches.match(request).then(cached => {
-            return cached || fetch(request).then(response => {
-                const copy = response.clone();
-                caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-                return response;
-            });
-        })
-    );
-});
+{
+    "name": "loyalty-4-All",
+    "short_name": "L4A",
+    "description": "Loyalty-first CRM for small family businesses. De-Omega-Point \"Project\".",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#f5f9f6",
+    "theme_color": "#10b981",
+    "categories": ["business", "productivity"],
+    "icons": [
+        {
+            "src": "./icons/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "./icons/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
